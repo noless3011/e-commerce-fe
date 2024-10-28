@@ -1,15 +1,9 @@
+import ProductImagesSlider from "./ProductImagesSlider"
 import ProductSideBar from "./ProductSideBar"
+import ProductImagePicker from "./ProductImagePicker"
+import { Product } from "@/app/types/Product"
 
 
-export type Product = {
-    name: string,
-    images: string[],
-    price: number,
-    smallDescription: string,
-    shop: string,
-    condition: string,
-    quantity: number
-}
 
 export default function ProductPage() {
     const images: string[] = Array.from({ length: 3 }, (_, i) => `text${i + 1}`)
@@ -25,8 +19,10 @@ export default function ProductPage() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-row">
+        <div className="flex flex-col gap-4 h-fit">
+            <div className="grid grid-cols-[7rem_1.8fr_1fr] gap-4 items-stretch">
+                <ProductImagePicker></ProductImagePicker>
+                <ProductImagesSlider></ProductImagesSlider>
                 <ProductSideBar product={product} />
             </div>
         </div>

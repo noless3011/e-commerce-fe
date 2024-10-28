@@ -1,5 +1,5 @@
 import React from 'react'
-import { Product } from './page';
+import { Product } from '@/app/types/Product';
 import Link from 'next/link';
 
 
@@ -9,11 +9,11 @@ type ProductProps = {
 
 const ProductSideBar: React.FC<ProductProps> = ({ product }) => {
     return (
-        <div className="max-w-sm p-6 bg-gray-100 rounded-lg">
+        <div className="max-w-xl h-fit p-6 bg-gray-100 rounded-lg">
             <h1 className="text-lg font-bold mb-4">{product.name}</h1>
 
             <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-gray-300 rounded-full mr-4"></div>
+                <div className="w-10 aspect-square bg-gray-300 rounded-full mr-4"></div>
                 <div>
                     <div className="text-sm font-semibold">{product.shop}</div>
                     <div className="text-xs text-blue-500 space-x-2">
