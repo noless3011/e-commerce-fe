@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Rethink_Sans } from "next/font/google";
+import { Inter } from "next/font/google"
 import "./globals.css";
 import Header from "./header";
 
-const rethinkSans = Rethink_Sans({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${rethinkSans.className} antialiased`}
+        className={`${inter.className} antialiased`}
       >
         <Header></Header>
         {children}
