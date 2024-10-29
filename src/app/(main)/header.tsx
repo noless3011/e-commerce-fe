@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { div } from 'framer-motion/client';
 import SearchBar from './SearchBar';
+import { useRouter } from 'next/navigation';
+import AuthenticationButtons from './components/AuthenticationButtons';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +19,15 @@ const Header = () => {
     ];
 
     const isActive = (path: string) => pathname === path;
+
+
+    const router = useRouter();
+    const login = () => {
+        router.push("/account/login");
+    }
+    const register = () => {
+        router.push("/account/register");
+    }
 
     return (
         <div className="flex flex-col gap-10 w-full">
@@ -42,11 +53,7 @@ const Header = () => {
                                 </Link>
                             ))}
                         </div>
-                        <div className="flex flex-row h-full items-center">
-                            <button className="w-32 h-3/4 mx-1 px-2 rounded-lg bg-white">Login</button>
-                            <button className="w-32 h-3/4 mx-1 px-2 rounded-lg bg-darkgreen text-white">Register</button>
-                        </div>
-
+                        <AuthenticationButtons login={login} register={register}></AuthenticationButtons>
                     </div>
                 </div>
             </nav>

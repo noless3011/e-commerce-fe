@@ -1,6 +1,18 @@
 import { BiChevronDown } from "react-icons/bi";
 import Link from "next/link";
 const SearchBar = () => {
+    const categories: string[] = [
+        "Electronics",
+        "Clothing",
+        "Home Appliances",
+        "Books",
+        "Beauty & Health",
+        "Sports & Outdoors",
+        "Toys & Games",
+        "Groceries",
+        "Furniture",
+        "Automotive"
+    ];
     return (
         <div className="w-full h-[50px] flex flew-row justify-center">
             <table className="bg-trsansparent w-2/5 h-full table-fixed">
@@ -14,14 +26,11 @@ const SearchBar = () => {
                         </td>
                         <td className="p-0 w-[150px]">
                             <select className="w-full h-full bg-slate-100 rounded-tr-full rounded-br-full border-solid border-y-2 border-r-2 border-black p-2 flex flex-row">
-                                <option>All Categories</option>
-                                <option>Categories 1</option>
-                                <option>Categories 2</option>
-                                <option>Categories 3</option>
-                                <option>Categories 4</option>
-                                <option>Categories 5</option>
-                                <option>Categories 6</option>
-                                <option>Categories 7</option>
+                                {categories.map((category) => {
+                                    return (
+                                        <option>{category}</option>
+                                    )
+                                })}
                             </select>
                         </td>
                     </tr>
