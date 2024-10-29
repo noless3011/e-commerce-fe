@@ -22,15 +22,12 @@ const Header = () => {
         <div className="flex flex-col gap-10 w-full">
             <nav className="bg-[#fcde70] shadow-md">
                 <div className="max-w-6xl mx-auto px-4">
-                    <div className="flex justify-between items-center h-16">
-                        {/* Logo */}
+                    <div className="flex flex-row justify-between items-center h-16">
                         <div className="flex-shrink-0">
                             <Link href="/" className="text-xl font-bold text-gray-800">
                                 Logo
                             </Link>
                         </div>
-
-                        {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center space-x-8">
                             {navLinks.map((link) => (
                                 <Link
@@ -45,6 +42,11 @@ const Header = () => {
                                 </Link>
                             ))}
                         </div>
+                        <div className="flex flex-row h-full items-center">
+                            <button className="w-32 h-3/4 mx-1 px-2 rounded-lg bg-white">Login</button>
+                            <button className="w-32 h-3/4 mx-1 px-2 rounded-lg bg-darkgreen text-white">Register</button>
+                        </div>
+
                     </div>
                 </div>
             </nav>
