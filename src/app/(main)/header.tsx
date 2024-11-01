@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import { div } from 'framer-motion/client';
-import SearchBar from './SearchBar';
+import SearchBar from './components/header/SearchBar';
 import { useRouter } from 'next/navigation';
-import AuthenticationButtons from './components/AuthenticationButtons';
+import AuthenticationButtons from './components/header/AuthenticationButtons';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
