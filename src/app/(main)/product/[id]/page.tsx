@@ -2,8 +2,8 @@ import ProductImagesSlider from "./ProductImagesSlider"
 import ProductSideBar from "./ProductSideBar"
 import ProductImagePicker from "./ProductImagePicker"
 import { Product } from "@/app/types/Product"
-
-
+import Recommended from "./recommended"
+import Reviews from "./reviews"
 
 export default function ProductPage() {
     const images: string[] = Array.from({ length: 3 }, (_, i) => `text${i + 1}`)
@@ -25,6 +25,8 @@ export default function ProductPage() {
                 <ProductImagesSlider></ProductImagesSlider>
                 <ProductSideBar product={product} />
             </div>
+            <Recommended></Recommended>
+            <Reviews></Reviews>
         </div>
     )
 }
