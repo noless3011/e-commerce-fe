@@ -1,7 +1,7 @@
 'use client'; // Make this component a client component
 
 import React from 'react';
-import Product from './[id]/Product'; // Ensure the correct path to the Product component
+import Product from './Product'; // Ensure the correct path to the Product component
 
 const Recommended: React.FC = () => {
     // Sample prices for each product
