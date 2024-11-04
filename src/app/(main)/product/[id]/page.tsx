@@ -2,8 +2,8 @@ import ProductImagesSlider from "./ProductImagesSlider"
 import ProductSideBar from "./ProductSideBar"
 import ProductImagePicker from "./ProductImagePicker"
 import { Product } from "@/app/types/Product"
-
-
+import Recommended from "./Recommended"
+import Reviews from "./Reviews"
 
 export default function ProductPage() {
     const images: string[] = Array.from({ length: 3 }, (_, i) => `text${i + 1}`)
@@ -19,12 +19,14 @@ export default function ProductPage() {
     }
 
     return (
-        <div className="flex flex-col gap-4 h-fit">
+        <div className="flex flex-col gap-4 h-fit mt-4 w-4/5 mx-auto"> 
             <div className="grid grid-cols-[7rem_1.8fr_1fr] gap-4 items-stretch">
                 <ProductImagePicker></ProductImagePicker>
                 <ProductImagesSlider></ProductImagesSlider>
                 <ProductSideBar product={product} />
             </div>
+            <Recommended></Recommended>
+            <Reviews></Reviews>
         </div>
     )
 }
