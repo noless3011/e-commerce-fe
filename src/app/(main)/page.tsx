@@ -1,6 +1,7 @@
 import CategoryCard from "./components/landing/CategoryCard";
 import CategoryGrid from "./components/landing/CategoryGrid";
 import ProductCard from "./components/landing/ProductCard";
+import ProductGridList from "./components/landing/ProductGridList";
 import ProductHorizontalList from "./components/landing/ProductHorizontalList";
 
 export default function Page() {
@@ -25,6 +26,16 @@ export default function Page() {
                     ))
                 }
             </ProductHorizontalList>
+
+            <ProductGridList>
+                {
+                    Array.from({ length: 30 }, (_, index) => (
+                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/300/300"
+                            imageH={100} imageW={100}
+                            price={1999} url="#" discount={90} />
+                    ))
+                }
+            </ProductGridList>
 
             <div className="h-96"></div>
         </div>
