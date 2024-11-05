@@ -13,4 +13,5 @@ const ProductGridList: React.FC<ProductGridListProps> = ({ children }) => {
         </div>
     </div>)
 }
+
 export default ProductGridList;
