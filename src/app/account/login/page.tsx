@@ -1,4 +1,6 @@
 "use client";
+import { LoginDto } from "@/api";
+import { AuthApi } from "@/app/utils/ApiClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
@@ -9,20 +11,23 @@ export default function Page() {
     const router = useRouter();
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const res = await fetch('http://localhost:3002/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userName: username, password }),
-        });
-
-        if (res.ok) {
-            router.push('/');
-        } else {
-            setLoginStatus("*Wrong username or password");
+        const loginData: LoginDto = {
+            userName: username,
+            password: password
         }
+        try {
+            const callLoginApiFunc = await AuthApi.authControllerLogin(loginData);
+            const res = await callLoginApiFunc();
+            if (res.data.isSuccess === true) {
+                router.push('/');
+            } else {
+                setLoginStatus("*Wrong username or password");
+            }
+        } catch (error) {
+            setLoginStatus("*Failed to create account");
+        }
+
+
     };
 
     return (

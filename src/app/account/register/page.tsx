@@ -1,6 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { UserApiFactory } from "@/api";
+import { LoginDto } from "@/api";
+import { AuthApi } from "@/app/utils/ApiClient";
+import { BaseAPI } from "@/api/base";
+
 
 export default function Page() {
     const [password, setPassword] = useState("");
@@ -10,19 +15,25 @@ export default function Page() {
     const register = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await fetch('http://localhost:3002/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userName: username, password }),
-        });
-
-        if (res.ok) {
-            router.push('/account/login');
-        } else {
+        const loginData: LoginDto = {
+            userName: username,
+            password: password
+        }
+        try {
+            // First execute the function to get the AxiosPromise
+            const apiFunction = await AuthApi.authControllerRegister(loginData);
+            // Then await the actual API call
+            const response = await apiFunction();
+            console.log(response);
+            if (response.statusText === "Created") {
+                router.push('/account/login');
+            } else {
+                setRegisterStatus("*Failed to create account");
+            }
+        } catch (error) {
             setRegisterStatus("*Failed to create account");
         }
+
     };
 
     return (
