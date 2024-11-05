@@ -64,7 +64,7 @@ const Reviews: React.FC = () => {
         <section className="flex justify-center p-5 min-h-[100%]">
             <div className="flex flex-col w-[105%] max-w-[105%] min-w-[105%] bg-gray-100 rounded-lg shadow-md md:flex-row">
                 <div className="flex-1 md:flex-[2] p-5 border-b md:border-b-0 md:border-r border-gray-300">
-                    <h3 className="text-black text-lg font-semibold">User Rating: {averageRating.toFixed(1)} out of 5 ⭐</h3>                    
+                    <h3 className="text-black text-lg font-semibold">User Rating: {averageRating.toFixed(1)} out of 5 ⭐</h3>
                     <h4 className='mt-2 text-black font-semibold'>From {totalVotes} people </h4>
                     <div className="mt-2">
                         {ratings.map((rating, index) => {
@@ -77,19 +77,19 @@ const Reviews: React.FC = () => {
                                                 <StarIcon key={i} filled={i < rating.stars} />
                                             ))}
                                         </span>
-                                        <span className="text-sm text-gray-600">{percentage}%</span>           
+                                        <span className="text-sm text-gray-600">{percentage}%</span>
                                     </div>
                                     <div className="relative mt-1 h-4 bg-gray-300 rounded">
-                                            <div
-                                                className="bg-green h-full rounded"
-                                                style={{ width: `${percentage}%` }}
-                                            ></div>
+                                        <div
+                                            className="bg-green h-full rounded"
+                                            style={{ width: `${percentage}%` }}
+                                        ></div>
                                     </div>
                                 </div>
                             );
                         })}
                     </div>
-                    
+
                 </div>
 
                 <div className="flex-1 md:flex-[5] p-5 flex flex-col">
@@ -111,11 +111,11 @@ const Reviews: React.FC = () => {
                         Publish
                     </button>
                     <div className="mt-4 flex-1">
-                        <div className="max-h-48 overflow-y-auto border border-gray-300 rounded p-2 bg-white">
+                        <div className="max-h-[1000px] overflow-y-auto border border-gray-300 rounded p-2 bg-white">
                             {userReviews.map((userReview, index) => (
                                 <div key={index} className="py-3 px-4 border border-gray-200 bg-gray-50 rounded-md shadow-sm mb-2 last:mb-0">
                                     <p className="text-black">
-                                        <strong>{userReview.user}</strong> 
+                                        <strong>{userReview.user}</strong>
                                         <span className="text-gray-600 text-sm ml-2">{new Date(userReview.date).toLocaleDateString()}</span>
                                     </p>
                                     <div className="flex mb-1">
