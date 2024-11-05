@@ -26,7 +26,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
     return (
         <div className="h-fit w-fit rounded-lg shadow-lg hover:shadow-black transition-shadow duration-300">
             <Link href={url}>
-                <div className={`relative h-[${imageH}px] w-[${imageW}px] rounded-t-lg`}>
+                <div className={`relative h-fit w-fit rounded-t-lg`}
+                    style={{
+                        width: imageW,
+                        height: imageH
+                    }}>
                     <img
                         src={image}
                         alt={name}

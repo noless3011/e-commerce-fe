@@ -31,7 +31,7 @@ export default function Page() {
                 {
                     Array.from({ length: 30 }, (_, index) => (
                         <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/300/300"
-                            imageH={100} imageW={100}
+                            imageH={200} imageW={200}
                             price={1999} url="#" discount={90} />
                     ))
                 }
