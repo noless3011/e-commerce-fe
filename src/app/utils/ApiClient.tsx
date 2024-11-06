@@ -7,6 +7,9 @@ import { HealthCheckApiFp } from '@/api';
 
 const configuration = new Configuration({
     basePath: process.env.URL,
+    baseOptions: {
+        credentials: 'include',
+    }
 });
 
 const Base = new BaseAPI(configuration); // Initialize the API client

@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import { div } from 'framer-motion/client';
 import SearchBar from './components/header/SearchBar';
-import { useRouter } from 'next/navigation';
-import AuthenticationButtons from './components/header/AuthenticationButtons';
+import AuthenticationArea from './components/header/AuthenticationArea';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,13 +20,7 @@ const Header = () => {
     const isActive = (path: string) => pathname === path;
 
 
-    const router = useRouter();
-    const login = () => {
-        router.push("/account/login");
-    }
-    const register = () => {
-        router.push("/account/register");
-    }
+
 
     return (
         <div className="flex flex-col gap-10 w-full">
@@ -53,7 +46,7 @@ const Header = () => {
                                 </Link>
                             ))}
                         </div>
-                        <AuthenticationButtons login={login} register={register}></AuthenticationButtons>
+                        <AuthenticationArea></AuthenticationArea>
                     </div>
                 </div>
             </nav>

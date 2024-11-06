@@ -12,19 +12,20 @@ export default function Page() {
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
         const loginData: LoginDto = {
-            userName: username,
+            username: username,
             password: password
         }
         try {
             const callLoginApiFunc = await AuthApi.authControllerLogin(loginData);
             const res = await callLoginApiFunc();
             if (res.data.isSuccess === true) {
+                console.log(13, res);
                 router.push('/');
             } else {
                 setLoginStatus("*Wrong username or password");
             }
         } catch (error) {
-            setLoginStatus("*Failed to create account");
+            setLoginStatus("*Failed to login account");
         }
 
 
