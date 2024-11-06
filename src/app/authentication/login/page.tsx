@@ -19,9 +19,10 @@ export default function Page() {
             const callLoginApiFunc = await AuthApi.authControllerLogin(loginData);
             const res = await callLoginApiFunc();
             if (res.data.isSuccess === true) {
-                console.log(13, res);
+                console.log(13, res.headers);
                 router.push('/');
             } else {
+
                 setLoginStatus("*Wrong username or password");
             }
         } catch (error) {

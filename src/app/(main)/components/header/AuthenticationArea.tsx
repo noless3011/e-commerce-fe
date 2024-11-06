@@ -13,14 +13,14 @@ const AuthenticationArea = () => {
     const checkLogin = async (): Promise<boolean> => {
         try {
 
-            // const checkLoginFunc = await UserApi.userControllerGetCurrentUser();
-            // const checkLoginRes = await checkLoginFunc();
-            // if (checkLoginRes.status === 200) {
-            //     console.log(checkLoginRes);
-            //     return true;
-            // } else {
-            //     return false;
-            // }
+            const checkLoginFunc = await UserApi.userControllerGetCurrentUser();
+            const checkLoginRes = await checkLoginFunc();
+            if (checkLoginRes.status === 200) {
+                console.log(checkLoginRes);
+                return true;
+            } else {
+                return false;
+            }
         } catch (error) {
             console.log(234, error);
             return false;

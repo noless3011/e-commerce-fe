@@ -6,9 +6,9 @@ import { UserApiFp } from '@/api';
 import { HealthCheckApiFp } from '@/api';
 
 const configuration = new Configuration({
-    basePath: process.env.URL,
+    basePath: "http://localhost:3001",
     baseOptions: {
-        credentials: 'include',
+        withCredentials: true
     }
 });
 
