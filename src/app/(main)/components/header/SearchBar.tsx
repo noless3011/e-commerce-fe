@@ -14,7 +14,7 @@ const SearchBar = () => {
         "Automotive"
     ];
     return (
-        <div className="w-full h-[50px] flex flew-row justify-center">
+        <div className="w-full h-[50px] flex flew-row justify-center text-black">
             <table className="bg-trsansparent w-2/5 h-full table-fixed">
                 <tbody>
                     <tr>

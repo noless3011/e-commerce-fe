@@ -30,7 +30,7 @@ const Header = () => {
     }
 
     return (
-        <div className="flex flex-col gap-10 w-full">
+        <div className="flex flex-col gap-0 w-full">
             <nav className="bg-[#fcde70] shadow-md">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="flex flex-row justify-between items-center h-16">
@@ -57,7 +57,9 @@ const Header = () => {
                     </div>
                 </div>
             </nav>
-            <SearchBar></SearchBar>
+            <div className="w-[110%] mt-1 py-2.5">
+                <SearchBar />
+            </div>
         </div>
 
     );
