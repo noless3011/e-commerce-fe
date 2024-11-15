@@ -8,20 +8,26 @@ const OrderStatus: React.FC = () => {
     ];
 
     return (
-        <div className="bg-white p-4 rounded-md shadow-md w-full max-w-lg">
-            <h2 className="text-xl text-black font-semibold mb-4">Trạng thái đơn hàng</h2>
-            <ul>
+        <div className="bg-white p-6 rounded-xl shadow-md w-[80%] h-screen ml-[8cm]">
+            <h2 className="text-xl text-black font-semibold mb-4">Product Management</h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {orders.map((order) => (
-                    <li key={order.id} className="text-black border-b p-2 last:border-none flex items-center space-x-4">
-                        <img src={order.image} alt={order.productName} className="w-16 h-16 object-cover rounded-md" />
-                        <div>
-                            <p><strong>Sản phẩm:</strong> {order.productName}</p>
-                            <p><strong>Trạng thái:</strong> {order.status}</p>
-                            <p><strong>Số lượng đặt:</strong> {order.quantityOrdered}</p>
+                    <div key={order.id} className="bg-gray-100 p-4 rounded-xl text-black shadow-md min-h-[450px] flex flex-col">
+                        <div className="flex justify-center">
+                            <img src={order.image} className="w-16 h-16 object-cover min-h-[250px] rounded-xl" />
                         </div>
-                    </li>
+                        <div className="flex flex-col justify-between mt-auto text-left">
+                            <p><strong>Product Name:</strong> {order.productName}</p>
+                            <p><strong>Status:</strong> {order.status}</p>
+                            <p><strong>Amount:</strong> {order.quantityOrdered}</p>
+                        </div>
+                        <div className="mt-auto flex justify-center space-x-4 w-full">
+                            <button className="bg-gray-300 text-black py-1 px-4 rounded-full hover:bg-gray-400 transition duration-200">Delete</button>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
