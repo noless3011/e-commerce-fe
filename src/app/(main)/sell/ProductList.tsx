@@ -1,38 +1,96 @@
-"use client";
-import React from 'react';
-
 const ProductList: React.FC = () => {
     const products = [
-        { id: 1, name: 'Product A', description: 'Mô tả sản phẩm A', price: 100000, image: '/path/to/imageA.jpg', quantity: 10 },
-        { id: 2, name: 'Product B', description: 'Mô tả sản phẩm B', price: 200000, image: '/path/to/imageB.jpg', quantity: 5 },
+      {
+        id: 1,
+        name: "This will be the name of the product, which can be about this long (Maybe with some bracket like this)",
+        totalSales: 123,
+        price: 1233.23,
+        categories: ["New", "Popular", "Category 1"],
+        amountLeft: 1203,
+      },
+      {
+        id: 2,
+        name: "This will be the name of the product, which can be about this long (Maybe with some bracket like this)",
+        totalSales: 123,
+        price: 1233.23,
+        categories: ["New", "Popular", "Category 2"],
+        amountLeft: 1203,
+      },
+      {
+        id: 3,
+        name: "This will be the name of the product, which can be about this long (Maybe with some bracket like this)",
+        totalSales: 123,
+        price: 1233.23,
+        categories: ["Featured", "Bestseller"],
+        amountLeft: 1203,
+      },
     ];
-
+  
     return (
-        <div className="bg-white p-6 rounded-xl shadow-md w-full h-screen ml-[8cm]">
-            <h2 className="text-xl text-black font-semibold mb-4">All Product</h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {products.map((product) => (
-                    <div key={product.id} className="bg-gray-100 p-4 rounded-xl text-black shadow-md min-h-[450px] flex flex-col">
-                        <div className="flex justify-center">
-                            <img src={product.image} alt={product.name} className="w-16 h-16 object-cover min-h-[250px] rounded-xl" />
-                        </div>
-
-                        <div className="flex flex-col justify-between mt-auto text-left">
-                            <p><strong>{product.name}</strong></p>
-                            <p>$ {product.price.toLocaleString()}</p>
-                            <p>Amount: {product.quantity}</p>
-                        </div>
-
-                        <div className="mt-auto flex justify-center space-x-4 w-full">
-                            <button className="bg-gray-300 text-black py-1 px-4 rounded-full hover:bg-gray-400 transition duration-200">Edit</button>
-                            <button className="bg-gray-300 text-black py-1 px-4 rounded-full hover:bg-gray-400 transition duration-200">Delete</button>
-                        </div>
-                    </div>
-                ))}
+      <div className="bg-white p-2">
+        {/* Table */}
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          {/* Header */}
+          <div className="grid grid-cols-6 bg-gray-300 p-2 text-sm font-bold text-gray-700">
+            <div>Product name</div>
+            <div className="text-center">Total sales</div>
+            <div className="text-center">Price</div>
+            <div className="text-center">Categories</div>
+            <div className="text-center">Amount left</div>
+            <div className="text-center">Actions</div>
+          </div>
+  
+          {/* Rows */}
+          {products.map((product, index) => (
+            <div
+              key={product.id}
+              className={`grid grid-cols-6 items-center p-3 ${
+                index % 2 === 0 ? "bg-gray-100" : "bg-white"
+              } border-b border-gray-300`}
+            >
+              {/* Product Name */}
+              <div className="text-sm text-gray-800">
+                {product.name}
+              </div>
+  
+              {/* Total Sales */}
+              <div className="text-center text-sm text-gray-600">{product.totalSales}</div>
+  
+              {/* Price */}
+              <div className="text-center text-sm font-medium text-gray-800">${product.price.toFixed(2)}</div>
+  
+              {/* Categories */}
+              <div className="text-center">
+                <div className="flex flex-wrap justify-center gap-2">
+                  {product.categories.map((category, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                </div>
+              </div>
+  
+              {/* Amount Left */}
+              <div className="text-center text-sm text-gray-600">{product.amountLeft}</div>
+  
+              {/* Actions */}
+              <div className="flex flex-col items-center gap-2">
+                <button className="bg-yellow-400 text-black font-semibold px-4 py-1 rounded hover:bg-yellow-500 w-24">
+                  Change
+                </button>
+                <button className="bg-red-500 text-white font-semibold px-4 py-1 rounded hover:bg-red-600 w-24">
+                  Delete
+                </button>
+              </div>
             </div>
+          ))}
         </div>
+      </div>
     );
-};
-
-export default ProductList;
+  };
+  
+  export default ProductList;
+  

@@ -1,35 +1,30 @@
-"use client";
-import React from 'react';
-
 const OrderStatus: React.FC = () => {
     const orders = [
-        { id: 1, productName: 'Sản phẩm A', status: 'Đang xử lý', quantityOrdered: 2, image: '/path/to/imageA.jpg' },
-        { id: 2, productName: 'Sản phẩm B', status: 'Đã giao hàng', quantityOrdered: 1, image: '/path/to/imageB.jpg' },
+      { id: 1, productName: "Product A", status: "Processing", quantityOrdered: 2, image: "/path/to/imageA.jpg" },
+      { id: 2, productName: "Product B", status: "Delivered", quantityOrdered: 1, image: "/path/to/imageB.jpg" },
     ];
-
+  
     return (
-        <div className="bg-white p-6 rounded-xl shadow-md w-[80%] h-screen ml-[8cm]">
-            <h2 className="text-xl text-black font-semibold mb-4">Product Management</h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {orders.map((order) => (
-                    <div key={order.id} className="bg-gray-100 p-4 rounded-xl text-black shadow-md min-h-[450px] flex flex-col">
-                        <div className="flex justify-center">
-                            <img src={order.image} className="w-16 h-16 object-cover min-h-[250px] rounded-xl" />
-                        </div>
-                        <div className="flex flex-col justify-between mt-auto text-left">
-                            <p><strong>Product Name:</strong> {order.productName}</p>
-                            <p><strong>Status:</strong> {order.status}</p>
-                            <p><strong>Amount:</strong> {order.quantityOrdered}</p>
-                        </div>
-                        <div className="mt-auto flex justify-center space-x-4 w-full">
-                            <button className="bg-gray-300 text-black py-1 px-4 rounded-full hover:bg-gray-400 transition duration-200">Delete</button>
-                        </div>
-                    </div>
-                ))}
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl mx-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Order Status</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {orders.map((order) => (
+            <div key={order.id} className="border rounded-lg shadow-sm overflow-hidden">
+              <img src={order.image} alt={order.productName} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-800">{order.productName}</h3>
+                <p className="text-gray-500 text-sm">Status: {order.status}</p>
+                <p className="text-sm text-gray-500">Quantity: {order.quantityOrdered}</p>
+                <button className="mt-4 w-full text-sm bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                  Delete Order
+                </button>
+              </div>
             </div>
+          ))}
         </div>
+      </div>
     );
-};
-
-export default OrderStatus;
+  };
+  
+  export default OrderStatus;
+  
