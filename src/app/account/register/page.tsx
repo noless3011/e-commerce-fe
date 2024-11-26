@@ -16,7 +16,7 @@ export default function Page() {
         e.preventDefault();
 
         const loginData: LoginDto = {
-            userName: username,
+            username: username,
             password: password
         }
         try {

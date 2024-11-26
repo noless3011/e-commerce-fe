@@ -12,7 +12,7 @@ export default function Page() {
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
         const loginData: LoginDto = {
-            userName: username,
+            username: username,
             password: password
         }
         try {
