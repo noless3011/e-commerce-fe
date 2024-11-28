@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import AddProductForm from "./AddProductForm";
 import OrderStatus from "./OrderStatus";
 import ProductList from "./ProductList";
+import ShippingInfo from "./ShippingInfo";
 
 const SellerPage = () => {
   const [activeTab, setActiveTab] = useState("selling"); // Quản lý tab chính
@@ -32,7 +33,13 @@ const SellerPage = () => {
         <main className="flex-1 p-8 bg-white">
           {activeTab === "selling" && activeSubPage === "addProduct" && <AddProductForm />}
           {activeTab === "selling" && activeSubPage === "productList" && <ProductList />}
-          {activeTab === "selling" && activeSubPage === "orders" && <OrderStatus />}
+          {activeTab === "selling" && activeSubPage === "allOrders" && <OrderStatus />}
+          {activeTab === "selling" && activeSubPage === "shippingInfo" && <ShippingInfo />}
+          {activeTab === "selling" && activeSubPage === "refund" && (
+            <div className="text-gray-500">
+              <p>Refund details will be displayed here.</p>
+            </div>
+          )}
           {activeTab === "selling" && activeSubPage === "saleOffers" && (
             <div className="text-gray-500">
               <p>Sale offers will be displayed here.</p>
