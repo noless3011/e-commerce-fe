@@ -6,6 +6,7 @@ import { div } from 'framer-motion/client';
 import SearchBar from './components/header/SearchBar';
 import { useRouter } from 'next/navigation';
 import AuthenticationButtons from './components/header/AuthenticationButtons';
+import AuthenticationArea from './components/header/AuthenticationArea';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ const Header = () => {
                                 </Link>
                             ))}
                         </div>
-                        <AuthenticationButtons login={login} register={register}></AuthenticationButtons>
+                        <AuthenticationArea />
                     </div>
                 </div>
             </nav>

@@ -6,7 +6,10 @@ import { UserApiFp } from '@/api';
 import { HealthCheckApiFp } from '@/api';
 
 const configuration = new Configuration({
-    basePath: process.env.URL,
+    basePath: 'https://lucas-digital-market-dev.nysm.work',
+    baseOptions: {
+        credentials: 'include',
+    }
 });
 
 const Base = new BaseAPI(configuration); // Initialize the API client
