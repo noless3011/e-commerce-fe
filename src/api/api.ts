@@ -133,9 +133,69 @@ export interface CreateChatDto {
 /**
  * 
  * @export
+ * @interface CreateOrderDto
+ */
+export interface CreateOrderDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
+    'status': CreateOrderDtoStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateOrderDto
+     */
+    'productId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateOrderDto
+     */
+    'address': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateOrderDto
+     */
+    'amount': number;
+}
+
+export const CreateOrderDtoStatusEnum = {
+    Active: 'active',
+    Canceled: 'canceled',
+    Purchased: 'purchased',
+    Preparing: 'preparing',
+    InCart: 'inCart'
+} as const;
+
+export type CreateOrderDtoStatusEnum = typeof CreateOrderDtoStatusEnum[keyof typeof CreateOrderDtoStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateProductDto
  */
 export interface CreateProductDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateProductDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateProductDto
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateProductDto
+     */
+    'image': Array<string>;
     /**
      * 
      * @type {number}
@@ -159,15 +219,15 @@ export interface CreateProductDto {
      * @type {Array<string>}
      * @memberof CreateProductDto
      */
-    'type'?: Array<CreateProductDtoTypeEnum>;
+    'types'?: Array<CreateProductDtoTypesEnum>;
 }
 
-export const CreateProductDtoTypeEnum = {
+export const CreateProductDtoTypesEnum = {
     Electronic: 'Electronic',
     Groceries: 'Groceries'
 } as const;
 
-export type CreateProductDtoTypeEnum = typeof CreateProductDtoTypeEnum[keyof typeof CreateProductDtoTypeEnum];
+export type CreateProductDtoTypesEnum = typeof CreateProductDtoTypesEnum[keyof typeof CreateProductDtoTypesEnum];
 
 /**
  * 
@@ -240,6 +300,97 @@ export interface LoginDto {
 /**
  * 
  * @export
+ * @interface OrderResponse
+ */
+export interface OrderResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    'status': OrderResponseStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'ownerId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'productId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    'address': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'createdTime': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'purchasedTime': number;
+}
+
+export const OrderResponseStatusEnum = {
+    Active: 'active',
+    Canceled: 'canceled',
+    Purchased: 'purchased',
+    Preparing: 'preparing',
+    InCart: 'inCart'
+} as const;
+
+export type OrderResponseStatusEnum = typeof OrderResponseStatusEnum[keyof typeof OrderResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface ProductPaginationResponse
+ */
+export interface ProductPaginationResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductPaginationResponse
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductPaginationResponse
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductPaginationResponse
+     */
+    'pageSize': number;
+    /**
+     * 
+     * @type {Array<ProductResponseDto>}
+     * @memberof ProductPaginationResponse
+     */
+    'data': Array<ProductResponseDto>;
+}
+/**
+ * 
+ * @export
  * @interface ProductResponseDto
  */
 export interface ProductResponseDto {
@@ -269,10 +420,28 @@ export interface ProductResponseDto {
     'status': ProductResponseDtoStatusEnum;
     /**
      * 
+     * @type {string}
+     * @memberof ProductResponseDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductResponseDto
+     */
+    'description': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProductResponseDto
+     */
+    'images': Array<string>;
+    /**
+     * 
      * @type {number}
      * @memberof ProductResponseDto
      */
-    'Price': number;
+    'price': number;
     /**
      * 
      * @type {number}
@@ -296,6 +465,12 @@ export interface ProductResponseDto {
      * @type {number}
      * @memberof ProductResponseDto
      */
+    'soldNumber': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductResponseDto
+     */
     'totalLike': number;
     /**
      * 
@@ -314,7 +489,13 @@ export interface ProductResponseDto {
      * @type {Array<string>}
      * @memberof ProductResponseDto
      */
-    'type': Array<ProductResponseDtoTypeEnum>;
+    'types': Array<ProductResponseDtoTypesEnum>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductResponseDto
+     */
+    'createdTime': number;
 }
 
 export const ProductResponseDtoStatusEnum = {
@@ -323,12 +504,12 @@ export const ProductResponseDtoStatusEnum = {
 } as const;
 
 export type ProductResponseDtoStatusEnum = typeof ProductResponseDtoStatusEnum[keyof typeof ProductResponseDtoStatusEnum];
-export const ProductResponseDtoTypeEnum = {
+export const ProductResponseDtoTypesEnum = {
     Electronic: 'Electronic',
     Groceries: 'Groceries'
 } as const;
 
-export type ProductResponseDtoTypeEnum = typeof ProductResponseDtoTypeEnum[keyof typeof ProductResponseDtoTypeEnum];
+export type ProductResponseDtoTypesEnum = typeof ProductResponseDtoTypesEnum[keyof typeof ProductResponseDtoTypesEnum];
 
 /**
  * 
@@ -1126,6 +1307,178 @@ export class HealthCheckApi extends BaseAPI {
 
 
 /**
+ * OrderApi - axios parameter creator
+ * @export
+ */
+export const OrderApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create New Order
+         * @param {CreateOrderDto} createOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerCreateNewOrder: async (createOrderDto: CreateOrderDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createOrderDto' is not null or undefined
+            assertParamExists('orderControllerCreateNewOrder', 'createOrderDto', createOrderDto)
+            const localVarPath = `/api/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createOrderDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Find In Cart Order by ownerId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerFindInCartByOwnerId: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrderApi - functional programming interface
+ * @export
+ */
+export const OrderApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrderApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create New Order
+         * @param {CreateOrderDto} createOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerCreateNewOrder(createOrderDto: CreateOrderDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerCreateNewOrder(createOrderDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerCreateNewOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Find In Cart Order by ownerId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerFindInCartByOwnerId(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindInCartByOwnerId(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerFindInCartByOwnerId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * OrderApi - factory interface
+ * @export
+ */
+export const OrderApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrderApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create New Order
+         * @param {CreateOrderDto} createOrderDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerCreateNewOrder(createOrderDto: CreateOrderDto, options?: RawAxiosRequestConfig): AxiosPromise<OrderResponse> {
+            return localVarFp.orderControllerCreateNewOrder(createOrderDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Find In Cart Order by ownerId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerFindInCartByOwnerId(options?: RawAxiosRequestConfig): AxiosPromise<Array<OrderResponse>> {
+            return localVarFp.orderControllerFindInCartByOwnerId(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrderApi - object-oriented interface
+ * @export
+ * @class OrderApi
+ * @extends {BaseAPI}
+ */
+export class OrderApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create New Order
+     * @param {CreateOrderDto} createOrderDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerCreateNewOrder(createOrderDto: CreateOrderDto, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerCreateNewOrder(createOrderDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Find In Cart Order by ownerId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerFindInCartByOwnerId(options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerFindInCartByOwnerId(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * ProductApi - axios parameter creator
  * @export
  */
@@ -1133,6 +1486,7 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Create New Product
          * @param {CreateProductDto} createProductDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1168,14 +1522,15 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get Products by ownerId
          * @param {number} ownerId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindByOwnerId: async (ownerId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerFindByOwner: async (ownerId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ownerId' is not null or undefined
-            assertParamExists('productControllerFindByOwnerId', 'ownerId', ownerId)
-            const localVarPath = `/api/product/{ownerId}`
+            assertParamExists('productControllerFindByOwner', 'ownerId', ownerId)
+            const localVarPath = `/api/product/seller/{ownerId}`
                 .replace(`{${"ownerId"}}`, encodeURIComponent(String(ownerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1187,6 +1542,106 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Product Detail by productId
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindByOwnerId: async (productId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('productControllerFindByOwnerId', 'productId', productId)
+            const localVarPath = `/api/product/{productId}`
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Query Product
+         * @param {number} page 
+         * @param {number} pageSize 
+         * @param {string} search 
+         * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
+         * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
+         * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindPagination: async (page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('productControllerFindPagination', 'page', page)
+            // verify required parameter 'pageSize' is not null or undefined
+            assertParamExists('productControllerFindPagination', 'pageSize', pageSize)
+            // verify required parameter 'search' is not null or undefined
+            assertParamExists('productControllerFindPagination', 'search', search)
+            const localVarPath = `/api/product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (types) {
+                localVarQueryParameter['types'] = types;
+            }
+
+            if (sortBy !== undefined) {
+                localVarQueryParameter['sortBy'] = sortBy;
+            }
+
+            if (sortOrder !== undefined) {
+                localVarQueryParameter['sortOrder'] = sortOrder;
+            }
 
 
     
@@ -1211,6 +1666,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Create New Product
          * @param {CreateProductDto} createProductDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1223,14 +1679,46 @@ export const ProductApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get Products by ownerId
          * @param {number} ownerId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerFindByOwnerId(ownerId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByOwnerId(ownerId, options);
+        async productControllerFindByOwner(ownerId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByOwner(ownerId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindByOwner']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get Product Detail by productId
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindByOwnerId(productId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByOwnerId(productId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindByOwnerId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Query Product
+         * @param {number} page 
+         * @param {number} pageSize 
+         * @param {string} search 
+         * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
+         * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
+         * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductPaginationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindPagination']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1245,6 +1733,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Create New Product
          * @param {CreateProductDto} createProductDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1254,12 +1743,38 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get Products by ownerId
          * @param {number} ownerId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindByOwnerId(ownerId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
-            return localVarFp.productControllerFindByOwnerId(ownerId, options).then((request) => request(axios, basePath));
+        productControllerFindByOwner(ownerId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindByOwner(ownerId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Product Detail by productId
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindByOwnerId(productId: number, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponseDto> {
+            return localVarFp.productControllerFindByOwnerId(productId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Query Product
+         * @param {number} page 
+         * @param {number} pageSize 
+         * @param {string} search 
+         * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
+         * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
+         * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): AxiosPromise<ProductPaginationResponse> {
+            return localVarFp.productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1273,6 +1788,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
 export class ProductApi extends BaseAPI {
     /**
      * 
+     * @summary Create New Product
      * @param {CreateProductDto} createProductDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1284,16 +1800,73 @@ export class ProductApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get Products by ownerId
      * @param {number} ownerId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerFindByOwnerId(ownerId: number, options?: RawAxiosRequestConfig) {
-        return ProductApiFp(this.configuration).productControllerFindByOwnerId(ownerId, options).then((request) => request(this.axios, this.basePath));
+    public productControllerFindByOwner(ownerId: number, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindByOwner(ownerId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Product Detail by productId
+     * @param {number} productId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindByOwnerId(productId: number, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindByOwnerId(productId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Query Product
+     * @param {number} page 
+     * @param {number} pageSize 
+     * @param {string} search 
+     * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
+     * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
+     * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+ * @export
+ */
+export const ProductControllerFindPaginationTypesEnum = {
+    Electronic: 'Electronic',
+    Groceries: 'Groceries'
+} as const;
+export type ProductControllerFindPaginationTypesEnum = typeof ProductControllerFindPaginationTypesEnum[keyof typeof ProductControllerFindPaginationTypesEnum];
+/**
+ * @export
+ */
+export const ProductControllerFindPaginationSortByEnum = {
+    CreatedTime: 'createdTime',
+    Price: 'price',
+    Rating: 'rating',
+    Remaining: 'remaining',
+    SoldNumber: 'soldNumber'
+} as const;
+export type ProductControllerFindPaginationSortByEnum = typeof ProductControllerFindPaginationSortByEnum[keyof typeof ProductControllerFindPaginationSortByEnum];
+/**
+ * @export
+ */
+export const ProductControllerFindPaginationSortOrderEnum = {
+    Desc: 'DESC',
+    Asc: 'ASC'
+} as const;
+export type ProductControllerFindPaginationSortOrderEnum = typeof ProductControllerFindPaginationSortOrderEnum[keyof typeof ProductControllerFindPaginationSortOrderEnum];
 
 
 /**
