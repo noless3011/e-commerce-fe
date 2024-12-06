@@ -17,7 +17,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Rethink Sans', sans-serif;
+  font-family: "Rethink Sans", sans-serif;
 }
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;

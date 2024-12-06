@@ -1527,9 +1527,9 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindByOwner: async (ownerId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerFindByOwnerId: async (ownerId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ownerId' is not null or undefined
-            assertParamExists('productControllerFindByOwner', 'ownerId', ownerId)
+            assertParamExists('productControllerFindByOwnerId', 'ownerId', ownerId)
             const localVarPath = `/api/product/seller/{ownerId}`
                 .replace(`{${"ownerId"}}`, encodeURIComponent(String(ownerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1561,9 +1561,9 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindByOwnerId: async (productId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerFindByProductId: async (productId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'productId' is not null or undefined
-            assertParamExists('productControllerFindByOwnerId', 'productId', productId)
+            assertParamExists('productControllerFindByProductId', 'productId', productId)
             const localVarPath = `/api/product/{productId}`
                 .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1684,10 +1684,10 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerFindByOwner(ownerId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByOwner(ownerId, options);
+        async productControllerFindByOwnerId(ownerId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByOwnerId(ownerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindByOwner']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindByOwnerId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1697,10 +1697,10 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerFindByOwnerId(productId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByOwnerId(productId, options);
+        async productControllerFindByProductId(productId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindByProductId(productId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindByOwnerId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindByProductId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1748,8 +1748,8 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindByOwner(ownerId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
-            return localVarFp.productControllerFindByOwner(ownerId, options).then((request) => request(axios, basePath));
+        productControllerFindByOwnerId(ownerId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindByOwnerId(ownerId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1758,8 +1758,8 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindByOwnerId(productId: number, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponseDto> {
-            return localVarFp.productControllerFindByOwnerId(productId, options).then((request) => request(axios, basePath));
+        productControllerFindByProductId(productId: number, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponseDto> {
+            return localVarFp.productControllerFindByProductId(productId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1806,8 +1806,8 @@ export class ProductApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerFindByOwner(ownerId: number, options?: RawAxiosRequestConfig) {
-        return ProductApiFp(this.configuration).productControllerFindByOwner(ownerId, options).then((request) => request(this.axios, this.basePath));
+    public productControllerFindByOwnerId(ownerId: number, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindByOwnerId(ownerId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1818,8 +1818,8 @@ export class ProductApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerFindByOwnerId(productId: number, options?: RawAxiosRequestConfig) {
-        return ProductApiFp(this.configuration).productControllerFindByOwnerId(productId, options).then((request) => request(this.axios, this.basePath));
+    public productControllerFindByProductId(productId: number, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindByProductId(productId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
