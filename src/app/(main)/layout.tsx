@@ -3,9 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google"
 import "./globals.css";
 import Header from "./header";
-import { useRef } from 'react';
-import { Provider } from 'react-redux';
-import store from '@/app/redux/store';
+
 //import RouterChangeHandler from "@/app/utils/CheckAuthHandler"
 
 const inter = Inter({ subsets: ['latin'] })

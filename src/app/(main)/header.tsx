@@ -17,7 +17,7 @@ const Header = () => {
     const navLinks = [
         { href: '/', label: 'Market' },
         { href: '/sell', label: 'Sell' },
-        { href: '/account', label: 'Account' },
+        { href: '/accountinfo', label: 'Account' },
         { href: '/about', label: 'About' },
     ];
 

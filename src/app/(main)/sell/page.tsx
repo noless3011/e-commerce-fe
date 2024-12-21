@@ -8,6 +8,7 @@ import AddProductForm from "./AddProductForm";
 import OrderStatus from "./OrderStatus";
 import ProductList from "./ProductList";
 import ShippingInfo from "./ShippingInfo";
+import MessagePage from "./MessagePage";
 
 const SellerPage = () => {
     const [activeTab, setActiveTab] = useState("selling"); // Quản lý tab chính
@@ -48,7 +49,7 @@ const SellerPage = () => {
                     )}
                     {activeTab === "messages" && (
                         <div className="text-gray-500 text-lg">
-                            <p>No messages yet. Check back later.</p>
+                            <MessagePage />
                         </div>
                     )}
                     {activeTab === "account" && (
