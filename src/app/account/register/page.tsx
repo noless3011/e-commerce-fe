@@ -16,7 +16,7 @@ export default function Page() {
         e.preventDefault();
 
         const loginData: LoginDto = {
-            userName: username,
+            username: username,
             password: password
         }
         try {
@@ -25,7 +25,7 @@ export default function Page() {
             // Then await the actual API call
             const response = await apiFunction();
             console.log(response);
-            if (response.statusText === "Created") {
+            if (response.status === 201) {
                 router.push('/account/login');
             } else {
                 setRegisterStatus("*Failed to create account");

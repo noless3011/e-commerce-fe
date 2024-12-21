@@ -4,9 +4,10 @@ import { ReactNode } from 'react';
 
 interface ProductGridListProps {
     children: ReactNode
+    cardW: number
 }
 
-const ProductGridList: React.FC<ProductGridListProps> = ({ children }) => {
+const ProductGridList: React.FC<ProductGridListProps> = ({ children, cardW }) => {
     return (<div className="w-2/3 h-fit">
         <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
             {children}

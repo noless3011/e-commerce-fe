@@ -12,7 +12,7 @@ export default function Page() {
     const login = async (e: React.FormEvent) => {
         e.preventDefault();
         const loginData: LoginDto = {
-            userName: username,
+            username: username,
             password: password
         }
         try {
@@ -24,7 +24,7 @@ export default function Page() {
                 setLoginStatus("*Wrong username or password");
             }
         } catch (error) {
-            setLoginStatus("*Failed to create account");
+            setLoginStatus("*Failed to login to your account");
         }
 
 

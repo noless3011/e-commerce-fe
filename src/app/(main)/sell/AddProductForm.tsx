@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import { ProductType } from "@/app/types/Product";
+import { CreateProductDto, CreateProductDtoTypesEnum } from "@/api";
+import { ProductApi } from "@/app/utils/ApiClient";
 
 const AddProductForm = () => {
   // CategoriesList
-  const categories = [
-    { value: "category1", label: "Category 1" },
-    { value: "category2", label: "Category 2" },
-    { value: "category3", label: "Category 3" },
-    { value: "category4", label: "Category 4" },
+  const categories: Array<{ value: ProductType, label: string }> = [
+    { value: "Electronic", label: "Electronic" },
+    { value: "Clothing", label: "Clothing" },
+    { value: "HomeAppliance", label: "HomeAppliance" }
   ];
 
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
@@ -15,7 +17,27 @@ const AddProductForm = () => {
   const handleCategoryChange = (selectedOptions: any) => {
     setSelectedCategories(selectedOptions);
   };
+  const handleAddProduct = async (e: React.FormEvent) => {
+    e.preventDefault();
 
+    const productDto: CreateProductDto = {
+      name: (document.getElementById("product-name") as HTMLInputElement).value,
+      description: (document.getElementById("description") as HTMLTextAreaElement).value,
+      price: parseFloat((document.getElementById("price") as HTMLInputElement).value),
+      image: [], // Handle image upload separately
+      discount: 0, // Add discount field if needed
+      remaining: 0, // Add remaining field if needed
+      types: selectedCategories.map((category: any) => category.value as CreateProductDtoTypesEnum),
+    };
+
+    try {
+      const createProductFunc = await ProductApi.productControllerCreate(productDto);
+      const response = await createProductFunc();
+      console.log("Product added successfully:", response.data);
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
   return (
     <div className="bg-white p-2 rounded-lg w-full max-w-4xl mx-auto">
       <form className="space-y-6">
@@ -84,37 +106,37 @@ const AddProductForm = () => {
                 borderRadius: "8px",
                 borderColor: "#ddd",
                 boxShadow: "none",
-                fontSize: "16px", 
+                fontSize: "16px",
               }),
               multiValue: (base) => ({
                 ...base,
-                backgroundColor: "#E5E7EB", 
-                color: "#333333", 
+                backgroundColor: "#E5E7EB",
+                color: "#333333",
                 borderRadius: "4px",
               }),
               multiValueLabel: (base) => ({
                 ...base,
-                color: "#333333", 
-                fontWeight: "600", 
+                color: "#333333",
+                fontWeight: "600",
               }),
               multiValueRemove: (base) => ({
                 ...base,
-                color: "#FF0000", 
+                color: "#FF0000",
                 ':hover': {
-                  backgroundColor: "#FF0000", 
+                  backgroundColor: "#FF0000",
                   color: "#FFFFFF",
                 },
               }),
               option: (base, state) => ({
                 ...base,
-                backgroundColor: state.isSelected ? "#4F46E5" : state.isFocused ? "#E0E7FF" : "white", 
+                backgroundColor: state.isSelected ? "#4F46E5" : state.isFocused ? "#E0E7FF" : "white",
                 color: state.isSelected ? "white" : "#333333",
                 padding: "10px 20px",
-                fontSize: "16px", 
+                fontSize: "16px",
               }),
               placeholder: (base) => ({
                 ...base,
-                color: "#A0A0A0", 
+                color: "#A0A0A0",
               }),
             }}
           />
