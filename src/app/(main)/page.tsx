@@ -5,6 +5,8 @@ import ProductGridList from "./components/landing/ProductGridList";
 import ProductHorizontalList from "./components/landing/ProductHorizontalList";
 
 export default function Page() {
+
+
     return (
         <div className=" h-fit w-full flex flex-col items-center gap-8">
             <div className="h-10"></div>

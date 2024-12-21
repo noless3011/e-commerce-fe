@@ -9,6 +9,7 @@ import OrderStatus from '../sell/OrderStatus';
 const Page: FC = () => {
     // Đây là một array state chứa các element là các state và hàm set của nó :))
     // Mỗi state sẽ là data của một order 
+    // [Order | null, React.Dispatch<React.SetStateAction<Order | null>>] là kiểu trả về của hàm useState<Order | null>()
     const [orders, setOrders] = useState<
         [Order | null, React.Dispatch<React.SetStateAction<Order | null>>][]
     >([

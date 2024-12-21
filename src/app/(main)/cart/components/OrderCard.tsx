@@ -11,13 +11,6 @@ interface OrderCardProps {
     onSetOrder: React.Dispatch<React.SetStateAction<Order | null>>;
     onRemove: (index: number) => void;
 }
-// : FC<OrderCardProps>
-// {
-//     product,
-//         onCountChange,
-//         onRemove,
-//         onAdd,
-// }
 export const OrderCard: React.FC<OrderCardProps> = ({
     index,
     orderList,
@@ -88,7 +81,6 @@ export const OrderCard: React.FC<OrderCardProps> = ({
                         value={order ? order.amount : 0}
                         onChange={(e) => {
                             if (!order) return;
-                            console.log("Trying to change")
                             const newOrder = { ...order, amount: e.target.valueAsNumber };
                             onSetOrder(newOrder);
                         }}

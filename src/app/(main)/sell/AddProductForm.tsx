@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import { ProductType } from "@/app/types/Product";
+import { CreateProductDto, CreateProductDtoTypesEnum } from "@/api";
 
 const AddProductForm = () => {
   // CategoriesList
@@ -84,37 +86,37 @@ const AddProductForm = () => {
                 borderRadius: "8px",
                 borderColor: "#ddd",
                 boxShadow: "none",
-                fontSize: "16px", 
+                fontSize: "16px",
               }),
               multiValue: (base) => ({
                 ...base,
-                backgroundColor: "#E5E7EB", 
-                color: "#333333", 
+                backgroundColor: "#E5E7EB",
+                color: "#333333",
                 borderRadius: "4px",
               }),
               multiValueLabel: (base) => ({
                 ...base,
-                color: "#333333", 
-                fontWeight: "600", 
+                color: "#333333",
+                fontWeight: "600",
               }),
               multiValueRemove: (base) => ({
                 ...base,
-                color: "#FF0000", 
+                color: "#FF0000",
                 ':hover': {
-                  backgroundColor: "#FF0000", 
+                  backgroundColor: "#FF0000",
                   color: "#FFFFFF",
                 },
               }),
               option: (base, state) => ({
                 ...base,
-                backgroundColor: state.isSelected ? "#4F46E5" : state.isFocused ? "#E0E7FF" : "white", 
+                backgroundColor: state.isSelected ? "#4F46E5" : state.isFocused ? "#E0E7FF" : "white",
                 color: state.isSelected ? "white" : "#333333",
                 padding: "10px 20px",
-                fontSize: "16px", 
+                fontSize: "16px",
               }),
               placeholder: (base) => ({
                 ...base,
-                color: "#A0A0A0", 
+                color: "#A0A0A0",
               }),
             }}
           />

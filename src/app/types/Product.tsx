@@ -1,8 +1,8 @@
 import { ProductResponseDto, ProductResponseDtoTypesEnum } from "@/api";
+import { CreateProductDto, CreateProductDtoTypesEnum } from "@/api";
+export type ProductStatus = "SoldOut" | "Available" | "ComingSoon"; // Extendable for other statuses
 
-type ProductStatus = "SoldOut" | "Available" | "ComingSoon"; // Extendable for other statuses
-
-type ProductType = "Electronic" | "Clothing" | "HomeAppliance"; // Extendable for other types
+export type ProductType = "Electronic" | "Clothing" | "HomeAppliance"; // Extendable for other types
 
 export default interface Product {
     id: string;
@@ -23,7 +23,6 @@ export default interface Product {
     types: ProductType[];
     createdTime: number;
 }
-
 export const mapProductResponseToProduct = (
     response: ProductResponseDto
 ): Product => {
@@ -47,3 +46,22 @@ export const mapProductResponseToProduct = (
         createdTime: response.createdTime,
     };
 };
+
+
+export function convertProductToCreateProductDto(product: Product): CreateProductDto {
+    const createProductDto: CreateProductDto = {
+        name: product.name,
+        description: product.description,
+        image: product.images,
+        price: product.price,
+        discount: product.discount,
+        remaining: product.remaining,
+        types: product.types.filter((type) =>
+            Object.values(CreateProductDtoTypesEnum).includes(
+                type as CreateProductDtoTypesEnum
+            )
+        ) as CreateProductDtoTypesEnum[], // Filter valid types and cast
+    };
+
+    return createProductDto;
+}
