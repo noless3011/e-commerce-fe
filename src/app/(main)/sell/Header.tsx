@@ -16,11 +16,10 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
           {/* Selling Tab */}
           <button
             onClick={() => setActiveTab("selling")}
-            className={`text-lg pb-2 ${
-              activeTab === "selling"
+            className={`text-lg pb-2 ${activeTab === "selling"
                 ? "text-black font-semibold"
                 : "text-gray-500 hover:text-black"
-            }`}
+              }`}
           >
             Selling
           </button>
@@ -28,11 +27,10 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
           {/* Messages Tab */}
           <button
             onClick={() => setActiveTab("messages")}
-            className={`text-lg pb-2 ${
-              activeTab === "messages"
+            className={`text-lg pb-2 ${activeTab === "messages"
                 ? "text-black font-semibold"
                 : "text-gray-500 hover:text-black"
-            }`}
+              }`}
           >
             Messages
           </button>
@@ -40,11 +38,10 @@ const Header = ({ activeTab, setActiveTab }: HeaderProps) => {
           {/* Account Tab */}
           <button
             onClick={() => setActiveTab("account")}
-            className={`text-lg pb-2 ${
-              activeTab === "account"
+            className={`text-lg pb-2 ${activeTab === "account"
                 ? "text-black font-semibold"
                 : "text-gray-500 hover:text-black"
-            }`}
+              }`}
           >
             Account
           </button>
