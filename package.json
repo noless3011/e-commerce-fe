@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api:generate": "openapi-generator-cli generate -i https://lucas-digital-market-dev.nysm.work/swagger/json -g typescript-axios -o ./src/api"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
