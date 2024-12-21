@@ -1,4 +1,4 @@
-import { Configuration, FileUploadApiFp } from '@/api';
+import { Configuration } from '@/api';
 import { BaseAPI } from '@/api/base';
 import { AuthApiFp } from '@/api';
 import { ProductApiFp } from '@/api';
@@ -6,14 +6,14 @@ import { UserApiFp } from '@/api';
 import { HealthCheckApiFp } from '@/api';
 import { ChatApiFp } from '@/api';
 import { OrderApiFp } from '@/api';
-
+import { FileUploadApiFp } from '@/api';
 
 
 const configuration = new Configuration({
-    basePath: 'https://lucas-digital-market-dev.nysm.work',
+    basePath: 'https://lucas-digital-market-dev.nysm.work',//,'http://localhost:3001'
     baseOptions: {
-        credentials: 'include',
-    }
+        withCredentials: true,
+    },
 });
 
 const Base = new BaseAPI(configuration); // Initialize the API client

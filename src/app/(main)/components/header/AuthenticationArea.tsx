@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AuthenticationButton from "./AuthenticationButtons";
 import AccountInfo from "./AccountInfo";
 import { UserResponseDto } from "@/api";
+import CartButton from "./CartButton";
 
 
 
@@ -48,7 +49,15 @@ const AuthenticationArea = () => {
     return (
         <div className="flex flex-row h-full items-center">
             {
-                loginState ? <AccountInfo account={account} /> : <AuthenticationButton login={loginRedirect} register={registerRedirect} />
+                !loginState ?
+                    <AuthenticationButton login={loginRedirect} register={registerRedirect} />
+                    :
+                    (
+                        <div className="flex flex-row items-center content-center gap-4">
+                            <CartButton />
+                            <AccountInfo account={account} />
+                        </div>
+                    )
             }
         </div>
     )

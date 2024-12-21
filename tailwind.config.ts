@@ -16,8 +16,13 @@ const config: Config = {
         darkgreen: "#185519",
         green: "#237625"
       },
+      flex: {
+        3: '3',
+        1: '1',
+      },
     },
   },
   plugins: [],
 };
+
 export default config;

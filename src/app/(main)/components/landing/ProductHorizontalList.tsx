@@ -19,7 +19,7 @@ const ProductHorizontalList = ({ children }: ProductHorizontalListProps) => {
         <div className="relative w-2/3 h-fit flex flex-row justify-center overflow-hidden rounded-2xl">
             <div className="p-4 w-full h-fit overflow-x-scroll [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-400"
                 ref={scrollList}>
-                <div className="flex flex-row gap-4 h-fit">
+                <div className="flex flex-row gap-4 h-fit w-fit">
                     {children}
                 </div>
             </div>
