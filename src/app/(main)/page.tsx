@@ -19,7 +19,17 @@ export default function Page() {
 
             </CategoryGrid>
 
-            <ProductHorizontalList>
+            <ProductHorizontalList title="Hot Sales">
+                {
+                    Array.from({ length: 20 }, (_, index) => (
+                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
+                            cardH={500} cardW={300}
+                            price={1999} url="#" discount={90} />
+                    ))
+                }
+            </ProductHorizontalList>
+
+            <ProductHorizontalList title="New Arrivals">
                 {
                     Array.from({ length: 20 }, (_, index) => (
                         <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
