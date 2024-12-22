@@ -47,7 +47,7 @@ const AuthenticationArea = () => {
         router.push('/account/register')
     }
     return (
-        <div className="flex flex-row h-full items-center">
+        <div className="flex flex-row h-3/5 items-center">
             {
                 !loginState ?
                     <AuthenticationButton login={loginRedirect} register={registerRedirect} />

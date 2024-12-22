@@ -1,5 +1,5 @@
-
-type OrderStatus = "active" | "pending" | "completed" | "canceled"; // Extendable for other statuses
+import { CreateOrderDto } from "@/api";
+export type OrderStatus = "active" | "canceled" | "purchased" | "preparing" | "inCart"; // Extendable for other statuses
 
 export default interface Order {
     status: OrderStatus;
@@ -8,5 +8,5 @@ export default interface Order {
     address: string;
     amount: number;
     createdTime: number;
-    purchasedTime: number;
+    purchasedTime: number | null;
 }
