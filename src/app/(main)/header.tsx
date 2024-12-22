@@ -1,14 +1,12 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
-import { div } from 'framer-motion/client';
+import { useRouter, usePathname } from 'next/navigation';
 import SearchBar from './components/header/SearchBar';
-import { useRouter } from 'next/navigation';
-import AuthenticationButtons from './components/header/AuthenticationButtons';
 import AuthenticationArea from './components/header/AuthenticationArea';
 import { Provider } from 'react-redux';
 import store from '@/app/redux/store';
+import path from 'path';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,13 +29,12 @@ const Header = () => {
     const register = () => {
         router.push("/account/register");
     }
-
     return (
         <Provider store={store}>
-            <div className="flex flex-col gap-0 w-full">
-                <nav className="bg-[#fcde70] shadow-md">
+            <div className="flex flex-col gap-0 w-full z-10">
+                <nav className="bg-[#fcde70] shadow-md p-2">
                     <div className="max-w-6xl mx-auto px-4">
-                        <div className="flex flex-row justify-between items-center h-16">
+                        <div className="flex flex-row justify-between items-center h-3/5">
                             <div className="flex-shrink-0">
                                 <Link href="/" className="text-xl font-bold text-gray-800">
                                     Logo
@@ -61,9 +58,10 @@ const Header = () => {
                         </div>
                     </div>
                 </nav>
-                <div className="w-full mt-1 py-2.5">
-                    <SearchBar />
-                </div>
+                {pathname === '/' ?
+                    (<div className="w-full mt-1 py-2.5">
+                        <SearchBar />
+                    </div>) : null}
             </div>
         </Provider>
 

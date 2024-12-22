@@ -20,12 +20,12 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html className="w-full h-full" lang="en">
       <body
-        className={`${inter.className} antialiased`}
+        className={`${inter.className} antialiased w-full h-full flex flex-col`}
       >
         <Header />
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
       </body>
     </html>
   );
