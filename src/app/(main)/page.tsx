@@ -38,10 +38,37 @@ export default function Page() {
                     ))
                 }
             </ProductHorizontalList>
-
-            <ProductGridList cardW={200}>
+            <ProductHorizontalList title="Recent Searched">
                 {
-                    Array.from({ length: 30 }, (_, index) => (
+                    Array.from({ length: 20 }, (_, index) => (
+                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
+                            cardH={500} cardW={300}
+                            price={1999} url="#" discount={90} />
+                    ))
+                }
+            </ProductHorizontalList>
+            <ProductHorizontalList title="Your most viewed category">
+                {
+                    Array.from({ length: 20 }, (_, index) => (
+                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
+                            cardH={500} cardW={300}
+                            price={1999} url="#" discount={90} />
+                    ))
+                }
+            </ProductHorizontalList>
+            <ProductHorizontalList title="Discovery">
+                {
+                    Array.from({ length: 20 }, (_, index) => (
+                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
+                            cardH={500} cardW={300}
+                            price={1999} url="#" discount={90} />
+                    ))
+                }
+            </ProductHorizontalList>
+
+            <ProductGridList itemsPerPage={20}>
+                {
+                    Array.from({ length: 600 }, (_, index) => (
                         <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/200/200"
                             cardH={400} cardW={230}
                             price={1999} url="#" discount={90} />
