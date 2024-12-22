@@ -6,7 +6,7 @@ interface AccountInfoProps {
 
 const AccountInfo: React.FC<AccountInfoProps> = () => {
     return (<div className="flex flex-row items-center gap-2">
-        <div className="w-14 aspect-square rounded-full overflow-hidden">
+        <div className="h-10 aspect-square rounded-full overflow-hidden">
             <img
                 src="https://picsum.photos/300/300"
                 alt="avatar"

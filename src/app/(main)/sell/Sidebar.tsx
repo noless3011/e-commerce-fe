@@ -1,105 +1,34 @@
-import { useState } from "react";
+'use client'; // Mark this component as a client component
 
-type SidebarProps = {
-  activeSubPage: string;
-  setActiveSubPage: (subPage: string) => void;
-};
+import React, { useState } from 'react';
+import { AiOutlineCaretDown, AiOutlineCaretRight, AiOutlineCaretUp, AiOutlineLineChart, AiOutlineMessage, AiTwotoneShop } from "react-icons/ai";
+import SideBarItem from './SideBarItem';
+import SideBarSubItem from './SideBarSubItem';
 
-const Sidebar = ({ activeSubPage, setActiveSubPage }: SidebarProps) => {
-  const [isOrdersOpen, setIsOrdersOpen] = useState(false); // Track if the "Orders" menu is open
+const Sidebar = () => {
+    const [isExpanded, setIsExpanded] = useState(false);
 
-  // Toggle the visibility of the "Orders" sub-menu
-  const toggleOrdersMenu = () => {
-    setIsOrdersOpen((prevState) => !prevState);
-  };
-
-  return (
-    <div className="w-full h-full bg-white border-r border-gray-300 p-6">
-      <ul className="space-y-4 p-4 ml-24">
-        {/* Add products */}
-        <li>
-          <button
-            onClick={() => setActiveSubPage("addProduct")}
-            className={`text-lg ${
-              activeSubPage === "addProduct"
-                ? "font-semibold underline text-black"
-                : "text-gray-700 hover:underline"
-            }`}
-          >
-            Add products
-          </button>
-        </li>
-
-        {/* Product list */}
-        <li>
-          <button
-            onClick={() => setActiveSubPage("productList")}
-            className={`text-lg ${
-              activeSubPage === "productList"
-                ? "font-semibold underline text-black"
-                : "text-gray-700 hover:underline"
-            }`}
-          >
-            Product list
-          </button>
-        </li>
-
-        {/* Orders */}
-        <li>
-          <button
-            onClick={toggleOrdersMenu}
-            className={`text-lg text-gray-700 hover:underline`}
-          >
-            Orders
-          </button>
-
-          {/* Toggleable Submenu for Orders */}
-          {isOrdersOpen && (
-            <ul className="ml-6 mt-2 space-y-2 text-sm text-gray-600">
-              <li
-                className={`hover:underline cursor-pointer ${
-                  activeSubPage === "allOrders" ? "font-semibold underline text-black" : ""
-                }`}
-                onClick={() => setActiveSubPage("allOrders")}
-              >
-                All orders
-              </li>
-              <li
-                className={`hover:underline cursor-pointer ${
-                  activeSubPage === "shippingInfo" ? "font-semibold underline text-black" : ""
-                }`}
-                onClick={() => setActiveSubPage("shippingInfo")}
-              >
-                Shipping info
-              </li>
-              <li
-                className={`hover:underline cursor-pointer ${
-                  activeSubPage === "refund" ? "font-semibold underline text-black" : ""
-                }`}
-                onClick={() => setActiveSubPage("refund")}
-              >
-                Refund
-              </li>
+    return (
+        <aside
+            className={`
+        bg-white h-full flex flex-col gap-10
+        transition-all duration-200 items-center ${isExpanded ? 'w-52' : 'delay-200 w-16 '} overflow-hidden 
+      `}
+            onMouseEnter={() => setIsExpanded(true)}
+            onMouseLeave={() => setIsExpanded(false)}
+        >
+            <ul className="w-fit h-fit">
+                <SideBarItem isExpanded={isExpanded} extendable={false} name="Dashboard" icon={AiOutlineLineChart} link='/sell/dashboard'></SideBarItem>
+                <SideBarItem isExpanded={isExpanded} extendable={true} name="Your Store" icon={AiTwotoneShop} link="#product">
+                    <SideBarSubItem isExpanded={isExpanded} name="Products" link="/sell/product"></SideBarSubItem>
+                    <SideBarSubItem isExpanded={isExpanded} name="Orders" link="/sell/order"></SideBarSubItem>
+                    <SideBarSubItem isExpanded={isExpanded} name="Refunds" link="/sell/refund"></SideBarSubItem>
+                </SideBarItem>
+                <SideBarItem isExpanded={isExpanded} extendable={false} name="Messages" icon={AiOutlineMessage} link='/sell/messages'></SideBarItem>
             </ul>
-          )}
-        </li>
 
-        {/* Sale offers */}
-        <li>
-          <button
-            onClick={() => setActiveSubPage("saleOffers")}
-            className={`text-lg ${
-              activeSubPage === "saleOffers"
-                ? "font-semibold underline text-black"
-                : "text-gray-700 hover:underline"
-            }`}
-          >
-            Sale offers
-          </button>
-        </li>
-      </ul>
-    </div>
-  );
+        </aside>
+    );
 };
 
 export default Sidebar;
