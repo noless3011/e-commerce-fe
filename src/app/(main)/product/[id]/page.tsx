@@ -1,7 +1,7 @@
 import ProductImagesSlider from "./ProductImagesSlider"
 import ProductSideBar from "./ProductSideBar"
 import ProductImagePicker from "./ProductImagePicker"
-import { Product } from "@/app/types/Product"
+import Product from "@/app/types/Product"
 import Recommended from "./Recommended"
 import Reviews from "./Reviews"
 

@@ -86,7 +86,7 @@ const DashboardPage: React.FC = () => {
     };
 
     return (
-        <div className="p-8">
+        <div className="p-8 w-full flex flex-col items-center">
             <h1 className="text-2xl font-bold mb-4">Seller Dashboard</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

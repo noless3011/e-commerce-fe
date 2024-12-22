@@ -1,6 +1,6 @@
 'use client'; // Mark this component as a client component
 import { usePathname, useRouter } from "next/navigation";
-import Sidebar from "./SideBar";
+import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 
 export default function SellLayout({
