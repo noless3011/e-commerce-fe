@@ -4,9 +4,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { ImageList } from "./ImageList"
-
-const ProductImagesSlider = () => {
-    const images = ImageList.instance.images;
+import Product from "@/app/types/Product";
+interface ProductImagesSliderProps {
+    product: Product;
+}
+const ProductImagesSlider: React.FC<ProductImagesSliderProps> = ({ product }) => {
+    const images = product.images;
     const [currentIndex, setCurrentIndex] = useState(0);
     const nextImage = () => {
         if (currentIndex < images.length) setCurrentIndex(currentIndex + 1);
