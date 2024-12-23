@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Product from '../types/Product';
 import { clear } from 'console';
-
+export type InspectorType = "collapsed" | "add" | "edit";
 interface InspectorState {
     viewProduct: Product | null;
-    sentProduct: Product | null;
+    state: "collapsed" | "add" | "edit";
 }
 
 const initialState: InspectorState = {
     viewProduct: null,
-    sentProduct: null,
+    state: 'collapsed'
 };
 
 const inspectorSlice = createSlice({
@@ -22,12 +22,9 @@ const inspectorSlice = createSlice({
         clearViewProduct: (state) => {
             state.viewProduct = null;
         },
-        setSentProduct: (state, action: PayloadAction<Product>) => {
-            state.sentProduct = action.payload;
+        setInspectorState: (state, action: PayloadAction<InspectorType>) => {
+            state.state = action.payload;
         },
-        clearSentProduct: (state) => {
-            state.sentProduct = null;
-        }
     },
 });
 

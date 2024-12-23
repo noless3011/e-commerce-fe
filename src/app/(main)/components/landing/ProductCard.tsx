@@ -1,49 +1,26 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Provider } from 'react-redux';
 import store from '@/app/redux/store';
 import ProductCardDropdown from './ProductCardDropdown';
-import Product, { mapProductResponseToProduct } from '@/app/types/Product';
-import { ProductApi } from '@/app/utils/ApiClient';
+import Product from '@/app/types/Product';
 
 interface ProductCardProps {
-    id: string;
-    name: string;
-    image: string;
+    product: Product;
     cardW: number;
     cardH: number;
-    price: number;
-    discount?: number;
-    url: string;
 }
 /**The image width and height must be divisible by 4 */
 const ProductCard: React.FC<ProductCardProps> = ({
-    id,
-    name,
-    image,
-    cardW: cardW,
-    cardH: cardH,
-    price,
-    discount,
-    url,
+    product,
+    cardW,
+    cardH,
 }) => {
-    const [product, setProduct] = useState<Product | null>(null);
-
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const getProductFunc = await ProductApi.productControllerFindByProductId(Number(id));
-                const response = await getProductFunc();
-                const productData = mapProductResponseToProduct(response.data);
-                setProduct(productData);
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
-        };
-
-        fetchProduct();
-    }, [id]);
+    const { name, images, price, discount, id } = product;
+    const url = `/product/${id}`;
+    const image = images && images.length > 0 ? images[0] : 'https://picsum.photos/300/300'; // Use a fallback image if no images are available
+    const discountedPrice = discount ? price * (1 - discount / 100) : price;
 
     return (
         <Provider store={store}>
@@ -72,12 +49,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
                             <span className="text-sm font-bold">
                                 {discount ? (
                                     <>
-                                        <span className="text-red-500">{discount.toFixed(2)}%</span>{' '}
+                                        <span className="text-red-500">{discount.toFixed(0)}%</span>{' '}
                                         <span className="text-gray-900 line-through">
                                             {price.toFixed(2)} VND
                                         </span>
                                         <span className="ml-2 text-gray-900">
-                                            {(price * (discount / 100)).toFixed(2)} VND
+                                            {discountedPrice.toFixed(2)} VND
                                         </span>
                                     </>
                                 ) : (
@@ -88,11 +65,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     </div>
                 </Link>
 
-                <ProductCardDropdown></ProductCardDropdown>
+                <ProductCardDropdown ></ProductCardDropdown>
             </div>
         </Provider>
     );
 };
-
 
 export default ProductCard;
