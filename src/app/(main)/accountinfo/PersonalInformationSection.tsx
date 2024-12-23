@@ -16,10 +16,11 @@ const PersonalInformationSection: React.FC = () => {
                 <InfoCard title="Name" value="Irakli talavadze" />
                 <InfoCard title="Date of Birth" value="07 July 1993" />
                 <InfoCard title="Country Region" value="Georgia , Tbilisi" />
-                <InfoCard title="Language" value="English ( UK ) - English" />
+                <InfoCard title="Language" value="English" />
+                <InfoCard title="Contactable at" value="ikakodesign@gmail.com" />
             </div>
 
-            <InfoCard title="Contactable at" value="ikakodesign@gmail.com" />
+            
         </div>
     );
 };
