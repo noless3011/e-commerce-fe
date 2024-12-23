@@ -1,8 +1,9 @@
 // components/ProductRow.tsx
 import React from 'react';
-import Product from '@/app/types/Product';
+import Product, { productTypeColorMap } from '@/app/types/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
+import { setInspectorState, setProduct } from '@/app/redux/inspectorSlice';
 
 interface ProductRowProps {
     product: Product;
@@ -29,18 +30,27 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
             statusColor = 'bg-gray-100 text-gray-800';
             statusText = product.status;
     }
+    //Handling tag color
+    const productType = product.types[0];
+    const colors = productType && productTypeColorMap[productType];
+
+    const bgColorClass = colors?.bgColor || 'bg-gray-100'; // Default background color
+    const textColorClass = colors?.textColor || 'text-gray-800';
+
+    // Handling edit
     const dispatch = useDispatch();
 
-    const inspectedProduct = useSelector((state: RootState) => state.inspector.viewProduct);
-    const inspectorState = useSelector((state: RootState) => state.inspector.state);
+    const inspector = useSelector((state: RootState) => state.inspector);
     const handleEdit = () => {
-        if (inspectorState === 'collapsed' || inspectorState === 'add') {
-            dispatch({ type: 'inspector/setViewProduct', payload: product });
-            dispatch({ type: 'inspector/setInspectorState', payload: 'edit' });
+        if (inspector.currentState === 'collapsed' || inspector.currentState === 'add') {
+            dispatch(setProduct(product));
+            dispatch(setInspectorState("edit"));
         } else {
-            dispatch({ type: 'inspector/setInspectorState', payload: 'edit' });
+            dispatch(setInspectorState("collapsed"));
         }
     }
+
+
     return (
         <tr>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -63,15 +73,10 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
                 <div className="text-sm text-gray-900">{product.soldNumber}</div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${product.types[0] === 'Electronic'
-                    ? 'bg-blue-100 text-blue-800'
-                    : product.types[0] === 'Clothing'
-                        ? 'bg-purple-100 text-purple-800'
-                        : product.types[0] === 'HomeAppliance'
-                            ? 'bg-indigo-100 text-indigo-800'
-                            : 'bg-gray-100 text-gray-800'
-                    }`}>
-                    {product.types[0]}
+                <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${bgColorClass} ${textColorClass}`}
+                >
+                    {productType}
                 </span>
             </td>
             <td className="px-6 py-4 whitespace-nowrap">

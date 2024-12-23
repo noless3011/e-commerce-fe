@@ -1,17 +1,33 @@
 // app/page.tsx
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductTable from './ProductTable';
-import { addProduct } from './dummy';
-import Product from '@/app/types/Product';
+import Product, { mapProductResponseArrayToProductArray } from '@/app/types/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
-
+import { InspectorType, setInspectorState } from '@/app/redux/inspectorSlice';
+import { AppDispatch } from '@/app/redux/store';
+import { ProductApi } from '@/app/utils/ApiClient';
 export default function StoreManagementPage() {
     const [products, setProducts] = useState<Product[]>([]);
-    const inspectorDispatch = useDispatch();
-    const inspector = useSelector((state: RootState) => (state.inspector))
-    const [inspectorState, setInspectorState] = useState<boolean>();
+    const inspectorState = useSelector((state: RootState) => (state.inspector.currentState));
+    const userId = useSelector((state: RootState) => state.auth.user?.id);
+    useEffect(() => {
+        const getProducts = async () => {
+            if (typeof userId != undefined) {
+                console.log('fetching...', userId);
+                try {
+                    const getProductsFunc = await ProductApi.productControllerFindByOwnerId(Number(userId));
+                    const res = await getProductsFunc();
+                    setProducts(mapProductResponseArrayToProductArray(res.data));
+                } catch (error) {
+                    console.log("Fetch product table fail", error)
+                }
+
+            }
+        }
+        getProducts();
+    }, [inspectorState, userId])
     const defaultProduct: Product = {
         id: "",
         created_at: "",
@@ -32,6 +48,10 @@ export default function StoreManagementPage() {
         createdTime: 0, // Or Date.now() if you prefer
     };
 
+    const inspectorDispatch: AppDispatch = useDispatch();
+    const addProduct = () => {
+        inspectorDispatch(setInspectorState('add'));
+    }
     return (
         <div className="p-4 w-full">
             <div className="flex justify-between items-center mb-4">
@@ -53,7 +73,9 @@ export default function StoreManagementPage() {
                 <button className="px-4 py-2 border rounded">Filters</button>
                 <button className="px-4 py-2 border rounded">Sort</button>
             </div>
-            <ProductTable products={products} />
+            {userId ?
+                (<ProductTable products={products} />) :
+                (<h2>You need to login</h2>)}
         </div>
     );
 }
