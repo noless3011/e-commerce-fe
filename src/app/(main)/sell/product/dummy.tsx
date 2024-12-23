@@ -6,7 +6,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Electronic Gadget 1",
         "description": "A versatile electronic gadget for your everyday needs.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 49.99,
@@ -21,7 +21,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Fresh Apples",
         "description": "Crisp and delicious apples, perfect for a healthy snack.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 2.50,
@@ -36,7 +36,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Bluetooth Headphones",
         "description": "High-quality Bluetooth headphones for immersive audio experience.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 79.99,
@@ -51,7 +51,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Organic Milk",
         "description": "Fresh and creamy organic milk.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 3.99,
@@ -66,7 +66,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Smartwatch",
         "description": "A feature-packed smartwatch to track your fitness and stay connected.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 149.99,
@@ -81,7 +81,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Brown Rice",
         "description": "Nutritious and wholesome brown rice.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 1.80,
@@ -96,7 +96,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Wireless Mouse",
         "description": "Ergonomic wireless mouse for comfortable computing.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 24.50,
@@ -111,7 +111,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Fresh Bananas",
         "description": "Ripe and delicious bananas, a great source of potassium.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 0.99,
@@ -126,7 +126,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Portable Charger",
         "description": "Compact and powerful portable charger for your devices.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 29.99,
@@ -141,7 +141,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Whole Wheat Bread",
         "description": "Healthy and nutritious whole wheat bread.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 3.20,
@@ -156,7 +156,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "USB Flash Drive",
         "description": "Reliable USB flash drive for data storage and transfer.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 12.75,
@@ -171,7 +171,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Cheddar Cheese",
         "description": "Sharp and flavorful cheddar cheese.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 4.50,
@@ -186,7 +186,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Keyboard",
         "description": "Comfortable and responsive keyboard for efficient typing.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 35.50,
@@ -201,7 +201,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Pasta",
         "description": "High-quality pasta for delicious meals.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 1.50,
@@ -216,7 +216,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Webcam",
         "description": "High-definition webcam for clear video calls and streaming.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 59.99,
@@ -231,7 +231,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Eggs",
         "description": "Fresh and nutritious eggs.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 2.80,
@@ -246,7 +246,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Tablet",
         "description": "Powerful tablet for entertainment and productivity.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 299.00,
@@ -261,7 +261,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Tomatoes",
         "description": "Juicy and ripe tomatoes, perfect for salads and cooking.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 2.00,
@@ -276,7 +276,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Monitor",
         "description": "High-resolution monitor for crisp and clear visuals.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 179.50,
@@ -291,7 +291,7 @@ const dummy: CreateProductDto[] = [
     {
         "name": "Potatoes",
         "description": "Versatile and essential potatoes for various dishes.",
-        "image": [
+        "images": [
             "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300", "https://picsum.photos/300/300",
         ],
         "price": 1.20,

@@ -1,4 +1,4 @@
-import { Configuration } from '@/api';
+import { Configuration, RatingApiFp } from '@/api';
 import { BaseAPI } from '@/api/base';
 import { AuthApiFp } from '@/api';
 import { ProductApiFp } from '@/api';
@@ -24,4 +24,5 @@ export const HealthCheckApi = HealthCheckApiFp(configuration);
 export const ChatApi = ChatApiFp(configuration);
 export const OrderApi = OrderApiFp(configuration);
 export const FileUploadApi = FileUploadApiFp(configuration);
+export const RatingApi = RatingApiFp(configuration);
 export default Base;
