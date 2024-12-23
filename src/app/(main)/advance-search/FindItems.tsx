@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react";
+import ItemsResult from "./ItemsResult";
 
 const FindItems: React.FC = () => {
     const [keywords, setKeywords] = useState("");
@@ -11,17 +12,28 @@ const FindItems: React.FC = () => {
         returnsAccepted: false,
     });
 
+    const [showResults, setShowResults] = useState(false);
+    const [showForm, setShowForm] = useState(true);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-      };
+        setShowResults(true);
+        setShowForm(false);
+    };
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
         setCheckboxOptions({ ...checkboxOptions, [name]: checked });
     };
 
+    const handleBack = () => {
+        setShowForm(true); 
+        setShowResults(false); 
+    };
+
     return (
-        <div className="container mx-auto p-8 max-w-4xl bg-white rounded-lg">
+        <div className="container mx-auto max-w-4xl bg-white rounded-lg">
+            {showForm &&
             <form onSubmit={handleSubmit} className="space-y-6">
             {/* Keywords Section */}
             <div className="flex flex-col">
@@ -128,7 +140,21 @@ const FindItems: React.FC = () => {
                     Search
                 </button>
             </div>
-            </form>
+            </form>}
+
+            {showResults && (
+                <div>
+                    <div className="flex justify-start mb-4">
+                        <button
+                            onClick={handleBack}
+                            className="px-4 py-2 bg-darkgreen text-white rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-blue-300 flex items-center"
+                        >
+                            <span style={{ fontSize: '20px' }}>←</span>
+                        </button>
+                    </div>
+                    <ItemsResult />
+                </div>
+            )}
         </div>
     );
 };
