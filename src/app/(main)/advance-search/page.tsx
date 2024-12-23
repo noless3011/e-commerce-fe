@@ -23,7 +23,9 @@ const AdvancedSearchPage = () => {
                 )}
 
                 <main className="flex-1 p-8 bg-white">
-                    {activeTab === "search" && activeSubPage === "findItems" && <FindItems />}
+                    {activeTab === "search" && activeSubPage === "findItems" && <FindItems search={function (): void {
+                        throw new Error("Function not implemented.");
+                    } } />}
                     {activeTab === "search" && activeSubPage === "findStores" && <FindStores />}
                 </main>
             </div>

@@ -1,17 +1,30 @@
 "use client"
 import { SocketAddress } from "net";
 import React, { useState } from "react";
+import StoresResult from "./StoreResult";
 
 const FindStores: React.FC = () => {
     const [keywords, setKeywords] = useState("");
     const [address, setAddress] = useState("");
 
+    const [showResults, setShowResults] = useState(false);
+    const [showForm, setShowForm] = useState(true);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        setShowResults(true);
+        setShowForm(false);
+    };
+
+    const handleBack = () => {
+        setShowForm(true); 
+        setShowResults(false); 
+
     };
 
     return (
-        <div className="container mx-auto p-8 max-w-4xl bg-white rounded-lg">
+        <div className="container mx-auto max-w-4xl bg-white rounded-lg">
+            {showForm &&
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Keywords Section */}
                 <div className="flex flex-col">
@@ -42,16 +55,31 @@ const FindStores: React.FC = () => {
                     />
                 </div>
 
-                {/* Submit Button */}
-                <div className="flex justify-center">
-                    <button
-                        type="submit"
-                        className="px-8 py-3 bg-darkgreen text-white rounded-md hover:bg-green focus:outline-none focus:ring-4 focus:ring-yellow-300"
-                    >
-                        Search
-                    </button>
+            {/* Submit Button */}
+            <div className="flex justify-center">
+                <button
+                    type="submit"
+                    className="px-8 py-3 bg-darkgreen text-white rounded-md hover:bg-green focus:outline-none focus:ring-4 focus:ring-yellow-300"
+                >
+                    Search
+                </button>
+            </div>
+            </form>}
+            {showResults && (
+                <div>
+                    <div className="flex justify-start mb-4">
+                        <button
+                            onClick={handleBack}
+                            className="px-4 py-2 bg-darkgreen text-white rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-blue-300 flex items-center"
+                        >
+                            <span style={{ fontSize: '20px' }}>←</span>
+                        </button>
+                    </div>
+                    <div className="text-gray-500">
+                        <p>Coming soon...</p>
+                    </div>
                 </div>
-            </form>
+            )}
         </div>
     );
 };
