@@ -32,15 +32,14 @@ export const checkLogin = createAsyncThunk(
     }
 );
 
-export const logout = createAsyncThunk(
-    'auth/logout',
+export const logOutWithApi = createAsyncThunk(
+    'auth/logOutWithApi',
     async (_, { dispatch }) => {
         try {
-            await AuthApi.authControllerLogout();
+            const logOutFunc = await AuthApi.authControllerLogout();
+            const res = await logOutFunc();
             // Dispatch the synchronous logOut action to update the state
             dispatch(logOut());
-            // Optionally, clear any client-side storage here
-            localStorage.removeItem('authToken');
         } catch (error: any) {
             // Handle logout error (e.g., dispatch an error action, log the error)
             console.error("Logout API call failed:", error);
@@ -82,12 +81,12 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.error = action.payload as string; // Set the error message
-            }).addCase(logout.pending, (state) => {
+            }).addCase(logOutWithApi.pending, (state) => {
                 state.loading = true;
                 state.error = null;
-            }).addCase(logout.fulfilled, (state) => {
+            }).addCase(logOutWithApi.fulfilled, (state) => {
                 state.loading = false;
-            }).addCase(logout.rejected, (state, action) => {
+            }).addCase(logOutWithApi.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Logout failed';
             });
