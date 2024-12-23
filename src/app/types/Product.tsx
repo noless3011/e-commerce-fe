@@ -2,7 +2,17 @@ import { ProductResponseDto, ProductResponseDtoTypesEnum } from "@/api";
 import { CreateProductDto, CreateProductDtoTypesEnum } from "@/api";
 export type ProductStatus = "SoldOut" | "Available" | "ComingSoon"; // Extendable for other statuses
 
-export type ProductType = "Electronic" | "Clothing" | "HomeAppliance"; // Extendable for other types
+export type ProductType =
+    | "Electronic"
+    | "Groceries"
+    | "Clothing"
+    | "HomeAppliances"
+    | "Books"
+    | "BeautyAndHealth"
+    | "SportsAndOurDoors"
+    | "ToysAndGames"
+    | "Furniture"
+    | "Automotive"; // Extendable for other types
 
 export default interface Product {
     id: string;
@@ -55,6 +65,8 @@ export function convertProductToCreateProductDto(product: Product): CreateProduc
         image: product.images,
         price: product.price,
         discount: product.discount,
+        rating: product.rating,
+        soldNumber: product.soldNumber,
         remaining: product.remaining,
         types: product.types.filter((type) =>
             Object.values(CreateProductDtoTypesEnum).includes(

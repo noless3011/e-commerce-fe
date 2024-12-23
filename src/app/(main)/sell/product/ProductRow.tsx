@@ -32,16 +32,13 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
     const dispatch = useDispatch();
 
     const inspectedProduct = useSelector((state: RootState) => state.inspector.viewProduct);
-    const editedProduct = useSelector((state: RootState) => state.inspector.sentProduct);
+    const inspectorState = useSelector((state: RootState) => state.inspector.state);
     const handleEdit = () => {
-        if (!inspectedProduct) {
+        if (inspectorState === 'collapsed' || inspectorState === 'add') {
             dispatch({ type: 'inspector/setViewProduct', payload: product });
+            dispatch({ type: 'inspector/setInspectorState', payload: 'edit' });
         } else {
-            dispatch({ type: 'inspector/clearViewProduct' });
-        }
-        if (editedProduct) {
-            dispatch({ type: 'inspector/clearSentProduct' });
-            // TODO: Call the get products API
+            dispatch({ type: 'inspector/setInspectorState', payload: 'edit' });
         }
     }
     return (
