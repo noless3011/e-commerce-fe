@@ -1,39 +1,46 @@
-// Product.tsx
+import Product from '@/app/types/Product';
 import React from 'react';
+import Link from 'next/link';
 
 interface ProductProps {
-    img: string;
-    index: number;
-    price: number; // Price prop
+    product: Product;
     onHover: (isHovering: boolean) => void;
+    index?: number;
 }
 
-const Product: React.FC<ProductProps> = ({ img, index, price, onHover }) => {
+const ProductCard: React.FC<ProductProps> = ({ product, onHover, index }) => {
+    const imageUrl = product.images && product.images.length > 0 ? product.images[0] : '/placeholder.jpg';
+
     return (
         <div
-            className="flex flex-col justify-between items-center text-center p-2 bg-gray-100 border border-gray-300 rounded-md transition-shadow duration-300 hover:shadow-lg h-52"
-            style={{ width: '160px', minWidth: '160px' }} // Set fixed width to 400 pixels
-            onMouseEnter={() => onHover(true)} // Trigger hover state
-            onMouseLeave={() => onHover(false)} // Reset hover state
+            className="flex flex-col justify-between items-center text-center p-2 bg-gray-100 rounded-md transition-shadow duration-300 hover:shadow-lg h-72"
+            style={{ width: '160px', minWidth: '160px' }}
+            onMouseEnter={() => onHover(true)}
+            onMouseLeave={() => onHover(false)}
         >
-            <img
-                src={`/${img}.jpg`} // Image source
-                alt={`Item ${index + 1}`} // Alt text for accessibility
-                className="w-full h-auto rounded-md mb-2" // Image styles
-            />
-            <div className="flex flex-col items-center"> {/* Wrapper for product name and price */}
-                <a
-                    href="#" // Link to product details
-                    className="text-black font-bold hover:underline mb-1" // Styles for product name
+            <div className='w-full h-3/5 relative overflow-hidden'> {/* Added relative and overflow-hidden */}
+                <img
+                    src={imageUrl}
+                    alt={product.name}
+                    className="w-full h-full rounded-md mb-2 object-cover" // Changed h-auto to h-full and added object-cover
+                    style={{ maxHeight: 'none' }} // Remove maxHeight to allow full height
+                />
+            </div>
+
+            <div className="flex flex-col items-center justify-between h-2/5 w-full"> {/* Adjusted this div */}
+                <Link
+                    href={`/products/${product.id}`}
+                    className="text-black font-bold hover:underline text-sm sm:text-base overflow-hidden text-ellipsis" // Added text-sm and overflow properties
+                    style={{ maxWidth: '100%' }} // Ensure text doesn't overflow horizontally
                 >
-                    Product {index + 1}
-                </a>
-                <div className="text-gray-700 font-semibold"> {/* Styles for product price */}
-                    ${price.toFixed(2)} {/* Format price to two decimal places */}
+                    {product.name}
+                </Link>
+                <div className="text-gray-700 font-semibold">
+                    ${product.price.toFixed(2)}
                 </div>
             </div>
         </div>
     );
 };
 
-export default Product;
+export default ProductCard;

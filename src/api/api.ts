@@ -216,6 +216,18 @@ export interface CreateProductDto {
     'remaining': number;
     /**
      * 
+     * @type {number}
+     * @memberof CreateProductDto
+     */
+    'soldNumber': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateProductDto
+     */
+    'rating': number;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof CreateProductDto
      */
@@ -224,11 +236,44 @@ export interface CreateProductDto {
 
 export const CreateProductDtoTypesEnum = {
     Electronic: 'Electronic',
-    Groceries: 'Groceries'
+    Groceries: 'Groceries',
+    Clothing: 'Clothing',
+    HomeAppliances: 'HomeAppliances',
+    Books: 'Books',
+    BeautyAndHealth: 'BeautyAndHealth',
+    SportsAndOurDoors: 'SportsAndOurDoors',
+    ToysAndGames: 'ToysAndGames',
+    Furniture: 'Furniture',
+    Automotive: 'Automotive'
 } as const;
 
 export type CreateProductDtoTypesEnum = typeof CreateProductDtoTypesEnum[keyof typeof CreateProductDtoTypesEnum];
 
+/**
+ * 
+ * @export
+ * @interface CreateRatingDto
+ */
+export interface CreateRatingDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRatingDto
+     */
+    'productId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRatingDto
+     */
+    'ratingPoint': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRatingDto
+     */
+    'comment'?: string;
+}
 /**
  * 
  * @export
@@ -506,11 +551,68 @@ export const ProductResponseDtoStatusEnum = {
 export type ProductResponseDtoStatusEnum = typeof ProductResponseDtoStatusEnum[keyof typeof ProductResponseDtoStatusEnum];
 export const ProductResponseDtoTypesEnum = {
     Electronic: 'Electronic',
-    Groceries: 'Groceries'
+    Groceries: 'Groceries',
+    Clothing: 'Clothing',
+    HomeAppliances: 'HomeAppliances',
+    Books: 'Books',
+    BeautyAndHealth: 'BeautyAndHealth',
+    SportsAndOurDoors: 'SportsAndOurDoors',
+    ToysAndGames: 'ToysAndGames',
+    Furniture: 'Furniture',
+    Automotive: 'Automotive'
 } as const;
 
 export type ProductResponseDtoTypesEnum = typeof ProductResponseDtoTypesEnum[keyof typeof ProductResponseDtoTypesEnum];
 
+/**
+ * 
+ * @export
+ * @interface RatingResponse
+ */
+export interface RatingResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof RatingResponse
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RatingResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RatingResponse
+     */
+    'updated_at': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RatingResponse
+     */
+    'userId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RatingResponse
+     */
+    'productId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RatingResponse
+     */
+    'ratingPoint': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RatingResponse
+     */
+    'comment': string;
+}
 /**
  * 
  * @export
@@ -1522,6 +1624,36 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get Best Sale Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindBestSale: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/product/best-sale`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get Products by ownerId
          * @param {number} ownerId 
          * @param {*} [options] Override http request option.
@@ -1566,6 +1698,66 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists('productControllerFindByProductId', 'productId', productId)
             const localVarPath = `/api/product/{productId}`
                 .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get discovery Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindDiscovery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/product/discovery`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Newest Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindNewest: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/product/newest`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1654,6 +1846,66 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get recent search Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindRecentSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/product/recent-search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get suggestion Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindSuggestion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/product/suggestion`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1675,6 +1927,18 @@ export const ProductApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerCreate(createProductDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get Best Sale Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindBestSale(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindBestSale(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindBestSale']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1705,6 +1969,30 @@ export const ProductApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get discovery Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindDiscovery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindDiscovery(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindDiscovery']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get Newest Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindNewest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindNewest(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindNewest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Query Product
          * @param {number} page 
          * @param {number} pageSize 
@@ -1719,6 +2007,30 @@ export const ProductApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindPagination']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get recent search Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindRecentSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindRecentSearch(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindRecentSearch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get suggestion Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerFindSuggestion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindSuggestion(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindSuggestion']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1743,6 +2055,15 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get Best Sale Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindBestSale(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindBestSale(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get Products by ownerId
          * @param {number} ownerId 
          * @param {*} [options] Override http request option.
@@ -1763,6 +2084,24 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get discovery Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindDiscovery(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindDiscovery(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Newest Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindNewest(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindNewest(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Query Product
          * @param {number} page 
          * @param {number} pageSize 
@@ -1775,6 +2114,24 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          */
         productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): AxiosPromise<ProductPaginationResponse> {
             return localVarFp.productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get recent search Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindRecentSearch(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindRecentSearch(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get suggestion Products
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerFindSuggestion(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductResponseDto>> {
+            return localVarFp.productControllerFindSuggestion(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1796,6 +2153,17 @@ export class ProductApi extends BaseAPI {
      */
     public productControllerCreate(createProductDto: CreateProductDto, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).productControllerCreate(createProductDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Best Sale Products
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindBestSale(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindBestSale(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1824,6 +2192,28 @@ export class ProductApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get discovery Products
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindDiscovery(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindDiscovery(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Newest Products
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindNewest(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindNewest(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Query Product
      * @param {number} page 
      * @param {number} pageSize 
@@ -1838,6 +2228,28 @@ export class ProductApi extends BaseAPI {
     public productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options).then((request) => request(this.axios, this.basePath));
     }
+
+    /**
+     * 
+     * @summary Get recent search Products
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindRecentSearch(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindRecentSearch(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get suggestion Products
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerFindSuggestion(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerFindSuggestion(options).then((request) => request(this.axios, this.basePath));
+    }
 }
 
 /**
@@ -1845,7 +2257,15 @@ export class ProductApi extends BaseAPI {
  */
 export const ProductControllerFindPaginationTypesEnum = {
     Electronic: 'Electronic',
-    Groceries: 'Groceries'
+    Groceries: 'Groceries',
+    Clothing: 'Clothing',
+    HomeAppliances: 'HomeAppliances',
+    Books: 'Books',
+    BeautyAndHealth: 'BeautyAndHealth',
+    SportsAndOurDoors: 'SportsAndOurDoors',
+    ToysAndGames: 'ToysAndGames',
+    Furniture: 'Furniture',
+    Automotive: 'Automotive'
 } as const;
 export type ProductControllerFindPaginationTypesEnum = typeof ProductControllerFindPaginationTypesEnum[keyof typeof ProductControllerFindPaginationTypesEnum];
 /**
@@ -1867,6 +2287,180 @@ export const ProductControllerFindPaginationSortOrderEnum = {
     Asc: 'ASC'
 } as const;
 export type ProductControllerFindPaginationSortOrderEnum = typeof ProductControllerFindPaginationSortOrderEnum[keyof typeof ProductControllerFindPaginationSortOrderEnum];
+
+
+/**
+ * RatingApi - axios parameter creator
+ * @export
+ */
+export const RatingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ratingControllerFindAll: async (productId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('ratingControllerFindAll', 'productId', productId)
+            const localVarPath = `/api/rating/product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (productId !== undefined) {
+                localVarQueryParameter['productId'] = productId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CreateRatingDto} createRatingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ratingControllerUpsert: async (createRatingDto: CreateRatingDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createRatingDto' is not null or undefined
+            assertParamExists('ratingControllerUpsert', 'createRatingDto', createRatingDto)
+            const localVarPath = `/api/rating/upsert`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createRatingDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RatingApi - functional programming interface
+ * @export
+ */
+export const RatingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RatingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ratingControllerFindAll(productId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RatingResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ratingControllerFindAll(productId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RatingApi.ratingControllerFindAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {CreateRatingDto} createRatingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ratingControllerUpsert(createRatingDto: CreateRatingDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RatingResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ratingControllerUpsert(createRatingDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RatingApi.ratingControllerUpsert']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * RatingApi - factory interface
+ * @export
+ */
+export const RatingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RatingApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ratingControllerFindAll(productId: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<RatingResponse>> {
+            return localVarFp.ratingControllerFindAll(productId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CreateRatingDto} createRatingDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ratingControllerUpsert(createRatingDto: CreateRatingDto, options?: RawAxiosRequestConfig): AxiosPromise<RatingResponse> {
+            return localVarFp.ratingControllerUpsert(createRatingDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RatingApi - object-oriented interface
+ * @export
+ * @class RatingApi
+ * @extends {BaseAPI}
+ */
+export class RatingApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} productId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RatingApi
+     */
+    public ratingControllerFindAll(productId: number, options?: RawAxiosRequestConfig) {
+        return RatingApiFp(this.configuration).ratingControllerFindAll(productId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CreateRatingDto} createRatingDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RatingApi
+     */
+    public ratingControllerUpsert(createRatingDto: CreateRatingDto, options?: RawAxiosRequestConfig) {
+        return RatingApiFp(this.configuration).ratingControllerUpsert(createRatingDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**

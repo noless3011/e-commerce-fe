@@ -1,40 +1,63 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Provider } from 'react-redux';
 import store from '@/app/redux/store';
-import ProductCardDropdown from './ProductCardDropdown';
-import Product from '@/app/types/Product';
+import ProductCardDropdown from '@/app/(main)/components/landing/ProductCardDropdown';
+import Product, { mapProductResponseToProduct } from '@/app/types/Product';
+import { ProductApi } from '@/app/utils/ApiClient';
 
 interface ProductCardProps {
-    product: Product;
+    id: string;
+    name: string;
+    image: string;
     cardW: number;
     cardH: number;
+    price: number;
+    discount?: number;
+    url: string;
 }
 /**The image width and height must be divisible by 4 */
 const ProductCard: React.FC<ProductCardProps> = ({
-    product,
-    cardW,
-    cardH,
+    id,
+    name,
+    image,
+    cardW: cardW,
+    cardH: cardH,
+    price,
+    discount,
+    url,
 }) => {
-    const { name, images, price, discount, id } = product;
-    const url = `/product/${id}`;
-    const image = images && images.length > 0 ? images[0] : 'https://picsum.photos/300/300'; // Use a fallback image if no images are available
-    const discountedPrice = discount ? price * (1 - discount / 100) : price;
+    const [product, setProduct] = useState<Product | null>(null);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const getProductFunc = await ProductApi.productControllerFindByProductId(Number(id));
+                const response = await getProductFunc();
+                const productData = mapProductResponseToProduct(response.data);
+                setProduct(productData);
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
 
     return (
         <Provider store={store}>
-            <div className="flex flex-col relative rounded-lg shadow-lg hover:shadow-black transition-shadow duration-300"
+            <div className="flex flex-col relative "
                 style={{
                     height: cardH,
                     width: cardW
                 }}>
-                <Link href={url} className="block overflow-hidden aspect-square flex-grow-[3]">
-                    <div className="relative aspect-auto rounded-t-lg w-full h-full object-cover">
+                <Link href={url} className="block overflow-visible aspect-square flex-grow-[3]">
+                    <div className="relative aspect-auto rounded-lg w-full h-full object-cover shadow-lg hover:shadow-black transition-shadow duration-300">
                         <img
                             src={image}
                             alt={name}
-                            className="w-full h-full object-cover rounded-t-lg "
+                            className="w-full h-full object-cover rounded-lg "
                         />
                     </div>
                 </Link>
@@ -45,16 +68,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                 {name}
                             </h3>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-baseline">
                             <span className="text-sm font-bold">
                                 {discount ? (
                                     <>
-                                        <span className="text-red-500">{discount.toFixed(0)}%</span>{' '}
+                                        <span className="text-red-500">{discount.toFixed(2)}%</span>{' '}
                                         <span className="text-gray-900 line-through">
                                             {price.toFixed(2)} VND
                                         </span>
                                         <span className="ml-2 text-gray-900">
-                                            {discountedPrice.toFixed(2)} VND
+                                            {(price * (discount / 100)).toFixed(2)} VND
                                         </span>
                                     </>
                                 ) : (
@@ -65,10 +88,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     </div>
                 </Link>
 
-                <ProductCardDropdown ></ProductCardDropdown>
+                <ProductCardDropdown></ProductCardDropdown>
             </div>
         </Provider>
     );
 };
+
 
 export default ProductCard;

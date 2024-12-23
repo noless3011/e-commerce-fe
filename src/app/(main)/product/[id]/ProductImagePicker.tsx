@@ -4,9 +4,12 @@ import { ImageList } from "./ImageList";
 import Thumbnail from "./Thumbnail";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { motion } from "framer-motion";
-
-const ProductImagePicker = () => {
-    const images = ImageList.instance.images;
+import Product from "@/app/types/Product";
+interface ProductImagePickerProps {
+    product: Product;
+}
+const ProductImagePicker: React.FC<ProductImagePickerProps> = ({ product }) => {
+    const images = product.images;
     const [currentIndex, setCurrentIndex] = useState(0);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [stripeHeight, setStripeHeight] = useState(0);
@@ -17,8 +20,6 @@ const ProductImagePicker = () => {
             setStripeHeight(imagesStripeDiv.current.offsetHeight);
         }
     });
-    const pickImage = (index: number) => {
-    }
     const slideDown = () => {
         setPosition({ x: position.x, y: (position.y + 300) > 0 ? position.y : position.y + 300 });
     }

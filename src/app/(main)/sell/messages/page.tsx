@@ -111,9 +111,9 @@ const MessagingPanel: React.FC = () => {
     };
 
     return (
-        <div className="flex h-full">
+        <div className="flex h-full w-full">
             {/* Conversation List */}
-            <div className="w-1/4 border-r border-gray-200 overflow-y-auto">
+            <div className="w-2/5 border-r border-gray-200 overflow-y-auto">
                 <div className="p-4">
                     <h2 className="text-lg font-semibold mb-2">Messages</h2>
                 </div>

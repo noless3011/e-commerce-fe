@@ -1,52 +1,195 @@
+'use client';
+import { useEffect, useState } from "react";
+import { ProductApi } from "../utils/ApiClient";
 import CategoryCard from "./components/landing/CategoryCard";
 import CategoryGrid from "./components/landing/CategoryGrid";
 import ProductCard from "./components/landing/ProductCard";
 import ProductGridList from "./components/landing/ProductGridList";
 import ProductHorizontalList from "./components/landing/ProductHorizontalList";
+import { get } from "http";
+import Product, { mapProductResponseToProduct, ProductType } from "../types/Product";
+import { li } from "framer-motion/client";
 
 export default function Page() {
+    const [hotSalesProducts, setHotSalesProducts] = useState<Product[]>([]);
+    const [newArrivalsProducts, setNewArrivalsProducts] = useState<Product[]>([]);
+    const [recentSearchedProducts, setRecentSearchedProducts] = useState<Product[]>([]);
+    const [suggestionProducts, setSuggestionProducts] = useState<Product[]>([]);
+    const [discoveryProducts, setDiscoveryProducts] = useState<Product[]>([]);
+    const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
+    const productTypeArray: ProductType[] = [
+        "Electronic",
+        "Groceries",
+        "Clothing",
+        "HomeAppliances",
+        "Books",
+        "BeautyAndHealth",
+        "SportsAndOurDoors",
+        "ToysAndGames",
+        "Furniture",
+        "Automotive",
+    ];
+    const [categoryProducts, setCategoryProducts] = useState<ProductType[]>(productTypeArray);
+    useEffect(() => {
+        const fetchHotSales = async () => {
+            try {
+                const getHotSales = await ProductApi.productControllerFindBestSale();
+                const res = await getHotSales();
+                const listProductGot = res.data;
+                const mappedProducts = listProductGot.map(mapProductResponseToProduct);
+                setHotSalesProducts(mappedProducts);
+            } catch (error) {
+                console.error("Error fetching hot sales:", error);
+            }
+        };
 
+        const fetchNewArrivals = async () => {
+            try {
+                const getNewArrivals = await ProductApi.productControllerFindNewest();
+                const res = await getNewArrivals();
+                const listProductGot = res.data;
+                const mappedProducts = listProductGot.map(mapProductResponseToProduct);
+                setNewArrivalsProducts(mappedProducts);
+            } catch (error) {
+                console.error("Error fetching new arrivals:", error);
+            }
+        };
 
+        const fetchRecentSearched = async () => {
+            try {
+                const getRecentSearched = await ProductApi.productControllerFindRecentSearch();
+                const res = await getRecentSearched();
+                const listProductGot = res.data;
+                const mappedProducts = listProductGot.map(mapProductResponseToProduct);
+                setRecentSearchedProducts(mappedProducts);
+            } catch (error) {
+                console.error("Error fetching recent searched:", error);
+            }
+        };
+
+        const fetchSuggestions = async () => {
+            try {
+                const getSuggestions = await ProductApi.productControllerFindSuggestion();
+                const res = await getSuggestions();
+                const listProductGot = res.data;
+                const mappedProducts = listProductGot.map(mapProductResponseToProduct);
+                setSuggestionProducts(mappedProducts);
+            } catch (error) {
+                console.error("Error fetching suggestions:", error);
+            }
+        };
+
+        const fetchDiscovery = async () => {
+            try {
+                const getDiscovery = await ProductApi.productControllerFindDiscovery();
+                const res = await getDiscovery();
+                const listProductGot = res.data;
+                const mappedProducts = listProductGot.map(mapProductResponseToProduct);
+                setDiscoveryProducts(mappedProducts);
+            } catch (error) {
+                console.error("Error fetching discovery:", error);
+            }
+        };
+
+        const fetchPaginatedProducts = async () => {
+            try {
+                const getPaginated = await ProductApi.productControllerFindPagination(
+                    1,
+                    20,
+                    "",
+                );
+                const res = await getPaginated();
+                const listProductGot = res.data.data;
+                const mappedProducts = listProductGot.map(mapProductResponseToProduct);
+                setPaginatedProducts(mappedProducts);
+                console.log("length: " + listProductGot.length);
+            } catch (error) {
+                console.error("Error fetching paginated products:", error);
+            }
+        };
+        fetchHotSales();
+        fetchNewArrivals();
+        fetchRecentSearched();
+        fetchSuggestions();
+        fetchDiscovery();
+        fetchPaginatedProducts();
+    }, []);
     return (
-        <div className=" h-fit w-full flex flex-col items-center gap-8">
+        <div className="w-full flex flex-col items-center gap-8">
             <div className="h-10"></div>
             <CategoryGrid>
-                {
-                    Array.from({ length: 11 }, (_, index) => (
-                        <CategoryCard key={index} imageUrl="https://picsum.photos/200/300" categoryName={"Category" + (index + 1).toString()}></CategoryCard>
-                    ))
-                }
-
+                {categoryProducts.map((category, index) => (
+                    <CategoryCard
+                        key={index} // Use a unique key for each card
+                        imageUrl="https://picsum.photos/300/300" // Use a placeholder image
+                        categoryName={category}
+                    />
+                ))}
             </CategoryGrid>
 
             <ProductHorizontalList title="Hot Sales">
-                {
-                    Array.from({ length: 20 }, (_, index) => (
-                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
-                            cardH={500} cardW={300}
-                            price={1999} url="#" discount={90} />
-                    ))
-                }
+                {hotSalesProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        cardW={250} // Adjust as needed
+                        cardH={350} // Adjust as needed
+                    />
+                ))}
             </ProductHorizontalList>
 
             <ProductHorizontalList title="New Arrivals">
-                {
-                    Array.from({ length: 20 }, (_, index) => (
-                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/1000/1000"
-                            cardH={500} cardW={300}
-                            price={1999} url="#" discount={90} />
-                    ))
-                }
+                {newArrivalsProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        cardW={250} // Adjust as needed
+                        cardH={350} // Adjust as needed
+                    />
+                ))}
             </ProductHorizontalList>
-
-            <ProductGridList cardW={200}>
-                {
-                    Array.from({ length: 30 }, (_, index) => (
-                        <ProductCard key={`${index}`} id={`${index}`} name=" Original Apple Silicone Case with Wireless Magnetic Charger and Something else" image="https://picsum.photos/200/200"
-                            cardH={400} cardW={230}
-                            price={1999} url="#" discount={90} />
-                    ))
-                }
+            <ProductHorizontalList title="Recent Searched">
+                {recentSearchedProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        cardW={250} // Adjust as needed
+                        cardH={350} // Adjust as needed
+                    />
+                ))}
+            </ProductHorizontalList>
+            <ProductHorizontalList title="Your most viewed category">
+                {suggestionProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        cardW={250} // Adjust as needed
+                        cardH={350} // Adjust as needed
+                    />
+                ))}
+            </ProductHorizontalList>
+            <ProductHorizontalList title="Discovery">
+                {discoveryProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        cardW={250} // Adjust as needed
+                        cardH={350} // Adjust as needed
+                    />
+                ))}
+            </ProductHorizontalList>
+            <div className="h-10 text-3xl font-bold mt-10">
+                All Products
+            </div>
+            <ProductGridList itemsPerPage={20}>
+                {paginatedProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        cardW={250} // Adjust as needed
+                        cardH={350} // Adjust as needed
+                    />
+                ))}
             </ProductGridList>
 
             <div className="h-96"></div>
