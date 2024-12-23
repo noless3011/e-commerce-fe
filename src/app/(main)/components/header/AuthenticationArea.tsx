@@ -9,7 +9,7 @@ import CartButton from "./CartButton";
 import { useDispatch, useSelector } from "react-redux";
 import { checkLogin } from "@/app/redux/authSlice";
 import { RootState } from "@/app/redux/store";
-import { autoBatchEnhancer, ThunkDispatch } from "@reduxjs/toolkit";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const AuthenticationArea = () => {
     const [loginState, setLoginState] = useState(false);

@@ -1,10 +1,14 @@
+"use client"
 import React from 'react';
 import Sidebar from './Sidebar';
 import InfoCard from './InfoCard';
 import Header from './Header';
+import { Provider } from 'react-redux';
+import store from '@/app/redux/store';
 
 const AccountSettings = () => {
     return (
+        <Provider store={store}>
         <div className="bg-gray-50 min-h-screen font-sans">
             <div className="container mx-auto max-w-screen-lg py-10 px-6">
                 {/* Header */}
@@ -43,6 +47,7 @@ const AccountSettings = () => {
                 </div>
             </div>
         </div>
+        </Provider>
     );
 };
 

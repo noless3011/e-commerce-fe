@@ -1,5 +1,6 @@
+'use client'
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { UserApi } from '@/app/utils/ApiClient'; // Assuming this is the correct path
+import { AuthApi, UserApi } from '@/app/utils/ApiClient';
 import { User } from '../types/User';
 
 interface AuthState {
@@ -8,6 +9,7 @@ interface AuthState {
     loading: boolean; // Add a loading state
     error: string | null; // Add an error state
 }
+
 
 const initialState: AuthState = {
     isAuthenticated: false,
@@ -27,6 +29,27 @@ export const checkLogin = createAsyncThunk(
             return checkLoginRes.data; // Assuming the response data contains user info (e.g., username)
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to check login status');
+        }
+    }
+);
+
+export const logOutWithApi = createAsyncThunk(
+    'auth/logOutWithApi',
+    async (_, { dispatch }) => {
+        try {
+            const logOutFunc = await AuthApi.authControllerLogout();
+            const res = await logOutFunc();
+            console.log('logout called:', res);
+            const checkLoginFunc = await UserApi.userControllerGetCurrentUser();
+            const checkLoginRes = await checkLoginFunc();
+            console.log('check if logout', checkLoginRes);
+            dispatch(logOut());
+        } catch (error: any) {
+            // Handle logout error (e.g., dispatch an error action, log the error)
+            console.error("Logout API call failed:", error);
+            // Optionally, dispatch an action to set an error state in your slice
+            // dispatch(setLogoutError(error.message));
+            throw error; // Re-throw to let the component handle the error if needed
         }
     }
 );
@@ -62,6 +85,14 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.error = action.payload as string; // Set the error message
+            }).addCase(logOutWithApi.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            }).addCase(logOutWithApi.fulfilled, (state) => {
+                state.loading = false;
+            }).addCase(logOutWithApi.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message || 'Logout failed';
             });
     },
 });
