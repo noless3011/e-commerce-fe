@@ -4,7 +4,6 @@ import ItemsResult from "./ItemsResult";
 import { ProductApi } from "@/app/utils/ApiClient";
 import { ProductControllerFindPaginationTypesEnum } from "@/api";
 import { ProductControllerFindPaginationSortByEnum } from "@/api";
-import { ProductControllerFindPaginationSortOrderEnum } from "@/api";
 import { AxiosResponse } from "axios";
 
 // Định nghĩa kiểu dữ liệu cho sản phẩm và phản hồi phân trang từ API
@@ -36,8 +35,8 @@ type ProductPaginationResponse = {
 };
 
 const FindItems: React.FC = () => {
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [page] = useState(1);
+    const [pageSize] = useState(10);
     const [keywords, setKeywords] = useState("");
     const [category, setCategory] = useState("");
     const [sortBy, setSortBy] = useState("createdTime");

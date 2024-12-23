@@ -3,12 +3,13 @@ import ProductImagesSlider from "./ProductImagesSlider"
 import ProductSideBar from "./ProductSideBar"
 import ProductImagePicker from "./ProductImagePicker"
 import Product, { mapProductResponseToProduct } from "@/app/types/Product"
-import Recommended from "./Recommended"
 import Reviews from "./Reviews"
 import ChatButton from "./ChatButton"
 import { useEffect, useState } from "react"
 import { ProductApi } from "@/app/utils/ApiClient"
 import { useParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 export default function ProductPage() {
     const defaultProduct: Product = {
@@ -56,7 +57,7 @@ export default function ProductPage() {
             </div>
             {/* <Recommended></Recommended> */}
             <Reviews></Reviews>
-            <ChatButton />
+            <ChatButton ownerId={Number(product.id)} />
         </div>
     )
 }

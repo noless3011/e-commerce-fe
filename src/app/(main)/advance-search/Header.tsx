@@ -1,8 +1,3 @@
-type HeaderProps = {
-    activeTab: string;
-    setActiveTab: (tab: string) => void;
-};
-  
 const Header = () => {
     return (
         <header className="bg-white shadow-sm w-full mt-2">
@@ -14,6 +9,5 @@ const Header = () => {
         </header>
     );
 };
-  
-  export default Header;
-  
+
+export default Header;

@@ -1,5 +1,4 @@
 'use client';
-import ProductCard from "./ProductCard"
 import React, { useState } from 'react';
 import { ReactNode } from 'react';
 interface ProductGridListProps {
@@ -47,7 +46,6 @@ const ProductGridList: React.FC<ProductGridListProps> = ({ children, itemsPerPag
     const displayedPages = getDisplayedPages();
 
     const showingStart = (currentPage - 1) * itemsPerPage + 1;
-    const showingEnd = Math.min(currentPage * itemsPerPage, totalItems);
 
     return (
         <div className="w-2/3 h-fit flex flex-col items-center gap-4 md:gap-6 lg:gap-8">

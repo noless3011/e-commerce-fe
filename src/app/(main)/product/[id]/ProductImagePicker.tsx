@@ -10,7 +10,6 @@ interface ProductImagePickerProps {
 }
 const ProductImagePicker: React.FC<ProductImagePickerProps> = ({ product }) => {
     const [images, setImages] = useState<Array<string>>();
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [stripeHeight, setStripeHeight] = useState(0);
 
