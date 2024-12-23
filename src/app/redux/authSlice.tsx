@@ -1,3 +1,4 @@
+'use client'
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthApi, UserApi } from '@/app/utils/ApiClient';
 import { User } from '../types/User';
@@ -38,7 +39,10 @@ export const logOutWithApi = createAsyncThunk(
         try {
             const logOutFunc = await AuthApi.authControllerLogout();
             const res = await logOutFunc();
-            // Dispatch the synchronous logOut action to update the state
+            console.log('logout called:', res);
+            const checkLoginFunc = await UserApi.userControllerGetCurrentUser();
+            const checkLoginRes = await checkLoginFunc();
+            console.log('check if logout', checkLoginRes);
             dispatch(logOut());
         } catch (error: any) {
             // Handle logout error (e.g., dispatch an error action, log the error)

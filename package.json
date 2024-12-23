@@ -20,6 +20,7 @@
     "chart.js": "^4.4.7",
     "framer-motion": "^11.11.10",
     "global": "^4.4.0",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.462.0",
     "next": "14.2.15",
     "react": "^18",
@@ -33,6 +34,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
