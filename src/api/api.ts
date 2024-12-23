@@ -1624,6 +1624,71 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerDeleteAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/product/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerDeleteOne: async (productId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('productControllerDeleteOne', 'productId', productId)
+            const localVarPath = `/api/product/one`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (productId !== undefined) {
+                localVarQueryParameter['productId'] = productId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get Best Sale Products
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1785,20 +1850,18 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
          * @summary Query Product
          * @param {number} page 
          * @param {number} pageSize 
-         * @param {string} search 
+         * @param {string} [search] 
          * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
          * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
          * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindPagination: async (page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        productControllerFindPagination: async (page: number, pageSize: number, search?: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('productControllerFindPagination', 'page', page)
             // verify required parameter 'pageSize' is not null or undefined
             assertParamExists('productControllerFindPagination', 'pageSize', pageSize)
-            // verify required parameter 'search' is not null or undefined
-            assertParamExists('productControllerFindPagination', 'search', search)
             const localVarPath = `/api/product`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1931,6 +1994,29 @@ export const ProductApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerDeleteAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerDeleteAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerDeleteAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerDeleteOne(productId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerDeleteOne(productId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerDeleteOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get Best Sale Products
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1996,14 +2082,14 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @summary Query Product
          * @param {number} page 
          * @param {number} pageSize 
-         * @param {string} search 
+         * @param {string} [search] 
          * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
          * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
          * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductPaginationResponse>> {
+        async productControllerFindPagination(page: number, pageSize: number, search?: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductPaginationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.productControllerFindPagination']?.[localVarOperationServerIndex]?.url;
@@ -2052,6 +2138,23 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          */
         productControllerCreate(createProductDto: CreateProductDto, options?: RawAxiosRequestConfig): AxiosPromise<ProductResponseDto> {
             return localVarFp.productControllerCreate(createProductDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerDeleteAll(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.productControllerDeleteAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerDeleteOne(productId: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.productControllerDeleteOne(productId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2105,14 +2208,14 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @summary Query Product
          * @param {number} page 
          * @param {number} pageSize 
-         * @param {string} search 
+         * @param {string} [search] 
          * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
          * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
          * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): AxiosPromise<ProductPaginationResponse> {
+        productControllerFindPagination(page: number, pageSize: number, search?: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig): AxiosPromise<ProductPaginationResponse> {
             return localVarFp.productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2153,6 +2256,27 @@ export class ProductApi extends BaseAPI {
      */
     public productControllerCreate(createProductDto: CreateProductDto, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).productControllerCreate(createProductDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerDeleteAll(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerDeleteAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} productId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerDeleteOne(productId: number, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerDeleteOne(productId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2217,7 +2341,7 @@ export class ProductApi extends BaseAPI {
      * @summary Query Product
      * @param {number} page 
      * @param {number} pageSize 
-     * @param {string} search 
+     * @param {string} [search] 
      * @param {Array<ProductControllerFindPaginationTypesEnum>} [types] 
      * @param {ProductControllerFindPaginationSortByEnum} [sortBy] 
      * @param {ProductControllerFindPaginationSortOrderEnum} [sortOrder] 
@@ -2225,7 +2349,7 @@ export class ProductApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProductApi
      */
-    public productControllerFindPagination(page: number, pageSize: number, search: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig) {
+    public productControllerFindPagination(page: number, pageSize: number, search?: string, types?: Array<ProductControllerFindPaginationTypesEnum>, sortBy?: ProductControllerFindPaginationSortByEnum, sortOrder?: ProductControllerFindPaginationSortOrderEnum, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).productControllerFindPagination(page, pageSize, search, types, sortBy, sortOrder, options).then((request) => request(this.axios, this.basePath));
     }
 
