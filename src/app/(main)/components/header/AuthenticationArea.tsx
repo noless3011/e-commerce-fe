@@ -6,38 +6,25 @@ import AuthenticationButton from "./AuthenticationButtons";
 import AccountInfo from "./AccountInfo";
 import { UserResponseDto } from "@/api";
 import CartButton from "./CartButton";
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { checkLogin } from "@/app/redux/authSlice";
+import { RootState } from "@/app/redux/store";
+import { autoBatchEnhancer, ThunkDispatch } from "@reduxjs/toolkit";
 
 const AuthenticationArea = () => {
     const [loginState, setLoginState] = useState(false);
     const [account, setAccount] = useState<UserResponseDto>();
-    const checkLogin = async (): Promise<boolean> => {
-        try {
-            const checkLoginFunc = await UserApi.userControllerGetCurrentUser();
-            const checkLoginRes = await checkLoginFunc();
-            console.log("CHeck login")
-            if (checkLoginRes.status === 200) {
-                console.log(checkLoginRes);
-                setAccount(checkLoginRes.data);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (error) {
-            console.log("error", error);
-            return false;
-        }
+    const authDispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
-    }
+    const authInfo = useSelector((state: RootState) => state.auth)
+
     useEffect(() => {
-        const updateLoginState = async () => {
-            const isLoggedIn = await checkLogin();
-            setLoginState(isLoggedIn);
-        };
-        updateLoginState();
-    }, [])
+        authDispatch(checkLogin());
+    }, [authDispatch]);
+    useEffect(() => {
+        setLoginState(authInfo.isAuthenticated);
+        console.log("checking auth", authInfo);
+    }, [authInfo.isAuthenticated]);
     const router = useRouter();
     const loginRedirect = () => {
         router.push('/account/login')
