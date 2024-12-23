@@ -74,7 +74,9 @@ const FindStores: React.FC = () => {
                             <span style={{ fontSize: '20px' }}>←</span>
                         </button>
                     </div>
-                    <StoresResult />
+                    <div className="text-gray-500">
+                        <p>Coming soon...</p>
+                    </div>
                 </div>
             )}
         </div>
