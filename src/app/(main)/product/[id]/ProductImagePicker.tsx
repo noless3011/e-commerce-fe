@@ -17,10 +17,11 @@ const ProductImagePicker: React.FC<ProductImagePickerProps> = ({ product }) => {
     const imagesStripeDiv = useRef<HTMLDivElement>(null);
     useEffect(() => {
         setImages(product.images);
+        console.log("set these image: ", product.images)
         if (imagesStripeDiv.current) {
             setStripeHeight(imagesStripeDiv.current.offsetHeight);
         }
-    }, [product]);
+    }, [product.images]);
     const slideDown = () => {
         setPosition({ x: position.x, y: (position.y + 300) > 0 ? position.y : position.y + 300 });
     }
