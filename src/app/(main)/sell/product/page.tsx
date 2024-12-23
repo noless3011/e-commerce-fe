@@ -4,11 +4,34 @@ import React, { useState } from 'react';
 import ProductTable from './ProductTable';
 import { addProduct } from './dummy';
 import Product from '@/app/types/Product';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
 
 export default function StoreManagementPage() {
     const [products, setProducts] = useState<Product[]>([]);
-    const viewProduct = useSelector((state) => (state))
+    const inspectorDispatch = useDispatch();
+    const inspector = useSelector((state: RootState) => (state.inspector))
+    const [inspectorState, setInspectorState] = useState<boolean>();
+    const defaultProduct: Product = {
+        id: "",
+        created_at: "",
+        updated_at: "",
+        status: "Available", // Replace "draft" with a valid default status from your enum
+        name: "",
+        description: "",
+        images: [],
+        price: 0,
+        discount: 0,
+        rating: 0,
+        remaining: 0,
+        soldNumber: 0,
+        totalLike: 0,
+        totalReview: 0,
+        ownerId: 0,
+        types: [],
+        createdTime: 0, // Or Date.now() if you prefer
+    };
+
     return (
         <div className="p-4 w-full">
             <div className="flex justify-between items-center mb-4">
