@@ -1,6 +1,7 @@
 // components/MessagingPanel.tsx
 'use client';
 
+import { ChatApi } from '@/app/utils/ApiClient';
 import React, { useState, useEffect, useRef } from 'react';
 
 interface User {
@@ -63,7 +64,7 @@ const MessagingPanel: React.FC = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [selectedConversation?.messages]);
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
         if (selectedConversationId && newMessage.trim()) {
             const newMessageObject: Message = {
                 id: `msg-${Date.now()}`,
@@ -97,6 +98,13 @@ const MessagingPanel: React.FC = () => {
                     )
                 );
             }, 1000);
+            try {
+                const callGetChatFunc = await ChatApi.chatControllerGet(Number(mockOtherUser.id));
+                const res = await callGetChatFunc();
+                console.log(res);
+            } catch (error) {
+                
+            }
         }
     };
 
