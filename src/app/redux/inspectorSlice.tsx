@@ -4,12 +4,12 @@ import { clear } from 'console';
 export type InspectorType = "collapsed" | "add" | "edit";
 interface InspectorState {
     viewProduct: Product | null;
-    state: "collapsed" | "add" | "edit";
+    currentState: InspectorType;
 }
 
 const initialState: InspectorState = {
     viewProduct: null,
-    state: 'collapsed'
+    currentState: 'collapsed'
 };
 
 const inspectorSlice = createSlice({
@@ -23,11 +23,11 @@ const inspectorSlice = createSlice({
             state.viewProduct = null;
         },
         setInspectorState: (state, action: PayloadAction<InspectorType>) => {
-            state.state = action.payload;
+            state.currentState = action.payload;
         },
     },
 });
 
-export const { setViewProduct: setProduct, clearViewProduct: clearProduct } = inspectorSlice.actions;
+export const { setViewProduct: setProduct, clearViewProduct: clearProduct, setInspectorState: setInspectorState } = inspectorSlice.actions;
 
 export default inspectorSlice.reducer;
