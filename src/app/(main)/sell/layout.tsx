@@ -2,6 +2,9 @@
 import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
+import Inspector from "./Inspector";
+import { Provider } from "react-redux";
+import store from "@/app/redux/store";
 
 export default function SellLayout({
     children,
@@ -11,6 +14,7 @@ export default function SellLayout({
     const router = useRouter();
     const pathname = usePathname();
 
+
     useEffect(() => {
         // Check if the user is directly on the parent route
         if (pathname === '/sell') {
@@ -19,9 +23,12 @@ export default function SellLayout({
         }
     }, [pathname, router]);
     return (
-        <div className="flex flex-row w-full h-full">
-            <Sidebar></Sidebar>
-            {children}
-        </div>
+        <Provider store={store}>
+            <div className="flex flex-row w-full h-full">
+                <Sidebar></Sidebar>
+                {children}
+                <Inspector></Inspector>
+            </div>
+        </Provider>
     );
 }

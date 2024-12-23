@@ -1,6 +1,8 @@
 // components/ProductRow.tsx
 import React from 'react';
 import Product from '@/app/types/Product';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
 
 interface ProductRowProps {
     product: Product;
@@ -27,7 +29,21 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
             statusColor = 'bg-gray-100 text-gray-800';
             statusText = product.status;
     }
+    const dispatch = useDispatch();
 
+    const inspectedProduct = useSelector((state: RootState) => state.inspector.viewProduct);
+    const editedProduct = useSelector((state: RootState) => state.inspector.sentProduct);
+    const handleEdit = () => {
+        if (!inspectedProduct) {
+            dispatch({ type: 'inspector/setViewProduct', payload: product });
+        } else {
+            dispatch({ type: 'inspector/clearViewProduct' });
+        }
+        if (editedProduct) {
+            dispatch({ type: 'inspector/clearSentProduct' });
+            // TODO: Call the get products API
+        }
+    }
     return (
         <tr>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -48,7 +64,6 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">{product.soldNumber}</div>
-                {/* You can add a sparkline chart here if needed */}
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
                 <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${product.types[0] === 'Electronic'
@@ -71,7 +86,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
                 ${product.price.toFixed(2)}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right font-medium">
-                <button className="text-indigo-600 hover:text-indigo-900 mr-2">
+                <button className="text-indigo-600 hover:text-indigo-900 mr-2" onClick={handleEdit}>
                     Edit
                 </button>
                 <button className="text-red-600 hover:text-red-900">

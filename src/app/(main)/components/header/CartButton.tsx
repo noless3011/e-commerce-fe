@@ -1,14 +1,25 @@
-import { BiShoppingBag } from "react-icons/bi";
-import { useRouter } from "next/navigation";
+import React, { useState } from 'react';
+import { BiShoppingBag } from 'react-icons/bi';
+import Image from 'next/image';
+import OrderCart from './OrderCart';
 
 export default function CartButton() {
-    const router = useRouter();
-    const redirect = () => {
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
-        router.push("/cart");
-    }
+    const toggleCart = () => {
+        setIsCartOpen(!isCartOpen);
+    };
 
-    return (<div className="flex flex-row items-center justify-center w-10 aspect-square bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg">
-        <button className="w-28 aspect-square" onClick={redirect}><BiShoppingBag className="w-full h-full"></BiShoppingBag></button>
-    </div>)
+    return (
+        <div className="">
+            <button
+                onClick={toggleCart}
+                className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-lg z-50"
+            >
+                <BiShoppingBag size={24} />
+            </button>
+
+            {isCartOpen && (<OrderCart isCartOpen={isCartOpen}></OrderCart>)}
+        </div>
+    );
 }
