@@ -3,9 +3,16 @@
 import React, { useState } from 'react';
 import { FiMessageSquare } from 'react-icons/fi'; // Example icon, install react-icons
 import { motion, AnimatePresence } from 'framer-motion'; // For smooth animation, install framer-motion
+import { ChatApi } from '@/app/utils/ApiClient';
+import { CreateChatDto } from '@/api';
 
-const ChatButton = () => {
+interface ChatButtonProps {
+    ownerId: number;
+  }
+
+const ChatButton: React.FC<ChatButtonProps> = ({ ownerId }) => {
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [content, setContent] = useState("");
     const [messages, setMessages] = useState([
         { text: 'Welcome! How can I help you?', sender: 'bot' },
     ]);
@@ -27,6 +34,24 @@ const ChatButton = () => {
                     { text: `Thanks for your message! I'll get back to you soon.`, sender: 'bot' },
                 ]);
             }, 500); // Simulate a 0.5-second delay
+
+            const chatData: CreateChatDto ={
+                receiverId: ownerId,
+                content: newMessage
+            }
+            const chat = async (e: React.FormEvent) => {
+                e.preventDefault();
+    
+                try {
+                    const callCreateChatFunc = await ChatApi.chatControllerCreate(chatData);
+                    const res = await callCreateChatFunc();
+                    console.log(res);
+                } catch (error) {
+    
+                }
+                
+            }
+            
         }
     };
 
@@ -112,3 +137,4 @@ const ChatButton = () => {
 };
 
 export default ChatButton;
+
