@@ -195,7 +195,7 @@ export interface CreateProductDto {
      * @type {Array<string>}
      * @memberof CreateProductDto
      */
-    'image': Array<string>;
+    'images': Array<string>;
     /**
      * 
      * @type {number}

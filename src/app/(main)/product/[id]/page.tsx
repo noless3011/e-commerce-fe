@@ -38,15 +38,15 @@ export default function ProductPage() {
             try {
                 const getProductFunc = await ProductApi.productControllerFindByProductId(Number(params.id));
                 const response = await getProductFunc();
+
                 setProduct(mapProductResponseToProduct(response.data));
-                console.log(product.images);
+                console.log('fetched product:', Number(params.id));
             } catch (error) {
                 console.log("Error while fetching product with id:", params.id, " . Response:", error)
             }
         }
         getProduct();
     }, [])
-
     return (
         <div className="flex flex-col gap-4 h-fit mt-4 w-4/5 mx-auto">
             <div className="grid grid-cols-[7rem_1.8fr_1fr] gap-4 items-stretch">
@@ -54,7 +54,7 @@ export default function ProductPage() {
                 <ProductImagesSlider product={product}></ProductImagesSlider>
                 <ProductSideBar product={product} />
             </div>
-            <Recommended></Recommended>
+            {/* <Recommended></Recommended> */}
             <Reviews></Reviews>
             <ChatButton />
         </div>
