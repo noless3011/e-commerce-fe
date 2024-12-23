@@ -4,6 +4,7 @@ import Product, { productTypeColorMap } from '@/app/types/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
 import { setInspectorState, setProduct } from '@/app/redux/inspectorSlice';
+import { ProductApi } from '@/app/utils/ApiClient';
 
 interface ProductRowProps {
     product: Product;
@@ -41,6 +42,14 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
     const dispatch = useDispatch();
 
     const inspector = useSelector((state: RootState) => state.inspector);
+    const handleDelete = async () => {
+        try {
+            const deleteProductFunc = await ProductApi.productControllerDeleteOne(Number(product.id));
+            const res = await deleteProductFunc();
+        } catch (error) {
+            console.log("error while delete", error);
+        }
+    }
     const handleEdit = () => {
         if (inspector.currentState === 'collapsed' || inspector.currentState === 'add') {
             dispatch(setProduct(product));
@@ -91,7 +100,7 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
                 <button className="text-indigo-600 hover:text-indigo-900 mr-2" onClick={handleEdit}>
                     Edit
                 </button>
-                <button className="text-red-600 hover:text-red-900">
+                <button className="text-red-600 hover:text-red-900" onClick={handleDelete}>
                     Delete
                 </button>
             </td>

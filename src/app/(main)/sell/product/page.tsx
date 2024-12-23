@@ -5,7 +5,7 @@ import ProductTable from './ProductTable';
 import Product, { mapProductResponseArrayToProductArray } from '@/app/types/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
-import { InspectorType, setInspectorState } from '@/app/redux/inspectorSlice';
+import { InspectorType, setInspectorState, setProduct } from '@/app/redux/inspectorSlice';
 import { AppDispatch } from '@/app/redux/store';
 import { ProductApi } from '@/app/utils/ApiClient';
 export default function StoreManagementPage() {
@@ -50,7 +50,12 @@ export default function StoreManagementPage() {
 
     const inspectorDispatch: AppDispatch = useDispatch();
     const addProduct = () => {
-        inspectorDispatch(setInspectorState('add'));
+        if (inspectorState === 'collapsed' || inspectorState === 'edit') {
+            inspectorDispatch(setProduct(defaultProduct));
+            inspectorDispatch(setInspectorState('add'));
+        } else {
+            inspectorDispatch(setInspectorState('collapsed'))
+        }
     }
     return (
         <div className="p-4 w-full">
