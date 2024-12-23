@@ -12,7 +12,7 @@ const ProductCardDropdown = () => {
 
     const handleAddToCart = () => {
         const newOrder: Order = {
-            status: "pending",
+            status: "inCart",
             ownerId: 1, // Replace with actual owner ID
             productId: 123, // Replace with actual product ID
             address: "123 Main St", // Replace with actual address

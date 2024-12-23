@@ -50,8 +50,8 @@ const ProductGridList: React.FC<ProductGridListProps> = ({ children, itemsPerPag
     const showingEnd = Math.min(currentPage * itemsPerPage, totalItems);
 
     return (
-        <div className="w-2/3 h-fit flex flex-col items-center gap-8">
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 w-full">
+        <div className="w-2/3 h-fit flex flex-col items-center gap-4 md:gap-6 lg:gap-8">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2 md:gap-4 w-full">
                 {currentItems}
             </div>
 
