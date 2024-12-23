@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { ImageList } from "./ImageList"
@@ -9,8 +9,12 @@ interface ProductImagesSliderProps {
     product: Product;
 }
 const ProductImagesSlider: React.FC<ProductImagesSliderProps> = ({ product }) => {
-    const images = product.images;
+    const [images, setImages] = useState<Array<string>>([]);
+
     const [currentIndex, setCurrentIndex] = useState(0);
+    useEffect(() => {
+        setImages(product.images)
+    }, [product]);
     const nextImage = () => {
         if (currentIndex < images.length) setCurrentIndex(currentIndex + 1);
         else setCurrentIndex(0);

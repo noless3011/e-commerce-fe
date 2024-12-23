@@ -1,46 +1,51 @@
+'use client';
 import ProductImagesSlider from "./ProductImagesSlider"
 import ProductSideBar from "./ProductSideBar"
 import ProductImagePicker from "./ProductImagePicker"
-import Product from "@/app/types/Product"
+import Product, { mapProductResponseToProduct } from "@/app/types/Product"
 import Recommended from "./Recommended"
 import Reviews from "./Reviews"
 import ChatButton from "./ChatButton"
+import { useEffect, useState } from "react"
+import { ProductApi } from "@/app/utils/ApiClient"
+import { useParams } from "next/navigation";
 
 export default function ProductPage() {
-    const images: string[] = Array.from({ length: 3 }, (_, i) => `text${i + 1}`)
-
-    const product: Product = {
-        id: 'a1b2c3d4-e5f6-4789-a0b1-2c3d4e5f6789',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        status: "Available",
-        name: 'Smart Bluetooth Speaker',
-        description: 'Enjoy crystal-clear audio and seamless smart home integration with our latest Bluetooth speaker. Features voice control, wireless charging, and a sleek design.',
-        images: [
-            'https://picsum.photos/500',
-            'https://picsum.photos/500',
-            'https://picsum.photos/400',
-            'https://picsum.photos/700',
-            'https://picsum.photos/500/300',
-            'https://picsum.photos/500',
-            'https://picsum.photos/500',
-            'https://picsum.photos/700/500',
-            'https://picsum.photos/500/700',
-            'https://picsum.photos/300/700',
-            'https://picsum.photos/100',
-        ],
-        price: 79.99,
-        discount: 10,
-        rating: 4.5,
-        remaining: 25,
-        soldNumber: 75,
-        totalLike: 210,
-        totalReview: 55,
-        ownerId: 102,
-        types: ["Electronic"],
-        createdTime: Date.now(),
+    const defaultProduct: Product = {
+        id: "",
+        created_at: "",
+        updated_at: "",
+        status: "Available", // Replace "draft" with a valid default status from your enum
+        name: "",
+        description: "",
+        images: [],
+        price: 0,
+        discount: 0,
+        rating: 0,
+        remaining: 0,
+        soldNumber: 0,
+        totalLike: 0,
+        totalReview: 0,
+        ownerId: 0,
+        types: [],
+        createdTime: 0, // Or Date.now() if you prefer
     };
+    const [product, setProduct] = useState<Product>(defaultProduct);
+    const params = useParams();
 
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const getProductFunc = await ProductApi.productControllerFindByProductId(Number(params.id));
+                const response = await getProductFunc();
+                setProduct(mapProductResponseToProduct(response.data));
+                console.log(product.images);
+            } catch (error) {
+                console.log("Error while fetching product with id:", params.id, " . Response:", error)
+            }
+        }
+        getProduct();
+    }, [])
 
     return (
         <div className="flex flex-col gap-4 h-fit mt-4 w-4/5 mx-auto">
@@ -55,3 +60,4 @@ export default function ProductPage() {
         </div>
     )
 }
+
