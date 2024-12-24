@@ -24,7 +24,7 @@ export default function Page() {
                 setLoginStatus("*Wrong username or password");
             }
         } catch (error) {
-            setLoginStatus("*Failed to login to your account", error);
+            setLoginStatus("*Failed to login to your account");
         }
 
 

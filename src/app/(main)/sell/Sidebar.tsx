@@ -20,9 +20,9 @@ const Sidebar = () => {
             <ul className="w-fit h-fit">
                 <SideBarItem isExpanded={isExpanded} extendable={false} name="Dashboard" icon={AiOutlineLineChart} link='/sell/dashboard'></SideBarItem>
                 <SideBarItem isExpanded={isExpanded} extendable={true} name="Your Store" icon={AiTwotoneShop} link="#product">
-                    <SideBarSubItem isExpanded={isExpanded} name="Products" link="/sell/product"></SideBarSubItem>
-                    <SideBarSubItem isExpanded={isExpanded} name="Orders" link="/sell/order"></SideBarSubItem>
-                    <SideBarSubItem isExpanded={isExpanded} name="Refunds" link="/sell/refund"></SideBarSubItem>
+                    <SideBarSubItem name="Products" link="/sell/product"></SideBarSubItem>
+                    <SideBarSubItem name="Orders" link="/sell/order"></SideBarSubItem>
+                    <SideBarSubItem name="Refunds" link="/sell/refund"></SideBarSubItem>
                 </SideBarItem>
                 <SideBarItem isExpanded={isExpanded} extendable={false} name="Messages" icon={AiOutlineMessage} link='/sell/messages'></SideBarItem>
             </ul>

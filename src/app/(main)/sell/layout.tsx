@@ -19,7 +19,7 @@ export default function SellLayout({
         // Check if the user is directly on the parent route
         if (pathname === '/sell') {
             // Redirect to the default child route (e.g., /parent/child1)
-            router.replace('/sell/dashboard');
+            router.replace('/sell/product');
         }
     }, [pathname, router]);
     return (

@@ -82,13 +82,13 @@ const Inspector = () => {
             setUploading(true);
             setUploadError(null);
             try {
+                console.log("file up");
                 const uploadPromises = Array.from(files).map(async (file) => {
                     const uploadFunc = await FileUploadApi.fileUploadControllerUploadSingle(file);
                     const res = await uploadFunc();
-                    // Assuming the API returns the URL of the uploaded image in the response data
-                    // You'll need to adjust this based on your actual API response structure
-                    console.log("file up", res);
-                    const imageUrl = res.data.fileName; // Or however your API returns the URL
+                    console.log("file up promize", res);
+                    const image = res.data; // Or however your API returns the URL
+                    const imageUrl = 'https://lucas-digital-market-dev.nysm.work/api/file-upload/' + image.fileName;
                     return imageUrl;
                 });
 

@@ -29,7 +29,7 @@ export default function Page() {
                 setRegisterStatus("*Failed to create account");
             }
         } catch (error) {
-            setRegisterStatus("*Failed to create account", error);
+            console.log("*Failed to create account", error);
         }
 
     };
