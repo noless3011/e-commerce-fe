@@ -30,8 +30,11 @@ const Inspector = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [editableProduct, setEditableProduct] = useState<Partial<Product>>({});
     const dispatch = useDispatch();
-    const [uploading, setUploading] = useState(false);
-    const [uploadError, setUploadError] = useState<string | null>(null);
+    // Remove uploading and uploadError states
+    // const [uploading, setUploading] = useState(false);
+    // const [uploadError, setUploadError] = useState<string | null>(null);
+    const [newImageUrl, setNewImageUrl] = useState(''); // State to hold the URL input value
+
     const fillPartialProduct = (partialProduct: Partial<Product>): Product => {
         return { ...defaultProduct, ...partialProduct };
     };
@@ -62,7 +65,6 @@ const Inspector = () => {
         }
     }, [inspector])
 
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         if (name === 'price' || name === 'discount' || name === 'remaining') {
@@ -76,36 +78,37 @@ const Inspector = () => {
         }
     };
 
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if (files && files.length > 0) {
-            setUploading(true);
-            setUploadError(null);
-            try {
-                console.log("file up");
-                const uploadPromises = Array.from(files).map(async (file) => {
-                    const uploadFunc = await FileUploadApi.fileUploadControllerUploadSingle(file);
-                    const res = await uploadFunc();
-                    console.log("file up promize", res);
-                    const image = res.data; // Or however your API returns the URL
-                    const imageUrl = 'https://lucas-digital-market-dev.nysm.work/api/file-upload/' + image.fileName;
-                    return imageUrl;
-                });
+    // Remove handleImageUpload function
+    // const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const files = e.target.files;
+    //     if (files && files.length > 0) {
+    //         setUploading(true);
+    //         setUploadError(null);
+    //         try {
+    //             console.log("file up");
+    //             const uploadPromises = Array.from(files).map(async (file) => {
+    //                 const uploadFunc = await FileUploadApi.fileUploadControllerUploadSingle(file);
+    //                 const res = await uploadFunc();
+    //                 console.log("file up promize", res);
+    //                 const image = res.data; // Or however your API returns the URL
+    //                 const imageUrl = 'https://lucas-digital-market-dev.nysm.work/api/file-upload/' + image.fileName;
+    //                 return imageUrl;
+    //             });
 
-                const uploadedImageUrls = await Promise.all(uploadPromises);
+    //             const uploadedImageUrls = await Promise.all(uploadPromises);
 
-                setEditableProduct(prev => ({
-                    ...prev,
-                    images: [...(prev.images || []), ...uploadedImageUrls],
-                }));
-            } catch (error) {
-                console.error("Error uploading image:", error);
-                setUploadError("Failed to upload image. Please try again.");
-            } finally {
-                setUploading(false);
-            }
-        }
-    };
+    //             setEditableProduct(prev => ({
+    //                 ...prev,
+    //                 images: [...(prev.images || []), ...uploadedImageUrls],
+    //             }));
+    //         } catch (error) {
+    //             console.error("Error uploading image:", error);
+    //             setUploadError("Failed to upload image. Please try again.");
+    //         } finally {
+    //             setUploading(false);
+    //         }
+    //     }
+    // };
 
     const handleSubmit = (e: React.FormEvent) => {
 
@@ -147,6 +150,15 @@ const Inspector = () => {
         // Optionally, you might want to call an API to delete the image from the server
     };
 
+    const handleAddImageUrl = () => {
+        if (newImageUrl.trim() !== '') {
+            setEditableProduct(prev => ({
+                ...prev,
+                images: [...(prev.images || []), newImageUrl.trim()],
+            }));
+            setNewImageUrl(''); // Clear the input after adding
+        }
+    };
 
     return (
         <aside
@@ -228,17 +240,26 @@ const Inspector = () => {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="images" className="block text-sm font-medium text-gray-700">Images</label>
-                        <input
-                            type="file"
-                            id="images"
-                            multiple
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-                        />
-                        {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
-                        {uploadError && <p className="text-sm text-red-500">{uploadError}</p>}
+                        <label className="block text-sm font-medium text-gray-700">Images</label>
+                        <div className="mt-1 flex rounded-md shadow-sm">
+                            <input
+                                type="text"
+                                className="block w-full min-w-0 flex-grow rounded-none rounded-l-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                placeholder="Enter image URL"
+                                value={newImageUrl}
+                                onChange={(e) => setNewImageUrl(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleAddImageUrl}
+                                className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            >
+                                Add URL
+                            </button>
+                        </div>
+                        {/* Remove uploading and uploadError display */}
+                        {/* {uploading && <p className="text-sm text-gray-500">Uploading...</p>} */}
+                        {/* {uploadError && <p className="text-sm text-red-500">{uploadError}</p>} */}
                         <div className="mt-2 flex space-x-2">
                             {editableProduct.images && editableProduct.images.map((imgUrl, index) => (
                                 <div key={index} className="relative">
