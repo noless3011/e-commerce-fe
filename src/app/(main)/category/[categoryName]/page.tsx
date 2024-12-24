@@ -1,7 +1,9 @@
 'use client';
 import ProductCard from "./ProductCard";
 import ProductGridList from "@/app/(main)/components/landing/ProductGridList"; // Assuming ProductGridList is in components
-import React from 'react';
+import Product, { mapProductResponseToProduct } from "@/app/types/Product";
+import { ProductApi } from "@/app/utils/ApiClient";
+import React, { useEffect, useState } from 'react';
 
 interface CategoryPageParams {
     params: {
@@ -12,7 +14,16 @@ interface CategoryPageParams {
 const CategoryPage = ({ params }: CategoryPageParams) => {
     const { categoryName } = params;
     const normalizedCategoryName = categoryName.replace(/-/g, ' '); // For display purposes
-
+    const [products, setProducts] = useState<Product[]>([]);
+    useEffect(() => {
+        const getCategoryProduct = async () => {
+            const getCategoryProductFunc = await ProductApi.productControllerFindPagination(1, 100, categoryName);
+            const res = await getCategoryProductFunc();
+            const list = res.data.data.map(mapProductResponseToProduct);
+            setProducts(list);
+        }
+        getCategoryProduct();
+    }, [])
     return (
         <div className="container mx-auto p-4">
             {/* Category Title and Overview */}
@@ -47,17 +58,12 @@ const CategoryPage = ({ params }: CategoryPageParams) => {
             {/* Product Grid List */}
             <div className="flex flex-row h-fit w-full">
                 <ProductGridList itemsPerPage={20}>
-                    {Array.from({ length: 600 }, (_, index) => (
+                    {products.map((product, index) => (
                         <ProductCard
-                            key={`${index}`}
-                            id={`${index}`}
-                            name="Original Apple Silicone Case with Wireless Magnetic Charger and Something else"
-                            image="https://picsum.photos/200/200"
+                            key={index}
+                            product={product}
                             cardH={400}
                             cardW={230}
-                            price={1999}
-                            url={`/product/${index}`} // Consider a more meaningful URL
-                            discount={90}
                         />
                     ))}
                 </ProductGridList>

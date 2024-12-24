@@ -2,7 +2,7 @@
 import { LoginDto } from "@/api";
 import { AuthApi } from "@/app/utils/ApiClient";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 export default function Page() {
     const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ export default function Page() {
                 setLoginStatus("*Wrong username or password");
             }
         } catch (error) {
-            setLoginStatus("*Failed to login to your account");
+            setLoginStatus("*Failed to login to your account", error);
         }
 
 

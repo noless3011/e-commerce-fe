@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { ImageList } from "./ImageList";
 import Thumbnail from "./Thumbnail";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { motion } from "framer-motion";
@@ -10,7 +9,6 @@ interface ProductImagePickerProps {
 }
 const ProductImagePicker: React.FC<ProductImagePickerProps> = ({ product }) => {
     const [images, setImages] = useState<Array<string>>();
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [stripeHeight, setStripeHeight] = useState(0);
 
@@ -37,7 +35,7 @@ const ProductImagePicker: React.FC<ProductImagePickerProps> = ({ product }) => {
                 transition={{ duration: 0.5 }}
                 ref={imagesStripeDiv}>
                 {
-                    images?.map((image, index) => (<Thumbnail src={image} index={index}></Thumbnail>))
+                    images?.map((image, index) => (<Thumbnail key={index} src={image}></Thumbnail>))
                 }
 
             </motion.div>

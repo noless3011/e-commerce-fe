@@ -45,7 +45,8 @@ const ProductRow: React.FC<ProductRowProps> = ({ product }) => {
     const handleDelete = async () => {
         try {
             const deleteProductFunc = await ProductApi.productControllerDeleteOne(Number(product.id));
-            const res = await deleteProductFunc();
+            await deleteProductFunc();
+
         } catch (error) {
             console.log("error while delete", error);
         }

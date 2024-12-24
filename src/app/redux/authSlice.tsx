@@ -27,8 +27,8 @@ export const checkLogin = createAsyncThunk(
             const checkLoginRes = await checkLoginFunc();
             console.log('thunk', checkLoginRes);
             return checkLoginRes.data; // Assuming the response data contains user info (e.g., username)
-        } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to check login status');
+        } catch (error) {
+            return rejectWithValue(error);
         }
     }
 );
@@ -44,7 +44,7 @@ export const logOutWithApi = createAsyncThunk(
             const checkLoginRes = await checkLoginFunc();
             console.log('check if logout', checkLoginRes);
             dispatch(logOut());
-        } catch (error: any) {
+        } catch (error) {
             // Handle logout error (e.g., dispatch an error action, log the error)
             console.error("Logout API call failed:", error);
             // Optionally, dispatch an action to set an error state in your slice
@@ -75,7 +75,7 @@ const authSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(checkLogin.fulfilled, (state, action: PayloadAction<any>) => {
+            .addCase(checkLogin.fulfilled, (state, action: PayloadAction<User>) => {
                 state.loading = false;
                 state.isAuthenticated = true;
                 state.user = action.payload; // Adjust based on your API response

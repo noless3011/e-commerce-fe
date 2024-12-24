@@ -1,7 +1,7 @@
 'use client'; // Mark this component as a client component
 import Link from "next/link";
 import React, { useState } from "react";
-import { AiOutlineLineChart, AiOutlineCaretRight, AiOutlineCaretDown } from "react-icons/ai";
+import { AiOutlineCaretRight, AiOutlineCaretDown } from "react-icons/ai";
 import { IconType } from "react-icons/lib";
 interface SideBarItemProps {
     children?: React.ReactNode;

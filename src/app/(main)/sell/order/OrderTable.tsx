@@ -1,5 +1,5 @@
 import React from 'react';
-import Order, { OrderStatus } from '@/app/types/Order';
+import Order from '@/app/types/Order';
 import OrderRow from './OrderRow';
 
 interface OrderTableProps {
@@ -7,9 +7,6 @@ interface OrderTableProps {
     onNextStage: (order: Order) => void; // Pass the whole order
 }
 
-const getStatusDisplayName = (status: OrderStatus): string => {
-    return status.charAt(0).toUpperCase() + status.slice(1);
-};
 
 const OrderTable: React.FC<OrderTableProps> = ({ orders, onNextStage }) => {
     return (

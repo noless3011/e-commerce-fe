@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineUser } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
 // Info Card Props Interface
 interface InfoCardProps {

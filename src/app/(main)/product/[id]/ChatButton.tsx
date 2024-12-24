@@ -8,11 +8,10 @@ import { CreateChatDto } from '@/api';
 
 interface ChatButtonProps {
     ownerId: number;
-  }
+}
 
 const ChatButton: React.FC<ChatButtonProps> = ({ ownerId }) => {
     const [isChatOpen, setIsChatOpen] = useState(false);
-    const [content, setContent] = useState("");
     const [messages, setMessages] = useState([
         { text: 'Welcome! How can I help you?', sender: 'bot' },
     ]);
@@ -35,23 +34,21 @@ const ChatButton: React.FC<ChatButtonProps> = ({ ownerId }) => {
                 ]);
             }, 500); // Simulate a 0.5-second delay
 
-            const chatData: CreateChatDto ={
+            const chatData: CreateChatDto = {
                 receiverId: ownerId,
                 content: newMessage
             }
-            const chat = async (e: React.FormEvent) => {
-                e.preventDefault();
-    
+            const chat = async () => {
                 try {
                     const callCreateChatFunc = await ChatApi.chatControllerCreate(chatData);
                     const res = await callCreateChatFunc();
                     console.log(res);
                 } catch (error) {
-    
+                    console.log(error);
                 }
-                
+
             }
-            
+            chat();
         }
     };
 

@@ -10,6 +10,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    ChartOptions,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -72,7 +73,7 @@ const DashboardPage: React.FC = () => {
         ],
     };
 
-    const chartOptions: any = { // Using 'any' for simplicity, refine with Chart.js types
+    const chartOptions: ChartOptions<'bar' | 'line' | 'pie' | 'doughnut' | 'polarArea' | 'radar' | 'scatter'> = { // Using 'any' for simplicity, refine with Chart.js types
         responsive: true,
         plugins: {
             legend: {

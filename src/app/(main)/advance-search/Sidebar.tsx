@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 type SidebarProps = {
   activeSubPage: string;
@@ -12,11 +11,10 @@ const Sidebar = ({ activeSubPage, setActiveSubPage }: SidebarProps) => {
         <li>
           <button
             onClick={() => setActiveSubPage("findItems")}
-            className={`text-lg ${
-              activeSubPage === "findItems"
+            className={`text-lg ${activeSubPage === "findItems"
                 ? "font-semibold underline text-black"
                 : "text-gray-700 hover:underline"
-            }`}
+              }`}
           >
             Find Items
           </button>
@@ -25,11 +23,10 @@ const Sidebar = ({ activeSubPage, setActiveSubPage }: SidebarProps) => {
         <li>
           <button
             onClick={() => setActiveSubPage("findStores")}
-            className={`text-lg ${
-              activeSubPage === "findStores"
+            className={`text-lg ${activeSubPage === "findStores"
                 ? "font-semibold underline text-black"
                 : "text-gray-700 hover:underline"
-            }`}
+              }`}
           >
             Find Stores
           </button>

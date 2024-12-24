@@ -1,4 +1,4 @@
-import { CreateOrderDto } from "@/api";
+
 export type OrderStatus = "active" | "canceled" | "purchased" | "preparing" | "inCart"; // Extendable for other statuses
 
 export default interface Order {

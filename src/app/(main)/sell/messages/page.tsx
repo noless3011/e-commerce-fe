@@ -103,7 +103,7 @@ const MessagingPanel: React.FC = () => {
                 const res = await callGetChatFunc();
                 console.log(res);
             } catch (error) {
-                
+                console.log("error", error)
             }
         }
     };

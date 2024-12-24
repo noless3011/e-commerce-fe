@@ -1,4 +1,4 @@
-import { ProductResponseDto, ProductResponseDtoTypesEnum } from "@/api";
+import { ProductResponseDto } from "@/api";
 import { CreateProductDto, CreateProductDtoTypesEnum } from "@/api";
 export type ProductStatus = "SoldOut" | "Available" | "ComingSoon"; // Extendable for other statuses
 

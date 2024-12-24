@@ -4,7 +4,6 @@ import { RootState } from "@/app/redux/store";
 import Product, { convertProductToCreateProductDto, ProductType } from "@/app/types/Product";
 import { useState, useEffect } from "react";
 import { FileUploadApi, ProductApi } from "@/app/utils/ApiClient";
-import { AxiosInstance, AxiosPromise, RawAxiosRequestConfig } from 'axios';
 import { setInspectorState } from "@/app/redux/inspectorSlice";
 
 const Inspector = () => {
@@ -99,7 +98,7 @@ const Inspector = () => {
                     ...prev,
                     images: [...(prev.images || []), ...uploadedImageUrls],
                 }));
-            } catch (error: any) {
+            } catch (error) {
                 console.error("Error uploading image:", error);
                 setUploadError("Failed to upload image. Please try again.");
             } finally {
@@ -116,7 +115,7 @@ const Inspector = () => {
                 const postProduct = async () => {
                     try {
                         const postProductFunc = await ProductApi.productControllerCreate(convertProductToCreateProductDto(fillPartialProduct(editableProduct)));
-                        const res = await postProductFunc();
+                        await postProductFunc();
                     } catch (error) {
                         console.error(`Error adding product "${editableProduct.name}":`, error);
                     }

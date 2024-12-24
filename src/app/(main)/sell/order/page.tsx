@@ -3,7 +3,6 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { dummyOrders } from './dummy';
 import OrderTable from './OrderTable';
 import { OrderStatus, default as OrderType } from '@/app/types/Order'; // Import the interface
-import { OrderApi } from '@/app/utils/ApiClient';
 
 const tabs: OrderStatus[] = ['active', 'preparing', 'purchased', 'canceled'];
 

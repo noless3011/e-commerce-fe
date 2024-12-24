@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineUser } from 'react-icons/ai';
 import InfoCard from './InfoCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';

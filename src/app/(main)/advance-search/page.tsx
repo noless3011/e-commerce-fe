@@ -6,26 +6,24 @@ import FindStores from "./FindStores";
 import Header from "./Header";
 
 const AdvancedSearchPage = () => {
-    const [activeTab, setActiveTab] = useState("search");
+    const [activeTab] = useState("search");
     const [activeSubPage, setActiveSubPage] = useState("findItems");
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
-            <Header/>
+            <Header />
             <div className="flex flex-1">
                 {/* Sidebar */}
                 {activeTab === "search" && (
                     <aside className="w-1/4">
-                    <Sidebar
-                    activeSubPage={activeSubPage}
-                    setActiveSubPage={setActiveSubPage}
-                    />
+                        <Sidebar
+                            activeSubPage={activeSubPage}
+                            setActiveSubPage={setActiveSubPage}
+                        />
                     </aside>
                 )}
 
                 <main className="flex-1 p-8 bg-white">
-                    {activeTab === "search" && activeSubPage === "findItems" && <FindItems search={function (): void {
-                        throw new Error("Function not implemented.");
-                    } } />}
+                    {activeTab === "search" && activeSubPage === "findItems" && <FindItems />}
                     {activeTab === "search" && activeSubPage === "findStores" && <FindStores />}
                 </main>
             </div>

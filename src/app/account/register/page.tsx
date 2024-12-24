@@ -1,10 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { UserApiFactory } from "@/api";
+import { useState } from "react";
 import { LoginDto } from "@/api";
 import { AuthApi } from "@/app/utils/ApiClient";
-import { BaseAPI } from "@/api/base";
 
 
 export default function Page() {
@@ -31,7 +29,7 @@ export default function Page() {
                 setRegisterStatus("*Failed to create account");
             }
         } catch (error) {
-            setRegisterStatus("*Failed to create account");
+            setRegisterStatus("*Failed to create account", error);
         }
 
     };
