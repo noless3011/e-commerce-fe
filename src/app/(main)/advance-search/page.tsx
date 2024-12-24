@@ -6,7 +6,7 @@ import FindStores from "./FindStores";
 import Header from "./Header";
 
 const AdvancedSearchPage = () => {
-    const [activeTab, setActiveTab] = useState("search");
+    const [activeTab] = useState("search");
     const [activeSubPage, setActiveSubPage] = useState("findItems");
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">

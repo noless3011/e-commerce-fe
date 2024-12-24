@@ -1,15 +1,13 @@
 "use client";
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import SearchBar from './components/header/SearchBar';
 import AuthenticationArea from './components/header/AuthenticationArea';
 import { Provider } from 'react-redux';
 import store from '@/app/redux/store';
-import path from 'path';
 
 const Header = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
     const navLinks = [
@@ -20,15 +18,6 @@ const Header = () => {
     ];
 
     const isActive = (path: string) => pathname === path;
-
-
-    const router = useRouter();
-    const login = () => {
-        router.push("/account/login");
-    }
-    const register = () => {
-        router.push("/account/register");
-    }
     return (
         <Provider store={store}>
             <div className="flex flex-col gap-0 w-full z-10">

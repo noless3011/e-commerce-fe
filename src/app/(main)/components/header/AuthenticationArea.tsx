@@ -1,5 +1,4 @@
-import React, { SetStateAction, useEffect } from "react";
-import { UserApi } from "@/app/utils/ApiClient";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthenticationButton from "./AuthenticationButtons";
@@ -13,7 +12,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const AuthenticationArea = () => {
     const [loginState, setLoginState] = useState(false);
-    const [account, setAccount] = useState<UserResponseDto>();
+    const [account] = useState<UserResponseDto>();
     const authDispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
     const authInfo = useSelector((state: RootState) => state.auth)

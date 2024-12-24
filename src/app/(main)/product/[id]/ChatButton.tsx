@@ -38,19 +38,17 @@ const ChatButton: React.FC<ChatButtonProps> = ({ ownerId }) => {
                 receiverId: ownerId,
                 content: newMessage
             }
-            const chat = async (e: React.FormEvent) => {
-                e.preventDefault();
-
+            const chat = async () => {
                 try {
                     const callCreateChatFunc = await ChatApi.chatControllerCreate(chatData);
                     const res = await callCreateChatFunc();
                     console.log(res);
                 } catch (error) {
-
+                    console.log(error);
                 }
 
             }
-
+            chat();
         }
     };
 

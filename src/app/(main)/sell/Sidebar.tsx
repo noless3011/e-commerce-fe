@@ -1,7 +1,7 @@
 'use client'; // Mark this component as a client component
 
 import React, { useState } from 'react';
-import { AiOutlineCaretDown, AiOutlineCaretRight, AiOutlineCaretUp, AiOutlineLineChart, AiOutlineMessage, AiTwotoneShop } from "react-icons/ai";
+import { AiOutlineLineChart, AiOutlineMessage, AiTwotoneShop } from "react-icons/ai";
 import SideBarItem from './SideBarItem';
 import SideBarSubItem from './SideBarSubItem';
 

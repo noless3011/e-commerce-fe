@@ -25,9 +25,9 @@ const SearchBar = () => {
                         </td>
                         <td className="p-0 w-[150px]">
                             <select className="w-full h-full bg-slate-100 rounded-tr-full rounded-br-full border-solid border-y-2 border-r-2 border-black p-2 flex flex-row">
-                                {categories.map((category) => {
+                                {categories.map((category, index) => {
                                     return (
-                                        <option>{category}</option>
+                                        <option key={index}>{category}</option>
                                     )
                                 })}
                             </select>

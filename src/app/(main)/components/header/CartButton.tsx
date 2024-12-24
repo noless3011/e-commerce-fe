@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BiShoppingBag } from 'react-icons/bi';
-import Image from 'next/image';
 import OrderCart from './OrderCart';
 
 export default function CartButton() {

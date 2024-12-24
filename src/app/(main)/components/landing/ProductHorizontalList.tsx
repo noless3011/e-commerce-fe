@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import { ReactNode } from "react"
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 

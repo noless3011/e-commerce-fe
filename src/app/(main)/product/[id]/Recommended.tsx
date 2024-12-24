@@ -127,7 +127,7 @@ const Recommended: React.FC = () => {
                     <Product
                         key={index}
                         product={product}
-                        onHover={(isHovering) => { }} // Pass an empty handler or implement hover behavior
+                        onHover={() => { }} // Pass an empty handler or implement hover behavior
                     />
                 ))}
             </div>

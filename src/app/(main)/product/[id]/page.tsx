@@ -8,8 +8,6 @@ import ChatButton from "./ChatButton"
 import { useEffect, useState } from "react"
 import { ProductApi } from "@/app/utils/ApiClient"
 import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
 
 export default function ProductPage() {
     const defaultProduct: Product = {

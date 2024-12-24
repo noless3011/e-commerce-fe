@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Product from '../types/Product';
-import { clear } from 'console';
 export type InspectorType = "collapsed" | "add" | "edit";
 interface InspectorState {
     viewProduct: Product | null;

@@ -5,10 +5,9 @@ import Link from 'next/link';
 interface ProductProps {
     product: Product;
     onHover: (isHovering: boolean) => void;
-    index?: number;
 }
 
-const ProductCard: React.FC<ProductProps> = ({ product, onHover, index }) => {
+const ProductCard: React.FC<ProductProps> = ({ product, onHover }) => {
     const imageUrl = product.images && product.images.length > 0 ? product.images[0] : '/placeholder.jpg';
 
     return (

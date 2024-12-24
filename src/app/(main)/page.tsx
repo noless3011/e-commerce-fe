@@ -6,9 +6,7 @@ import CategoryGrid from "./components/landing/CategoryGrid";
 import ProductCard from "./components/landing/ProductCard";
 import ProductGridList from "./components/landing/ProductGridList";
 import ProductHorizontalList from "./components/landing/ProductHorizontalList";
-import { get } from "http";
 import Product, { mapProductResponseToProduct, ProductType } from "../types/Product";
-import { li } from "framer-motion/client";
 
 export default function Page() {
     const [hotSalesProducts, setHotSalesProducts] = useState<Product[]>([]);
@@ -29,7 +27,7 @@ export default function Page() {
         "Furniture",
         "Automotive",
     ];
-    const [categoryProducts, setCategoryProducts] = useState<ProductType[]>(productTypeArray);
+    const [categoryProducts] = useState<ProductType[]>(productTypeArray);
     useEffect(() => {
         const fetchHotSales = async () => {
             try {

@@ -1,5 +1,5 @@
 // data/orders.ts
-import Order, { OrderStatus } from '@/app/types/Order';
+import Order from '@/app/types/Order';
 
 export const dummyOrders: Order[] = [
     {
