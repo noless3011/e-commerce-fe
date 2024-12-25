@@ -5,9 +5,9 @@ import ProductTable from './ProductTable';
 import Product, { mapProductResponseArrayToProductArray } from '@/app/types/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
-import { setInspectorState, setProduct } from '@/app/redux/inspectorSlice';
 import { AppDispatch } from '@/app/redux/store';
 import { ProductApi } from '@/app/utils/ApiClient';
+import { setProduct, setInspectorState } from '@/app/redux/inspectorSlice';
 export default function StoreManagementPage() {
     const [products, setProducts] = useState<Product[]>([]);
     const inspectorState = useSelector((state: RootState) => (state.inspector.currentState));
@@ -57,6 +57,7 @@ export default function StoreManagementPage() {
             inspectorDispatch(setInspectorState('collapsed'))
         }
     }
+
     return (
         <div className="p-4 w-full">
             <div className="flex justify-between items-center mb-4">

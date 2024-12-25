@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import Product, { convertProductToCreateProductDto, ProductType } from "@/app/types/Product";
 import { useState, useEffect } from "react";
-import { FileUploadApi, ProductApi } from "@/app/utils/ApiClient";
+import { ProductApi } from "@/app/utils/ApiClient";
 import { setInspectorState } from "@/app/redux/inspectorSlice";
 
 const Inspector = () => {
