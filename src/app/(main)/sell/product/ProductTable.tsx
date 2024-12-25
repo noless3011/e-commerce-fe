@@ -33,7 +33,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-gray-200 overflow-y-scroll h-[40rem]">
                     {products.map((product) => (
                         <ProductRow key={product.id} product={product} />
                     ))}
