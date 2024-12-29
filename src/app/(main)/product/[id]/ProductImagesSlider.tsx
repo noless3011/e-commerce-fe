@@ -34,6 +34,7 @@ const ProductImagesSlider: React.FC<ProductImagesSliderProps> = ({ product }) =>
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -300, opacity: 0 }}
                 transition={{ duration: 1 }}
+                crossOrigin='anonymous'
                 className="absolute w-full h-full object-contain"
             />
             <button onClick={prevImage} className="absolute left-4 top-1/2 transform -translate-y-1/2  w-16 aspect-square bg-slate-300/50 backdrop-blur-3xl rounded-full">

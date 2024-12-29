@@ -351,6 +351,37 @@ export interface LoginDto {
 /**
  * 
  * @export
+ * @interface OrderPaginationResponse
+ */
+export interface OrderPaginationResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderPaginationResponse
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderPaginationResponse
+     */
+    'page': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderPaginationResponse
+     */
+    'pageSize': number;
+    /**
+     * 
+     * @type {Array<OrderResponse>}
+     * @memberof OrderPaginationResponse
+     */
+    'data': Array<OrderResponse>;
+}
+/**
+ * 
+ * @export
  * @interface OrderResponse
  */
 export interface OrderResponse {
@@ -655,6 +686,31 @@ export interface UpdateUserDto {
      * @memberof UpdateUserDto
      */
     'address'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UploadFileResponse
+ */
+export interface UploadFileResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadFileResponse
+     */
+    'fileName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadFileResponse
+     */
+    'message': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UploadFileResponse
+     */
+    'code': number;
 }
 /**
  * 
@@ -1310,7 +1366,7 @@ export const FileUploadApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async fileUploadControllerUploadSingle(file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async fileUploadControllerUploadSingle(file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadFileResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.fileUploadControllerUploadSingle(file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FileUploadApi.fileUploadControllerUploadSingle']?.[localVarOperationServerIndex]?.url;
@@ -1341,7 +1397,7 @@ export const FileUploadApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileUploadControllerUploadSingle(file?: File, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        fileUploadControllerUploadSingle(file?: File, options?: RawAxiosRequestConfig): AxiosPromise<UploadFileResponse> {
             return localVarFp.fileUploadControllerUploadSingle(file, options).then((request) => request(axios, basePath));
         },
     };
@@ -1520,11 +1576,52 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Find In Cart Order by ownerId
+         * @summary Order Detail
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerFindInCartByOwnerId: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        orderControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('orderControllerFindOne', 'id', id)
+            const localVarPath = `/api/order/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Query Order
+         * @param {number} page 
+         * @param {number} pageSize 
+         * @param {OrderControllerFindPaginationStatusEnum} [status] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerFindPagination: async (page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('orderControllerFindPagination', 'page', page)
+            // verify required parameter 'pageSize' is not null or undefined
+            assertParamExists('orderControllerFindPagination', 'pageSize', pageSize)
             const localVarPath = `/api/order`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1536,6 +1633,62 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update Status Order
+         * @param {number} id 
+         * @param {OrderControllerUpdateStatusStatusEnum} status 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerUpdateStatus: async (id: number, status: OrderControllerUpdateStatusStatusEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('orderControllerUpdateStatus', 'id', id)
+            // verify required parameter 'status' is not null or undefined
+            assertParamExists('orderControllerUpdateStatus', 'status', status)
+            const localVarPath = `/api/order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
 
 
     
@@ -1573,14 +1726,44 @@ export const OrderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Find In Cart Order by ownerId
+         * @summary Order Detail
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async orderControllerFindInCartByOwnerId(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrderResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindInCartByOwnerId(options);
+        async orderControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindOne(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerFindInCartByOwnerId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerFindOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Query Order
+         * @param {number} page 
+         * @param {number} pageSize 
+         * @param {OrderControllerFindPaginationStatusEnum} [status] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderPaginationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindPagination(page, pageSize, status, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerFindPagination']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update Status Order
+         * @param {number} id 
+         * @param {OrderControllerUpdateStatusStatusEnum} status 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerUpdateStatus(id: number, status: OrderControllerUpdateStatusStatusEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerUpdateStatus(id, status, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerUpdateStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1605,12 +1788,36 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Find In Cart Order by ownerId
+         * @summary Order Detail
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerFindInCartByOwnerId(options?: RawAxiosRequestConfig): AxiosPromise<Array<OrderResponse>> {
-            return localVarFp.orderControllerFindInCartByOwnerId(options).then((request) => request(axios, basePath));
+        orderControllerFindOne(id: string, options?: RawAxiosRequestConfig): AxiosPromise<OrderResponse> {
+            return localVarFp.orderControllerFindOne(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Query Order
+         * @param {number} page 
+         * @param {number} pageSize 
+         * @param {OrderControllerFindPaginationStatusEnum} [status] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options?: RawAxiosRequestConfig): AxiosPromise<OrderPaginationResponse> {
+            return localVarFp.orderControllerFindPagination(page, pageSize, status, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update Status Order
+         * @param {number} id 
+         * @param {OrderControllerUpdateStatusStatusEnum} status 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerUpdateStatus(id: number, status: OrderControllerUpdateStatusStatusEnum, options?: RawAxiosRequestConfig): AxiosPromise<OrderResponse> {
+            return localVarFp.orderControllerUpdateStatus(id, status, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1636,16 +1843,66 @@ export class OrderApi extends BaseAPI {
 
     /**
      * 
-     * @summary Find In Cart Order by ownerId
+     * @summary Order Detail
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrderApi
      */
-    public orderControllerFindInCartByOwnerId(options?: RawAxiosRequestConfig) {
-        return OrderApiFp(this.configuration).orderControllerFindInCartByOwnerId(options).then((request) => request(this.axios, this.basePath));
+    public orderControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Query Order
+     * @param {number} page 
+     * @param {number} pageSize 
+     * @param {OrderControllerFindPaginationStatusEnum} [status] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerFindPagination(page, pageSize, status, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Status Order
+     * @param {number} id 
+     * @param {OrderControllerUpdateStatusStatusEnum} status 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerUpdateStatus(id: number, status: OrderControllerUpdateStatusStatusEnum, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerUpdateStatus(id, status, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+ * @export
+ */
+export const OrderControllerFindPaginationStatusEnum = {
+    Active: 'active',
+    Canceled: 'canceled',
+    Purchased: 'purchased',
+    Preparing: 'preparing',
+    InCart: 'inCart'
+} as const;
+export type OrderControllerFindPaginationStatusEnum = typeof OrderControllerFindPaginationStatusEnum[keyof typeof OrderControllerFindPaginationStatusEnum];
+/**
+ * @export
+ */
+export const OrderControllerUpdateStatusStatusEnum = {
+    Active: 'active',
+    Canceled: 'canceled',
+    Purchased: 'purchased',
+    Preparing: 'preparing',
+    InCart: 'inCart'
+} as const;
+export type OrderControllerUpdateStatusStatusEnum = typeof OrderControllerUpdateStatusStatusEnum[keyof typeof OrderControllerUpdateStatusStatusEnum];
 
 
 /**
