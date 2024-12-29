@@ -15,6 +15,12 @@ const nextConfig = {
         port: '',
         pathname: '/api/file-upload/**', // Adjust pathname if needed
       },
+      {
+        protocol: 'https',
+        hostname: 'i.ebayimg.com',
+        port: '',
+        pathname: '/**', // Adjust pathname if needed
+      },
     ],
   },
 };

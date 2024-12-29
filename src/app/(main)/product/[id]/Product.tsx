@@ -1,6 +1,7 @@
 import Product from '@/app/types/Product';
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface ProductProps {
     product: Product;
@@ -18,10 +19,13 @@ const ProductCard: React.FC<ProductProps> = ({ product, onHover }) => {
             onMouseLeave={() => onHover(false)}
         >
             <div className='w-full h-3/5 relative overflow-hidden'> {/* Added relative and overflow-hidden */}
-                <img
+                <Image
                     src={imageUrl}
                     alt={product.name}
-                    className="w-full h-full rounded-md mb-2 object-cover" // Changed h-auto to h-full and added object-cover
+                    layout='fill'
+                    objectFit='cover'
+                    crossOrigin='anonymous'
+                    className="rounded-md mb-2" // Changed h-auto to h-full and added object-cover
                     style={{ maxHeight: 'none' }} // Remove maxHeight to allow full height
                 />
             </div>

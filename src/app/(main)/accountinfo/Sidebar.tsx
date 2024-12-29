@@ -1,4 +1,5 @@
 import { RootState } from '@/app/redux/store';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
@@ -9,17 +10,17 @@ const Sidebar: React.FC = () => {
     const authInfo = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {
-            setUserName(authInfo.user?.username || "N/A");
-            setAvatar(authInfo.user?.avatar || "N/A");
-        }, [authInfo]);
-    
+        setUserName(authInfo.user?.username || "N/A");
+        setAvatar(authInfo.user?.avatar || "N/A");
+    }, [authInfo]);
+
     return (
         <div className="w-64 pr-8">
             <div className="bg-white rounded-md shadow-sm p-4 mb-6">
                 <div className="flex justify-center mb-4">
-                    <div className="rounded-full bg-gray-200 w-16 h-16 flex items-center justify-center">
+                    <div className="relative rounded-full bg-gray-200 w-16 h-16 flex items-center justify-center">
                         {avatar != "N/A" ? (
-                            <img src={avatar} alt="User Avatar" className="w-full h-full object-cover" />
+                            <Image src={avatar} alt="User Avatar" layout='fill' objectFit='cover' crossOrigin='anonymous' />
                         ) : (
                             <AiOutlineUser size={32} className="text-gray-500" />
                         )}

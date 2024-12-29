@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface ProductItem {
@@ -16,13 +17,16 @@ const ItemsResult: React.FC<ItemsResultProps> = ({ results }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {results.map((product) => (
-                <div key={product.id} className="bg-white p-4 rounded-lg shadow-lg">
+                <div key={product.id} className="relative w-full h-64 bg-white p-4 rounded-lg shadow-lg">
                     {/* Hiển thị hình ảnh sản phẩm */}
                     {product.images.length > 0 ? (
-                        <img
+                        <Image
                             src={product.images[0]} // Hiển thị ảnh đầu tiên trong mảng images
                             alt={product.name}
-                            className="w-full h-64 object-cover rounded-md mb-4"
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-md mb-4"
+                            crossOrigin='anonymous'
                         />
                     ) : (
                         <div className="w-full h-64 bg-gray-300 rounded-md mb-4 flex items-center justify-center">
