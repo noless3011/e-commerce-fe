@@ -1,26 +1,33 @@
+'use client';
 import React, { useState } from "react";
 import { BiDotsVerticalRounded, BiCart, BiHeart } from "react-icons/bi";
-import { Provider, useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { addOrder } from '@/app/redux/cartSlice';
 import Order from '@/app/types/Order';
-import store from "@/app/redux/store";
-const ProductCardDropdown = () => {
+import store, { RootState } from "@/app/redux/store";
+
+interface ProductCardDropdownProps {
+    productId: number;
+}
+const ProductCardDropdown: React.FC<ProductCardDropdownProps> = ({ productId }) => {
     const [isHovered, setIsHovered] = useState(false);
 
-
+    const currentUser = useSelector((state: RootState) => state.auth.user);
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
-        const newOrder: Order = {
-            status: "inCart",
-            ownerId: 1, // Replace with actual owner ID
-            productId: 123, // Replace with actual product ID
-            address: "123 Main St", // Replace with actual address
-            amount: 1, // Replace with actual amount
-            createdTime: Date.now(),
-            purchasedTime: 0,
-        };
-        dispatch(addOrder(newOrder));
+        if (currentUser) {
+            const newOrder: Order = {
+                status: "inCart",
+                ownerId: currentUser.id, // Replace with actual owner ID
+                productId: productId, // Replace with actual product ID
+                address: currentUser.address, // Replace with actual address
+                amount: 1, // Replace with actual amount
+                createdTime: Date.now(),
+                purchasedTime: 0,
+            };
+            dispatch(addOrder(newOrder));
+        }
     };
 
 

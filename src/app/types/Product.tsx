@@ -31,7 +31,7 @@ export const productTypeColorMap: Record<ProductType, ProductTypeColors> = {
     Automotive: { bgColor: 'bg-red-100', textColor: 'text-red-800' },
 };
 export default interface Product {
-    id: string;
+    id: number;
     created_at: string;
     updated_at: string;
     status: ProductStatus;
@@ -73,7 +73,7 @@ export const mapProductResponseToProduct = (
     };
 };
 export const defaultProduct: Product = {
-    id: "",
+    id: 0,
     created_at: "",
     updated_at: "",
     status: "Available",
