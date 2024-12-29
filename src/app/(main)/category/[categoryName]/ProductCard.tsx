@@ -38,6 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                             layout='fill'
                             objectFit='fit'
                             className="rounded-t-lg "
+                            crossOrigin='anonymous'
                         />
                     </div>
                 </Link>

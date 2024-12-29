@@ -83,6 +83,7 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                     layout="fill"
                                     objectFit="contain"
                                     className="rounded-md"
+                                    crossOrigin='anonymous'
                                 />
                             </div>
                             <div className="flex-grow">

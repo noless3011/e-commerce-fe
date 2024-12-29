@@ -1,5 +1,6 @@
 import { UserResponseDto } from "@/api";
 import { RootState } from "@/app/redux/store";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -14,11 +15,14 @@ const AccountInfo: React.FC<AccountInfoProps> = () => {
         setUsername(authInfo.user?.username);
     }, [authInfo])
     return (<div className="flex flex-row items-center gap-2">
-        <div className="h-10 aspect-square rounded-full overflow-hidden">
-            <img
+        <div className="relative h-10 aspect-square rounded-full overflow-hidden">
+            <Image
                 src="https://picsum.photos/300/300"
                 alt="avatar"
-                className="w-full h-full object-contain rounded-t-lg "
+                layout="fill"
+                objectFit="contain"
+                className="rounded-t-lg "
+                crossOrigin='anonymous'
             />
         </div>
         <div className="w-fit">
