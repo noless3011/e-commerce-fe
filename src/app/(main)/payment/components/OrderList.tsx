@@ -19,7 +19,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders, setOrders }) => {
     };
     return (<div className="flex-1 xl:w-auto h-fit">
         {orders.map((order, index) => (
-            <OrderCard index={index} order={order} onSetOrder={setOrderFunc} onRemove={remove} />
+            <OrderCard key={index} index={index} order={order} onSetOrder={setOrderFunc} onRemove={remove} />
         ))}
     </div>)
 }

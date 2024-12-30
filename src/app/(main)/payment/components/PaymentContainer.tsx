@@ -1,6 +1,6 @@
 'use client';
 import { RootState } from "@/app/redux/store";
-import Order, { convertOrderToCreateOrderDto } from "@/app/types/Order";
+import Order from "@/app/types/Order";
 import { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import OrderList from "./OrderList";
@@ -68,7 +68,7 @@ const PaymentContainer = () => {
                     onClick={async () => {
                         orders.map(async (order) => {
                             try {
-                                let temp = {
+                                const temp = {
                                     status: 'active',
                                     productId: order.productId,
                                     address: order.address,

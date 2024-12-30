@@ -40,7 +40,7 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onNextStage, isLoadingUpdate
             }
         }
         fetchProduct();
-    }, [order])
+    }, [order, product])
     return (
         <tr>
             <td className="px-6 py-4 whitespace-nowrap">

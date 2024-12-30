@@ -1,6 +1,6 @@
 'use client'
 import { CreateProductDto, CreateUserDto } from "@/api";
-import { AuthApi, ProductApi, UserApi } from "@/app/utils/ApiClient";
+import { AuthApi, ProductApi } from "@/app/utils/ApiClient";
 import data from './data.json';
 
 // Function to generate a random boolean for gender
@@ -8,12 +8,6 @@ function getRandomGender(): boolean {
     return Math.random() < 0.5; // 50% chance of true/false
 }
 
-// Function to generate a random birthday timestamp within a reasonable range
-function generateRandomBirthday(): number {
-    const now = Date.now();
-    const pastDate = new Date(now - (Math.random() * 50 * 365 * 24 * 60 * 60 * 1000)); // Up to 50 years ago
-    return pastDate.getTime();
-}
 
 // Function to create mock user data (matching CreateUserDto)
 function createMockUser(index: number): CreateUserDto {
@@ -30,17 +24,6 @@ function createMockUser(index: number): CreateUserDto {
     };
 }
 
-type ProductFromJson = {
-    name: string;
-    description: string;
-    images: string[];
-    price: number;
-    discount: number;
-    remaining: number;
-    soldNumber: number;
-    rating: number;
-    types: string;
-}
 const Dashboard = () => {
     const numberOfUsers = 6;
     const mockUsers: Array<CreateUserDto> = [];

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Order from '@/app/types/Order';
 import { ProductApi } from '@/app/utils/ApiClient';
 import Product, { mapProductResponseToProduct } from '@/app/types/Product';
@@ -91,7 +91,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
                 {/* Action Buttons */}
                 <div className="flex space-x-4">
                     <button
-                        onClick={(e) => onRemove(index)}
+                        onClick={() => onRemove(index)}
                         className="text-black underline font-medium hover:text-gray-700"
                     >
                         Remove

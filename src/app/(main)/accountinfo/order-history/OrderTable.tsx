@@ -1,16 +1,15 @@
 'use client';
 import { RootState } from "@/app/redux/store";
 import OrderRow from "./OrderRow";
-import Order, { convertToOrders, OrderStatus } from "@/app/types/Order";
+import Order, { convertToOrders } from "@/app/types/Order";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { OrderApi } from "@/app/utils/ApiClient";
-const tabs: OrderStatus[] = ['active', 'preparing', 'purchased', 'canceled'];
 const ITEMS_PER_PAGE = 1000; // Define items per page
 
 const OrderTable = () => {
     const [orders, setOrders] = useState<Order[]>([]);
-    const [isLoadingUpdate, setIsLoadingUpdate] = useState(false); // To prevent multiple updates at once
+    const [isLoadingUpdate] = useState(false); // To prevent multiple updates at once
     const currentUser = useSelector((state: RootState) => state.auth.user?.id);
     const auth = useSelector((state: RootState) => state.auth.isAuthenticated);
     const fetchOrders = useCallback(async () => {
