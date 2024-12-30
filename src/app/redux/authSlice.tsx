@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthApi, UserApi } from '@/app/utils/ApiClient';
 import { User } from '../types/User';
+import { UpdateUserDto, UserResponseDto } from '@/api';
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -50,6 +51,18 @@ export const logOutWithApi = createAsyncThunk(
         }
     }
 );
+export const updateUser = createAsyncThunk(
+    'auth/updateUser',
+    async (updateData: UpdateUserDto, { rejectWithValue }) => {
+        try {
+            const updateUserFunc = await UserApi.userControllerUpdateUserInfo(updateData);
+            const response = await updateUserFunc();
+            return response.data; // Assuming your API returns the updated user data
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data?.message || error.message || 'Failed to update user information');
+        }
+    }
+);
 
 const authSlice = createSlice({
     name: 'auth',
@@ -90,6 +103,15 @@ const authSlice = createSlice({
             }).addCase(logOutWithApi.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Logout failed';
+            }).addCase(updateUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            }).addCase(updateUser.fulfilled, (state, action: PayloadAction<Array<UserResponseDto>>) => {
+                state.loading = false;
+                state.user = action.payload[0] as User; // Update user info in the state, you might need to adjust this if UserResponseDto is different from User
+            }).addCase(updateUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
             });
     },
 });

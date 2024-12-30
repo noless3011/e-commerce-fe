@@ -36,3 +36,17 @@ body {
     text-wrap: balance;
   }
 }
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+  /* Adjust duration as needed */
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}

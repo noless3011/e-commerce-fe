@@ -68,8 +68,11 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, isLoadingUpdate, finishDelet
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">{order.ownerId}</div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{product?.name}</div>
+            <td className="px-6 py-4 whitespace-nowrap max-w-[150px] overflow-hidden relative">
+                <div className="text-sm text-gray-900 whitespace-nowrap absolute left-0 animate-marquee text-center">
+                    {product?.name}     {/* Add some spacing for the loop */}
+                    {product?.name}
+                </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">${price}</div>

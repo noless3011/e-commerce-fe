@@ -7,12 +7,13 @@ import OrderList from "./OrderList";
 import { OrderApi, ProductApi } from "@/app/utils/ApiClient";
 import Product, { mapProductResponseToProduct } from "@/app/types/Product";
 import { CreateOrderDto } from "@/api";
+import { useRouter } from "next/navigation";
 
 const PaymentContainer = () => {
     const [orders, setOrders] = useState<Array<Order>>([]);
     const [productPrices, setProductPrices] = useState<{ [productId: number]: number }>({});
     const orderRedux = useSelector((state: RootState) => state.cart.orders);
-
+    const router = useRouter();
     useEffect(() => {
         console.log("orders from Redux: ", orderRedux);
         setOrders(orderRedux);
@@ -45,6 +46,28 @@ const PaymentContainer = () => {
             return sum + (price * order.amount || 0);
         }, 0);
     }, [orders, productPrices]);
+    const paymentHandler = async () => {
+        orders.map(async (order) => {
+            try {
+                const temp = {
+                    status: 'active',
+                    productId: order.productId,
+                    address: order.address,
+                    amount: order.amount,
+                };
+                const createOrderFunc = await OrderApi.orderControllerCreateNewOrder(temp as CreateOrderDto)
+                const res = await createOrderFunc();
+                console.log(res);
+                router.push("/");
+
+            } catch (error) {
+                router.push("/accountinfo/personal-info");
+                alert("please fill user info");
+                console.log(error);
+            }
+        })
+
+    }
     return (<div className="w-full flex flex-col xl:flex-row">
         <OrderList orders={orders} setOrders={setOrders}></OrderList>
         <div className="w-full h-fit xl:w-80 p-4">
@@ -65,23 +88,7 @@ const PaymentContainer = () => {
                 </div>
                 <button
                     className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    onClick={async () => {
-                        orders.map(async (order) => {
-                            try {
-                                const temp = {
-                                    status: 'active',
-                                    productId: order.productId,
-                                    address: order.address,
-                                    amount: order.amount,
-                                };
-                                const createOrderFunc = await OrderApi.orderControllerCreateNewOrder(temp as CreateOrderDto)
-                                const res = await createOrderFunc();
-                                console.log(res);
-                            } catch (error) {
-                                console.log(error);
-                            }
-                        })
-                    }}
+                    onClick={paymentHandler}
                 >
                     Proceed to Pay
                 </button>
