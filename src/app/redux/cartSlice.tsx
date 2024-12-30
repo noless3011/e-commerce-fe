@@ -14,7 +14,10 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addOrder: (state, action: PayloadAction<Order>) => {
-            state.orders.push(action.payload);
+            const isProductInCart = state.orders.some(order => order.productId === action.payload.productId);
+            if (!isProductInCart) {
+                state.orders.push(action.payload);
+            }
         },
         removeOrder: (state, action: PayloadAction<number>) => {
             state.orders = state.orders.filter(order => order.productId !== action.payload);

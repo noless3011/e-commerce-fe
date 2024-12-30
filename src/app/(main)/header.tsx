@@ -13,7 +13,7 @@ const Header = () => {
     const navLinks = [
         { href: '/', label: 'Market' },
         { href: '/sell', label: 'Sell' },
-        { href: '/accountinfo', label: 'Account' },
+        { href: '/accountinfo/personal-info', label: 'Account' },
         { href: '/about', label: 'About' },
     ];
 

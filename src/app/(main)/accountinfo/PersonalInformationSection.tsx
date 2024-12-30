@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import InfoCard from './InfoCard';
+import InfoCard from './personal-info/InfoCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
 

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import OrderList from "./OrderList";
 import { OrderApi, ProductApi } from "@/app/utils/ApiClient";
 import Product, { mapProductResponseToProduct } from "@/app/types/Product";
+import { CreateOrderDto } from "@/api";
 
 const PaymentContainer = () => {
     const [orders, setOrders] = useState<Array<Order>>([]);
@@ -67,7 +68,13 @@ const PaymentContainer = () => {
                     onClick={async () => {
                         orders.map(async (order) => {
                             try {
-                                const createOrderFunc = await OrderApi.orderControllerCreateNewOrder(convertOrderToCreateOrderDto(order))
+                                let temp = {
+                                    status: 'active',
+                                    productId: order.productId,
+                                    address: order.address,
+                                    amount: order.amount,
+                                };
+                                const createOrderFunc = await OrderApi.orderControllerCreateNewOrder(temp as CreateOrderDto)
                                 const res = await createOrderFunc();
                                 console.log(res);
                             } catch (error) {

@@ -387,6 +387,24 @@ export interface OrderPaginationResponse {
 export interface OrderResponse {
     /**
      * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    'updated_at': string;
+    /**
+     * 
      * @type {string}
      * @memberof OrderResponse
      */
