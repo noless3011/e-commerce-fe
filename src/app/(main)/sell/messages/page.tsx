@@ -1,5 +1,6 @@
 // components/MessagingPanel.tsx
 'use client';
+import Image from 'next/image';
 
 import { ChatApi } from '@/app/utils/ApiClient';
 import React, { useState, useEffect, useRef } from 'react';
@@ -137,13 +138,16 @@ const MessagingPanel: React.FC = () => {
                                 {conversation.participants
                                     .find((user) => user.id !== mockUser.id)
                                     ?.avatarUrl && (
-                                        <img
+                                        <Image
                                             src={
                                                 conversation.participants.find((user) => user.id !== mockUser.id)
-                                                    ?.avatarUrl
+                                                    ?.avatarUrl || "/images/categories/default-avatar.jpg"
                                             }
                                             alt="Avatar"
-                                            className="w-8 h-8 rounded-full"
+                                            width={32} // Set the desired width in pixels (w-8 * 4 based on Tailwind)
+                                            height={32} // Set the desired height in pixels (h-8 * 4 based on Tailwind)
+                                            className="rounded-full"
+                                            unoptimized // Optional: If the image is already optimized
                                         />
                                     )}
                                 <div>

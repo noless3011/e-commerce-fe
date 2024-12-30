@@ -54,14 +54,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                     <>
                                         <span className="text-red-500">{discount.toFixed(0)}%</span>{' '}
                                         <span className="text-gray-900 line-through">
-                                            {price.toFixed(2)} VND
+                                            {price.toFixed(2)} USD
                                         </span>
                                         <span className="ml-2 text-gray-900">
-                                            {discountedPrice.toFixed(2)} VND
+                                            {discountedPrice.toFixed(2)} USD
                                         </span>
                                     </>
                                 ) : (
-                                    <>{price.toFixed(2)} VND</>
+                                    <>{price.toFixed(2)} USD</>
                                 )}
                             </span>
                         </div>
