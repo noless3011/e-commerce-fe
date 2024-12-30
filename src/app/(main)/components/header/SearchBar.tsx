@@ -1,5 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 const SearchBar = () => {
+    const router = useRouter();
+
     const categories: string[] = [
         "Electronics",
         "Clothing",
@@ -10,8 +17,22 @@ const SearchBar = () => {
         "Toys & Games",
         "Groceries",
         "Furniture",
-        "Automotive"
+        "Automotive",
     ];
+
+    const [keywords, setKeywords] = useState("");
+    const [category, setCategory] = useState("");
+
+    const handleSearch = () => {
+        // Tạo query string và chuyển hướng đến trang search
+        const params = new URLSearchParams({
+            keywords,
+            category,
+        });
+
+        router.push(`/advance-search?activeSubPage=searchResults&${params.toString()}`);
+    };
+
     return (
         <div className="w-full h-[50px] flex flew-row justify-center text-black">
             <table className="bg-transparent w-2/5 h-full table-fixed">
@@ -19,30 +40,48 @@ const SearchBar = () => {
                     <tr>
                         <td className="p-0">
                             <div className="h-full bg-slate-100 rounded-tl-full rounded-bl-full border-solid border-2 border-black p-2 flex flex-row items-center">
-                                <input type="text" className="w-full border-transparent focus:border-transparent focus:outline-none bg-slate-100 ml-2"></input>
+                                <input
+                                    type="text"
+                                    className="w-full border-transparent focus:border-transparent focus:outline-none bg-slate-100 ml-2"
+                                    placeholder="Search products..."
+                                    value={keywords}
+                                    onChange={(e) => setKeywords(e.target.value)}
+                                />
                             </div>
-
                         </td>
                         <td className="p-0 w-[150px]">
-                            <select className="w-full h-full bg-slate-100 rounded-tr-full rounded-br-full border-solid border-y-2 border-r-2 border-black p-2 flex flex-row">
-                                {categories.map((category, index) => {
-                                    return (
-                                        <option key={index}>{category}</option>
-                                    )
-                                })}
+                            <select
+                                className="w-full h-full bg-slate-100 rounded-tr-full rounded-br-full border-solid border-y-2 border-r-2 border-black p-2 flex flex-row"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
+                                <option value="">All Categories</option>
+                                {categories.map((cat, index) => (
+                                    <option key={index} value={cat}>
+                                        {cat}
+                                    </option>
+                                ))}
                             </select>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <button className="ml-10 rounded-full w-40 h-full text-white font-bold text-xl bg-darkgreen hover:bg-green">
+            <button
+                onClick={handleSearch}
+                className="ml-10 rounded-full w-40 h-full text-white font-bold text-xl bg-darkgreen hover:bg-green"
+            >
                 Search
             </button>
 
-            <Link href="/advance-search" className="my-auto ml-10 underline hover:text-darkgreen">Advance Search</Link>
+            <Link
+                href="/advance-search"
+                className="my-auto ml-10 underline hover:text-darkgreen"
+            >
+                Advance Search
+            </Link>
         </div>
-    )
-}
+    );
+};
 
-export default SearchBar
+export default SearchBar;
