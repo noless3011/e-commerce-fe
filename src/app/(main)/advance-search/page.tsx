@@ -5,13 +5,12 @@ import Sidebar from "./Sidebar";
 import FindStores from "./FindStores";
 import Header from "./Header";
 import SearchResult from "./SearchResult";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const AdvancedSearchPage = () => {
-    const [activeTab, setActiveTab] = useState("search");
+    const [activeTab] = useState("search");
     const [activeSubPage, setActiveSubPage] = useState("findItems");
     const searchParams = useSearchParams();
-    const router = useRouter();
 
     const keywords = searchParams.get("keywords") || "";
     const category = searchParams.get("category") || "";

@@ -1,16 +1,10 @@
+import Product from "@/app/types/Product";
 import Image from "next/image";
 import React from "react";
 
-interface ProductItem {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    images: string[]; // Mảng các URL hình ảnh
-}
 
 interface ItemsResultProps {
-    results: ProductItem[];
+    results: Product[];
 }
 
 const ItemsResult: React.FC<ItemsResultProps> = ({ results }) => {

@@ -18,7 +18,8 @@ const ProductCardDropdown: React.FC<ProductCardDropdownProps> = ({ productId }) 
     const handleAddToCart = () => {
         if (currentUser) {
             const newOrder: Order = {
-                status: "inCart",
+                id: 0,
+                status: 'inCart',
                 ownerId: currentUser.id, // Replace with actual owner ID
                 productId: productId, // Replace with actual product ID
                 address: currentUser.address, // Replace with actual address
