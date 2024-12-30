@@ -50,10 +50,10 @@ export interface AuthResponseDto {
 export interface ChatResponseDto {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ChatResponseDto
      */
-    'id': string;
+    'id': number;
     /**
      * 
      * @type {string}
@@ -387,6 +387,24 @@ export interface OrderPaginationResponse {
 export interface OrderResponse {
     /**
      * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderResponse
+     */
+    'updated_at': string;
+    /**
+     * 
      * @type {string}
      * @memberof OrderResponse
      */
@@ -403,6 +421,12 @@ export interface OrderResponse {
      * @memberof OrderResponse
      */
     'productId': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderResponse
+     */
+    'sellerId': number;
     /**
      * 
      * @type {string}
@@ -478,10 +502,10 @@ export interface ProductPaginationResponse {
 export interface ProductResponseDto {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ProductResponseDto
      */
-    'id': string;
+    'id': number;
     /**
      * 
      * @type {string}
@@ -609,10 +633,10 @@ export type ProductResponseDtoTypesEnum = typeof ProductResponseDtoTypesEnum[key
 export interface RatingResponse {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof RatingResponse
      */
-    'id': string;
+    'id': number;
     /**
      * 
      * @type {string}
@@ -720,10 +744,10 @@ export interface UploadFileResponse {
 export interface UserResponseDto {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof UserResponseDto
      */
-    'id': string;
+    'id': number;
     /**
      * 
      * @type {string}
@@ -1576,6 +1600,71 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerDeleteAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/order/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerDeleteOne: async (orderId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orderId' is not null or undefined
+            assertParamExists('orderControllerDeleteOne', 'orderId', orderId)
+            const localVarPath = `/api/order/one`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (orderId !== undefined) {
+                localVarQueryParameter['orderId'] = orderId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Order Detail
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -1614,10 +1703,12 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} page 
          * @param {number} pageSize 
          * @param {OrderControllerFindPaginationStatusEnum} [status] 
+         * @param {number} [buyer] 
+         * @param {number} [seller] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerFindPagination: async (page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        orderControllerFindPagination: async (page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, buyer?: number, seller?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('orderControllerFindPagination', 'page', page)
             // verify required parameter 'pageSize' is not null or undefined
@@ -1644,6 +1735,14 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
 
             if (status !== undefined) {
                 localVarQueryParameter['status'] = status;
+            }
+
+            if (buyer !== undefined) {
+                localVarQueryParameter['buyer'] = buyer;
+            }
+
+            if (seller !== undefined) {
+                localVarQueryParameter['seller'] = seller;
             }
 
 
@@ -1726,6 +1825,29 @@ export const OrderApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerDeleteAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerDeleteAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerDeleteAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orderControllerDeleteOne(orderId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerDeleteOne(orderId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerDeleteOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Order Detail
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -1743,11 +1865,13 @@ export const OrderApiFp = function(configuration?: Configuration) {
          * @param {number} page 
          * @param {number} pageSize 
          * @param {OrderControllerFindPaginationStatusEnum} [status] 
+         * @param {number} [buyer] 
+         * @param {number} [seller] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderPaginationResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindPagination(page, pageSize, status, options);
+        async orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, buyer?: number, seller?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderPaginationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orderControllerFindPagination(page, pageSize, status, buyer, seller, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrderApi.orderControllerFindPagination']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1788,6 +1912,23 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerDeleteAll(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.orderControllerDeleteAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} orderId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orderControllerDeleteOne(orderId: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.orderControllerDeleteOne(orderId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Order Detail
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -1802,11 +1943,13 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
          * @param {number} page 
          * @param {number} pageSize 
          * @param {OrderControllerFindPaginationStatusEnum} [status] 
+         * @param {number} [buyer] 
+         * @param {number} [seller] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options?: RawAxiosRequestConfig): AxiosPromise<OrderPaginationResponse> {
-            return localVarFp.orderControllerFindPagination(page, pageSize, status, options).then((request) => request(axios, basePath));
+        orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, buyer?: number, seller?: number, options?: RawAxiosRequestConfig): AxiosPromise<OrderPaginationResponse> {
+            return localVarFp.orderControllerFindPagination(page, pageSize, status, buyer, seller, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1843,6 +1986,27 @@ export class OrderApi extends BaseAPI {
 
     /**
      * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerDeleteAll(options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerDeleteAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} orderId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrderApi
+     */
+    public orderControllerDeleteOne(orderId: number, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerDeleteOne(orderId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Order Detail
      * @param {string} id 
      * @param {*} [options] Override http request option.
@@ -1859,12 +2023,14 @@ export class OrderApi extends BaseAPI {
      * @param {number} page 
      * @param {number} pageSize 
      * @param {OrderControllerFindPaginationStatusEnum} [status] 
+     * @param {number} [buyer] 
+     * @param {number} [seller] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrderApi
      */
-    public orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, options?: RawAxiosRequestConfig) {
-        return OrderApiFp(this.configuration).orderControllerFindPagination(page, pageSize, status, options).then((request) => request(this.axios, this.basePath));
+    public orderControllerFindPagination(page: number, pageSize: number, status?: OrderControllerFindPaginationStatusEnum, buyer?: number, seller?: number, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).orderControllerFindPagination(page, pageSize, status, buyer, seller, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2920,6 +3086,71 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerDeleteAll: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/users/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerDeleteOne: async (userId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('userControllerDeleteOne', 'userId', userId)
+            const localVarPath = `/api/users/one`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get User By UserId
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -3030,6 +3261,29 @@ export const UserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userControllerDeleteAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerDeleteAll(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.userControllerDeleteAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userControllerDeleteOne(userId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerDeleteOne(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.userControllerDeleteOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get User By UserId
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -3078,6 +3332,23 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerDeleteAll(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.userControllerDeleteAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerDeleteOne(userId: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.userControllerDeleteOne(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get User By UserId
          * @param {number} id 
          * @param {*} [options] Override http request option.
@@ -3115,6 +3386,27 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class UserApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public userControllerDeleteAll(options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).userControllerDeleteAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public userControllerDeleteOne(userId: number, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).userControllerDeleteOne(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get User By UserId

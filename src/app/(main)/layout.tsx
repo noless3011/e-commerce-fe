@@ -25,7 +25,7 @@ export default function RootLayout({
         className={`${inter.className} antialiased w-full h-full flex flex-col`}
       >
         <Header />
-        <main className="flex-grow">{children}</main>
+        <main className="mt-20 flex-grow">{children}</main>
       </body>
     </html>
   );

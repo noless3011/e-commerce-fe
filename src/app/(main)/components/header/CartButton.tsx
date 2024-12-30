@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BiShoppingBag } from 'react-icons/bi';
 import OrderCart from './OrderCart';
 
 export default function CartButton() {
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const cartRef = useRef<HTMLDivElement | null>(null); // Explicitly type the ref
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
     };
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+                setIsCartOpen(false);
+            }
+        }
+
+        if (isCartOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isCartOpen]);
 
     return (
         <div className="">
@@ -18,7 +35,9 @@ export default function CartButton() {
                 <BiShoppingBag size={24} />
             </button>
 
-            {isCartOpen && (<OrderCart isCartOpen={isCartOpen}></OrderCart>)}
+            <div ref={cartRef}>
+                {isCartOpen && <OrderCart isCartOpen={isCartOpen} />}
+            </div>
         </div>
     );
 }

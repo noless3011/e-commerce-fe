@@ -9,7 +9,7 @@ import Image from "next/image";
 
 const Inspector = () => {
     const defaultProduct: Product = {
-        id: "",
+        id: 0,
         created_at: "",
         updated_at: "",
         status: "Available",

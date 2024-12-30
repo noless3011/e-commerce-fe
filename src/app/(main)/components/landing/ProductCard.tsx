@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                     </div>
                 </Link>
 
-                <ProductCardDropdown ></ProductCardDropdown>
+                <ProductCardDropdown productId={product.id}></ProductCardDropdown>
             </div>
         </Provider>
     );

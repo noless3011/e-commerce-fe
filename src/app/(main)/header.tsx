@@ -13,14 +13,14 @@ const Header = () => {
     const navLinks = [
         { href: '/', label: 'Market' },
         { href: '/sell', label: 'Sell' },
-        { href: '/accountinfo', label: 'Account' },
+        { href: '/accountinfo/personal-info', label: 'Account' },
         { href: '/about', label: 'About' },
     ];
 
     const isActive = (path: string) => pathname === path;
     return (
         <Provider store={store}>
-            <div className="flex flex-col gap-0 w-full z-10">
+            <div className="absolute top-0 left-0 flex flex-col gap-0 w-full z-10">
                 <nav className="bg-[#fcde70] shadow-md p-2">
                     <div className="max-w-6xl mx-auto px-4">
                         <div className="flex flex-row justify-between items-center h-3/5">

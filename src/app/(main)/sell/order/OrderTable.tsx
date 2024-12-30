@@ -5,14 +5,14 @@ import OrderRow from './OrderRow';
 interface OrderTableProps {
     orders: Order[];
     onNextStage: (order: Order) => void; // Pass the whole order
+    isLoadingUpdate: boolean; // Add isLoadingUpdate prop
 }
 
-
-const OrderTable: React.FC<OrderTableProps> = ({ orders, onNextStage }) => {
+const OrderTable: React.FC<OrderTableProps> = ({ orders, onNextStage, isLoadingUpdate }) => {
     return (
-        <div className="overflow-x-auto rounded-lg border">
+        <div className="overflow-x-auto rounded-lg border h-[40rem] overflow-y-scroll">
             <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 sticky top-0 z-10">
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
@@ -35,8 +35,8 @@ const OrderTable: React.FC<OrderTableProps> = ({ orders, onNextStage }) => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {orders.map((order, index) => (
-                        <OrderRow key={index} order={order} onNextStage={onNextStage} />
+                    {orders.map((order) => (
+                        <OrderRow key={order.id} order={order} onNextStage={onNextStage} isLoadingUpdate={isLoadingUpdate} />
                     ))}
                 </tbody>
             </table>

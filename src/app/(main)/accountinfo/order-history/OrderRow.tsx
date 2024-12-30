@@ -1,33 +1,29 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import Order, { OrderStatus } from '@/app/types/Order';
 import Product, { mapProductResponseToProduct } from '@/app/types/Product';
-import { ProductApi } from '@/app/utils/ApiClient';
+import { OrderApi, ProductApi } from '@/app/utils/ApiClient';
 
 interface OrderRowProps {
     order: Order;
-    onNextStage: (order: Order) => void; // Receive the whole order
     isLoadingUpdate: boolean; // Add isLoadingUpdate prop
+    finishDeleteHandler: () => void
 }
 
 const getStatusDisplayName = (status: OrderStatus): string => {
     return status.charAt(0).toUpperCase() + status.slice(1);
 };
 
-const getNextStatus = (status: OrderStatus): OrderStatus | undefined => {
-    switch (status) {
-        case 'active':
-            return 'preparing';
-        case 'preparing':
-            return 'purchased';
-        default:
-            return undefined;
-    }
-};
 
-const OrderRow: React.FC<OrderRowProps> = ({ order, onNextStage, isLoadingUpdate }) => {
-    const nextStatus = getNextStatus(order.status);
+const OrderRow: React.FC<OrderRowProps> = ({ order, isLoadingUpdate, finishDeleteHandler }) => {
     const [price, setPrice] = useState(0);
+    const [isCancelled, setIsCancelled] = useState(false);
     const [product, setProduct] = useState<Product>();
+
+    useEffect(() => {
+        setIsCancelled(order.status === 'canceled');
+    }, [order]);
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -38,9 +34,21 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onNextStage, isLoadingUpdate
             } catch (error) {
                 console.log(error);
             }
-        }
+        };
         fetchProduct();
-    }, [order, product])
+    }, [order]);
+
+    const cancelHandler = async () => {
+        try {
+            const cancelFunc = await OrderApi.orderControllerUpdateStatus(order.id, 'canceled');
+            await cancelFunc();
+            setIsCancelled(true);
+            finishDeleteHandler(); // Call the handler after successful cancellation
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <tr>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -72,13 +80,13 @@ const OrderRow: React.FC<OrderRowProps> = ({ order, onNextStage, isLoadingUpdate
                 </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-right font-medium">
-                {nextStatus && (
+                {isCancelled ? null : (
                     <button
-                        onClick={() => onNextStage(order)} // Pass the whole order
+                        onClick={cancelHandler}
                         className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={isLoadingUpdate}
                     >
-                        {isLoadingUpdate ? `Updating...` : `Move to ${getStatusDisplayName(nextStatus)}`}
+                        {isLoadingUpdate ? `Updating...` : `Cancel`}
                     </button>
                 )}
             </td>

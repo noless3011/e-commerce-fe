@@ -10,6 +10,8 @@ import Product, { mapProductResponseToProduct, ProductType } from "../types/Prod
 import LoadingAnimation from "./components/landing/LoadingAnimationCards";
 import LoadingCard from "./components/landing/LoadingCard";
 import Pagination from "./components/landing/Pagination";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 
 export default function Page() {
     const [hotSalesProducts, setHotSalesProducts] = useState<Product[]>([]);
@@ -143,79 +145,21 @@ export default function Page() {
     };
 
     return (
-        <div className="w-full flex flex-col items-center gap-8">
-            <div className="h-10"></div>
-            <CategoryGrid>
-                {categoryProducts.map((category, index) => (
-                    <CategoryCard
-                        key={index} // Use a unique key for each card
-                        imageUrl={categoriesImage[index]} // Use a placeholder image
-                        categoryName={category}
-                    />
-                ))}
-            </CategoryGrid>
+        <Provider store={store}>
+            <div className="w-full flex flex-col items-center gap-8">
+                <div className="h-10"></div>
+                <CategoryGrid>
+                    {categoryProducts.map((category, index) => (
+                        <CategoryCard
+                            key={index} // Use a unique key for each card
+                            imageUrl={categoriesImage[index]} // Use a placeholder image
+                            categoryName={category}
+                        />
+                    ))}
+                </CategoryGrid>
 
-            <ProductHorizontalList title="Hot Sales">
-                {hotSalesProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (hotSalesProducts.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        cardW={250} // Adjust as needed
-                        cardH={350} // Adjust as needed
-                    />
-                )))}
-            </ProductHorizontalList>
-
-            <ProductHorizontalList title="New Arrivals">
-                {newArrivalsProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (newArrivalsProducts.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        cardW={250} // Adjust as needed
-                        cardH={350} // Adjust as needed
-                    />
-                )))}
-            </ProductHorizontalList>
-            <ProductHorizontalList title="Recent Searched">
-                {recentSearchedProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (recentSearchedProducts.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        cardW={250} // Adjust as needed
-                        cardH={350} // Adjust as needed
-                    />
-                )))}
-            </ProductHorizontalList>
-            <ProductHorizontalList title="Your most viewed category">
-                {suggestionProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (suggestionProducts.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        cardW={250} // Adjust as needed
-                        cardH={350} // Adjust as needed
-                    />
-                )))}
-            </ProductHorizontalList>
-            <ProductHorizontalList title="Discovery">
-                {discoveryProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (discoveryProducts.map((product) => (
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        cardW={250} // Adjust as needed
-                        cardH={350} // Adjust as needed
-                    />
-                )))}
-            </ProductHorizontalList>
-            <div className="h-10 text-3xl font-bold mt-10">
-                All Products
-            </div>
-            <ProductGridList itemsPerPage={itemsPerPage}>
-                {paginatedProducts.length === 0 ?
-                    (Array.from({ length: itemsPerPage }).map((_, index) => (
-                        <LoadingCard key={index} />
-                    )))
-                    :
-                    (paginatedProducts.map((product) => (
+                <ProductHorizontalList title="Hot Sales">
+                    {hotSalesProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (hotSalesProducts.map((product) => (
                         <ProductCard
                             key={product.id}
                             product={product}
@@ -223,9 +167,69 @@ export default function Page() {
                             cardH={350} // Adjust as needed
                         />
                     )))}
-            </ProductGridList>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-            <div className="h-96"></div>
-        </div>
+                </ProductHorizontalList>
+
+                <ProductHorizontalList title="New Arrivals">
+                    {newArrivalsProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (newArrivalsProducts.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            cardW={250} // Adjust as needed
+                            cardH={350} // Adjust as needed
+                        />
+                    )))}
+                </ProductHorizontalList>
+                <ProductHorizontalList title="Recent Searched">
+                    {recentSearchedProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (recentSearchedProducts.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            cardW={250} // Adjust as needed
+                            cardH={350} // Adjust as needed
+                        />
+                    )))}
+                </ProductHorizontalList>
+                <ProductHorizontalList title="Your most viewed category">
+                    {suggestionProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (suggestionProducts.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            cardW={250} // Adjust as needed
+                            cardH={350} // Adjust as needed
+                        />
+                    )))}
+                </ProductHorizontalList>
+                <ProductHorizontalList title="Discovery">
+                    {discoveryProducts.length === 0 ? (<LoadingAnimation></LoadingAnimation>) : (discoveryProducts.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            cardW={250} // Adjust as needed
+                            cardH={350} // Adjust as needed
+                        />
+                    )))}
+                </ProductHorizontalList>
+                <div className="h-10 text-3xl font-bold mt-10">
+                    All Products
+                </div>
+                <ProductGridList itemsPerPage={itemsPerPage}>
+                    {paginatedProducts.length === 0 ?
+                        (Array.from({ length: itemsPerPage }).map((_, index) => (
+                            <LoadingCard key={index} />
+                        )))
+                        :
+                        (paginatedProducts.map((product) => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                cardW={250} // Adjust as needed
+                                cardH={350} // Adjust as needed
+                            />
+                        )))}
+                </ProductGridList>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+                <div className="h-96"></div>
+            </div>
+        </Provider>
     )
 }
