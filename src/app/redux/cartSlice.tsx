@@ -1,5 +1,6 @@
+// app/redux/slices/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Order from '../types/Order';
+import Order from '@/app/types/Order';
 
 interface CartState {
     orders: Order[];
@@ -28,9 +29,22 @@ const cartSlice = createSlice({
                 order.status = action.payload.status;
             }
         },
+        increaseOrderAmount: (state, action: PayloadAction<number>) => {
+            const order = state.orders.find(order => order.productId === action.payload);
+            if (order) {
+                order.amount += 1;
+            }
+        },
+        // You can add decreaseOrderAmount if needed, but removing when quantity is 0 might be sufficient
+        // decreaseOrderAmount: (state, action: PayloadAction<number>) => {
+        //     const order = state.orders.find(order => order.productId === action.payload);
+        //     if (order && order.amount > 1) {
+        //         order.amount -= 1;
+        //     }
+        // },
     },
 });
 
-export const { addOrder, removeOrder, updateOrderStatus } = cartSlice.actions;
+export const { addOrder, removeOrder, updateOrderStatus, increaseOrderAmount } = cartSlice.actions;
 
 export default cartSlice.reducer;
