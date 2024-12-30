@@ -9,8 +9,6 @@
 # testing
 /coverage
 **/test_images
-/public
-
 # next.js
 /.next/
 /out/

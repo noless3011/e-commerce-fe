@@ -5,9 +5,10 @@ import Image from 'next/image';
 import { ProductApi } from '@/app/utils/ApiClient';
 import Product, { mapProductResponseToProduct, ProductStatus } from '@/app/types/Product';
 import Order from '@/app/types/Order';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/redux/store';
 import { useRouter } from 'next/navigation';
+import { increaseOrderAmount, removeOrder } from '@/app/redux/cartSlice';
 
 export interface CartItem {
     id: number; // Use product ID as cart item ID
@@ -18,7 +19,6 @@ export interface CartItem {
     quantity: number;
     stockStatus: ProductStatus;
 }
-
 
 async function convertOrderToOrderItem(order: Order): Promise<CartItem | null> {
     try {
@@ -48,16 +48,16 @@ async function convertOrderToOrderItem(order: Order): Promise<CartItem | null> {
     }
 }
 
-
 interface OrderCartProps {
     isCartOpen: boolean;
 }
 
 const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
-    //TODO: Implement cart items from the API
     const [cartItems, setCartItems] = useState<Array<CartItem>>([]);
     const cartRedux = useSelector((state: RootState) => state.cart.orders);
     const router = useRouter();
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const fetchCart = async () => {
             const promises = cartRedux.map(async (order) => {
@@ -76,12 +76,33 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
         }
     }, [isCartOpen, cartRedux]);
 
+    const handleIncreaseQuantity = (productId: number) => {
+        const updatedCartItems = cartItems.map(item =>
+            item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        setCartItems(updatedCartItems);
+        dispatch(increaseOrderAmount(productId));
+    };
+
+    const handleDecreaseQuantity = (productId: number) => {
+        const updatedCartItems = cartItems.map(item =>
+            item.id === productId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+        );
+        setCartItems(updatedCartItems.filter(item => item.quantity > 0)); // Ensure no zero quantity items
+        // Assuming you have a Redux action to decrease quantity, otherwise you can remove the item if it goes to zero
+        // dispatch(decreaseOrderAmount(productId)); // You might need to create this action
+    };
+
+    const handleRemoveFromCart = (productId: number) => {
+        setCartItems(cartItems.filter(item => item.id !== productId));
+        dispatch(removeOrder(productId));
+    };
+
     return (
         <div
             className={`absolute top-16 right-82 mt-2 w-fit bg-white rounded-md shadow-xl overflow-hidden z-40 transition-all duration-300 transform ${isCartOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'}`}
             style={{ transformOrigin: 'top right' }}
         >
-
 
             <div className="bg-white rounded-lg w-fit shadow p-4 md:p-6 ">
                 <h2 className="text-lg font-semibold mb-4">Cart</h2>
@@ -104,7 +125,7 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                         <h3 className="text-sm font-medium">{item.name}</h3>
                                         <div className="text-sm text-gray-500">
                                             {item.originalPrice && item.price !== item.originalPrice && (
-                                                <span className="line-through mr-1">${item.originalPrice.toFixed(2)}</span>
+                                                <span className="line-through mr-1">${item.originalPrice?.toFixed(2)}</span>
                                             )}
                                             ${item.price.toFixed(2)}
                                         </div>
@@ -113,7 +134,7 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        ${item.price.toFixed(2)}
+                                        ${(item.price * item.quantity).toFixed(2)}
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between mt-2">
@@ -122,11 +143,15 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                             <button
                                                 className="px-2 py-1 hover:bg-gray-100 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                                                 disabled={item.quantity <= 1}
+                                                onClick={() => handleDecreaseQuantity(item.id)}
                                             >
                                                 -
                                             </button>
                                             <span className="px-2 py-1 text-sm">{item.quantity}</span>
-                                            <button className="px-2 py-1 hover:bg-gray-100 focus:outline-none">
+                                            <button
+                                                className="px-2 py-1 hover:bg-gray-100 focus:outline-none"
+                                                onClick={() => handleIncreaseQuantity(item.id)}
+                                            >
                                                 +
                                             </button>
                                         </div>
@@ -136,7 +161,11 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                             </svg>
                                             <span className="sr-only">Save</span>
                                         </button>
-                                        <button type="button" className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                                        <button
+                                            type="button"
+                                            className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                                            onClick={() => handleRemoveFromCart(item.id)}
+                                        >
                                             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
