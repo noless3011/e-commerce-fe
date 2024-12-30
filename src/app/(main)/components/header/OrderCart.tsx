@@ -1,62 +1,53 @@
+'use client';
+// components/order-cart.tsx
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { ProductApi } from '@/app/utils/ApiClient';
+import Product, { mapProductResponseToProduct, ProductStatus } from '@/app/types/Product';
+import Order from '@/app/types/Order';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
+import { useRouter } from 'next/navigation';
+
 export interface CartItem {
-    id: number;
+    id: number; // Use product ID as cart item ID
     name: string;
     imageUrl: string;
     price: number;
     originalPrice?: number;
-    selectedSize?: string;
-    selectedColor?: string;
     quantity: number;
-    stockStatus: 'In Stock' | 'Out of stock' | `Available in ${number} days`;
+    stockStatus: ProductStatus;
 }
 
-// components/order-cart.tsx
-import React from 'react';
-import Image from 'next/image';
 
-const cartItems: CartItem[] = [
-    {
-        id: 1,
-        name: 'Relaxed Fit T-shirt',
-        imageUrl: '/images/relaxed-fit-tshirt.png',
-        price: 12.99,
-        originalPrice: 12.99,
-        selectedSize: 'XL',
-        selectedColor: 'Blue',
-        quantity: 1,
-        stockStatus: 'In Stock',
-    },
-    {
-        id: 2,
-        name: 'Nylon Sports Cap',
-        imageUrl: '/images/nylon-sports-cap.png',
-        price: 14.99,
-        originalPrice: 14.99,
-        quantity: 1,
-        stockStatus: 'Available in 2 days',
-    },
-    {
-        id: 3,
-        name: 'Sneakers',
-        imageUrl: '/images/sneakers.png',
-        price: 34.99,
-        originalPrice: 34.99,
-        selectedSize: 'UK 9',
-        quantity: 1,
-        stockStatus: 'Out of stock',
-    },
-    {
-        id: 4,
-        name: 'Slim Fit Suit Vest',
-        imageUrl: '/images/slim-fit-suit-vest.png',
-        price: 17.99,
-        originalPrice: 17.99,
-        selectedSize: 'XL',
-        selectedColor: 'Yellow',
-        quantity: 1,
-        stockStatus: 'In Stock',
-    },
-];
+async function convertOrderToOrderItem(order: Order): Promise<CartItem | null> {
+    try {
+        const getProductFunc = await ProductApi.productControllerFindByProductId(order.productId);
+        const res = await getProductFunc();
+        const product: Product = mapProductResponseToProduct(res.data);
+
+        if (!product) {
+            console.error(`Product with ID ${order.productId} not found.`);
+            return null;
+        }
+
+        const orderItem: CartItem = {
+            id: product.id,
+            name: product.name,
+            imageUrl: product.images[0] || '', // Take the first image or an empty string
+            price: product.price,
+            originalPrice: product.discount > 0 ? product.price / (1 - product.discount) : undefined, // Calculate original price if there's a discount
+            quantity: order.amount,
+            stockStatus: product.status,
+        };
+
+        return orderItem;
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return null;
+    }
+}
+
 
 interface OrderCartProps {
     isCartOpen: boolean;
@@ -64,6 +55,27 @@ interface OrderCartProps {
 
 const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
     //TODO: Implement cart items from the API
+    const [cartItems, setCartItems] = useState<Array<CartItem>>([]);
+    const cartRedux = useSelector((state: RootState) => state.cart.orders);
+    const router = useRouter();
+    useEffect(() => {
+        const fetchCart = async () => {
+            const promises = cartRedux.map(async (order) => {
+                return await convertOrderToOrderItem(order);
+            });
+
+            const results = await Promise.all(promises);
+            const validCartItems = results.filter(item => item !== null) as CartItem[];
+            setCartItems(validCartItems);
+        };
+
+        if (isCartOpen) {
+            fetchCart();
+        } else {
+            setCartItems([]);
+        }
+    }, [isCartOpen, cartRedux]);
+
     return (
         <div
             className={`absolute top-16 right-82 mt-2 w-fit bg-white rounded-md shadow-xl overflow-hidden z-40 transition-all duration-300 transform ${isCartOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0 pointer-events-none'}`}
@@ -83,6 +95,7 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                     layout="fill"
                                     objectFit="contain"
                                     className="rounded-md"
+                                    crossOrigin='anonymous'
                                 />
                             </div>
                             <div className="flex-grow">
@@ -95,13 +108,7 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                             )}
                                             ${item.price.toFixed(2)}
                                         </div>
-                                        {item.selectedSize && (
-                                            <span className="text-xs text-gray-500 mr-2">Size: {item.selectedSize}</span>
-                                        )}
-                                        {item.selectedColor && (
-                                            <span className="text-xs text-gray-500">Color: {item.selectedColor}</span>
-                                        )}
-                                        <div className={`text-xs ${item.stockStatus === 'In Stock' ? 'text-green-500' : item.stockStatus.startsWith('Available') ? 'text-orange-500' : 'text-red-500'}`}>
+                                        <div className={`text-xs ${item.stockStatus === 'Available' ? 'text-green-500' : item.stockStatus.startsWith('Available') ? 'text-orange-500' : 'text-red-500'}`}>
                                             {item.stockStatus}
                                         </div>
                                     </div>
@@ -110,46 +117,6 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between mt-2">
-                                    <div className="flex items-center space-x-2">
-                                        {item.selectedSize && (
-                                            <div className="relative inline-block text-left">
-                                                <div>
-                                                    <button
-                                                        type="button"
-                                                        className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-2 py-1 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                        id={`menu-button-size-${item.id}`}
-                                                        aria-expanded="true"
-                                                        aria-haspopup="true"
-                                                    >
-                                                        {item.selectedSize}
-                                                        <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                                {/* More size options can be added here */}
-                                            </div>
-                                        )}
-                                        {item.selectedColor && (
-                                            <div className="relative inline-block text-left">
-                                                <div>
-                                                    <button
-                                                        type="button"
-                                                        className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-2 py-1 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                                        id={`menu-button-color-${item.id}`}
-                                                        aria-expanded="true"
-                                                        aria-haspopup="true"
-                                                    >
-                                                        {item.selectedColor}
-                                                        <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                                {/* More color options can be added here */}
-                                            </div>
-                                        )}
-                                    </div>
                                     <div className="flex items-center space-x-2">
                                         <div className="flex border border-gray-300 rounded">
                                             <button
@@ -181,6 +148,14 @@ const OrderCart: React.FC<OrderCartProps> = ({ isCartOpen }) => {
                         </li>
                     ))}
                 </ul>
+                <div className="mt-6 pt-4 border-t">
+                    <button
+                        onClick={() => router.push('/payment')}
+                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        Go to Payment
+                    </button>
+                </div>
             </div>
         </div>
     );

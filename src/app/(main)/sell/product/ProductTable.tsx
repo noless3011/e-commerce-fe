@@ -9,9 +9,9 @@ interface ProductTableProps {
 
 const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
     return (
-        <div className="overflow-x-auto rounded-lg border">
+        <div className="overflow-x-auto rounded-lg border h-[40rem] overflow-y-scroll">
             <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 sticky top-0 z-10"> {/* Added sticky, top-0 and z-10 */}
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Product

@@ -8,10 +8,12 @@ import ChatButton from "./ChatButton"
 import { useEffect, useState } from "react"
 import { ProductApi } from "@/app/utils/ApiClient"
 import { useParams } from "next/navigation";
+import { Provider } from "react-redux";
+import store from "@/app/redux/store";
 
 export default function ProductPage() {
     const defaultProduct: Product = {
-        id: "",
+        id: 0,
         created_at: "",
         updated_at: "",
         status: "Available", // Replace "draft" with a valid default status from your enum
@@ -47,16 +49,18 @@ export default function ProductPage() {
         getProduct();
     }, [])
     return (
-        <div className="flex flex-col gap-4 h-fit mt-4 w-4/5 mx-auto">
-            <div className="grid grid-cols-[7rem_1.8fr_1fr] gap-4 items-stretch">
-                <ProductImagePicker product={product}></ProductImagePicker>
-                <ProductImagesSlider product={product}></ProductImagesSlider>
-                <ProductSideBar product={product} />
+        <Provider store={store}>
+            <div className="flex flex-col gap-4 h-fit mt-4 w-4/5 mx-auto">
+                <div className="grid grid-cols-[7rem_1.8fr_1fr] gap-4 items-stretch">
+                    <ProductImagePicker product={product}></ProductImagePicker>
+                    <ProductImagesSlider product={product}></ProductImagesSlider>
+                    <ProductSideBar product={product} />
+                </div>
+                {/* <Recommended></Recommended> */}
+                <Reviews></Reviews>
+                <ChatButton ownerId={Number(product.id)} />
             </div>
-            {/* <Recommended></Recommended> */}
-            <Reviews></Reviews>
-            <ChatButton ownerId={Number(product.id)} />
-        </div>
+        </Provider>
     )
 }
 

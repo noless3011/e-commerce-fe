@@ -40,9 +40,6 @@ export const logOutWithApi = createAsyncThunk(
             const logOutFunc = await AuthApi.authControllerLogout();
             const res = await logOutFunc();
             console.log('logout called:', res);
-            const checkLoginFunc = await UserApi.userControllerGetCurrentUser();
-            const checkLoginRes = await checkLoginFunc();
-            console.log('check if logout', checkLoginRes);
             dispatch(logOut());
         } catch (error) {
             // Handle logout error (e.g., dispatch an error action, log the error)
