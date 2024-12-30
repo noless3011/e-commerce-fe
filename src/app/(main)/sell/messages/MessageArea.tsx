@@ -5,7 +5,7 @@ import MessageList from "./MessageList";
 
 interface MessageAreaProps {
     conversation: Conversation | undefined;
-    loggedInUserId: string;
+    loggedInUserId: number;
     onSendMessage: (messageContent: string) => void;
 }
 

@@ -2,7 +2,7 @@ import { Message } from "./Message";
 import { User } from "./User";
 
 export interface Conversation {
-    id: string;
+    id: number;
     participants: User[];
     messages: Message[];
     lastMessage?: Message;

@@ -4,7 +4,7 @@ import { User } from "@/app/types/User";
 
 // Mock Users
 export const mockUser1: User = {
-    id: 'user-1',
+    id: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     username: 'john.doe',
@@ -16,7 +16,7 @@ export const mockUser1: User = {
 };
 
 export const mockUser2: User = {
-    id: 'user-2',
+    id: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     username: 'jane.smith',
@@ -28,7 +28,7 @@ export const mockUser2: User = {
 };
 
 export const mockUser3: User = {
-    id: 'user-3',
+    id: 3,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     username: 'peter.jones',
@@ -41,36 +41,36 @@ export const mockUser3: User = {
 
 // Mock Messages
 const mockMessage1: Message = {
-    id: 'msg-1',
-    senderId: 'user-1',
+    id: 1,
+    senderId: 1,
     content: 'Hey Jane, how are you?',
     timestamp: new Date(Date.now() - 60 * 60 * 1000), // 1 hour ago
 };
 
 const mockMessage2: Message = {
-    id: 'msg-2',
-    senderId: 'user-2',
+    id: 2,
+    senderId: 2,
     content: 'Hi John, I\'m doing well, thanks! How about you?',
     timestamp: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
 };
 
 const mockMessage3: Message = {
-    id: 'msg-3',
-    senderId: 'user-1',
+    id: 3,
+    senderId: 1,
     content: 'I\'m good too. Just wanted to check in.',
     timestamp: new Date(Date.now() - 15 * 60 * 1000), // 15 minutes ago
 };
 
 const mockMessage4: Message = {
-    id: 'msg-4',
-    senderId: 'user-3',
+    id: 4,
+    senderId: 3,
     content: 'Anyone seen the latest news?',
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
 };
 
 const mockMessage5: Message = {
-    id: 'msg-5',
-    senderId: 'user-2',
+    id: 5,
+    senderId: 2,
     content: 'Not yet, what\'s up?',
     timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
 };
@@ -78,21 +78,21 @@ const mockMessage5: Message = {
 // Mock Conversations
 export const mockConversations: Conversation[] = [
     {
-        id: 'conv-1',
+        id: 1,
         participants: [mockUser1, mockUser2],
         messages: [mockMessage1, mockMessage2, mockMessage3],
         lastMessage: mockMessage3,
         unreadCount: 0,
     },
     {
-        id: 'conv-2',
+        id: 2,
         participants: [mockUser2, mockUser3],
         messages: [mockMessage4, mockMessage5],
         lastMessage: mockMessage5,
         unreadCount: 1,
     },
     {
-        id: 'conv-3',
+        id: 3,
         participants: [mockUser1, mockUser3],
         messages: [],
         lastMessage: undefined,

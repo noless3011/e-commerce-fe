@@ -5,7 +5,7 @@ import { Message } from "@/app/types/Message";
 
 interface MessageListProps {
     messages: Message[];
-    loggedInUserId: string;
+    loggedInUserId: number;
 }
 
 const MessageList: React.FC<MessageListProps> = ({ messages, loggedInUserId }) => {

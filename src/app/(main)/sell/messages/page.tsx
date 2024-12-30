@@ -11,7 +11,7 @@ import { mockConversations, mockUser1, mockUser2 } from './MockData';
 
 const MessagingPanel: React.FC = () => {
     const [conversations, setConversations] = useState<Conversation[]>(mockConversations);
-    const [selectedConversationId, setSelectedConversationId] = useState<string | null>(mockConversations[0]?.id || null);
+    const [selectedConversationId, setSelectedConversationId] = useState<number | null>(mockConversations[0]?.id || null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const selectedConversation = conversations.find((conv) => conv.id === selectedConversationId);
@@ -22,37 +22,37 @@ const MessagingPanel: React.FC = () => {
 
     const handleSendMessage = async (messageContent: string) => {
         if (selectedConversationId && messageContent.trim()) {
-            const newMessageObject: Message = {
-                id: `msg-${Date.now()}`,
-                senderId: mockUser1.id,
-                content: messageContent.trim(),
-                timestamp: new Date(),
-            };
+            // const newMessageObject: Message = {
+            //     id: `msg-${Date.now()}`,
+            //     senderId: mockUser1.id,
+            //     content: messageContent.trim(),
+            //     timestamp: new Date(),
+            // };
 
-            setConversations((prevConversations) =>
-                prevConversations.map((conv) =>
-                    conv.id === selectedConversationId
-                        ? { ...conv, messages: [...conv.messages, newMessageObject], lastMessage: newMessageObject }
-                        : conv
-                )
-            );
+            // setConversations((prevConversations) =>
+            //     prevConversations.map((conv) =>
+            //         conv.id === selectedConversationId
+            //             ? { ...conv, messages: [...conv.messages, newMessageObject], lastMessage: newMessageObject }
+            //             : conv
+            //     )
+            // );
 
             // Simulate receiving a reply after a short delay (for demo purposes)
-            setTimeout(() => {
-                const replyMessage: Message = {
-                    id: `msg-reply-${Date.now()}`,
-                    senderId: mockUser2.id,
-                    content: `Thanks for your message! We'll get back to you soon regarding "${messageContent.trim()}".`,
-                    timestamp: new Date(),
-                };
-                setConversations((prevConversations) =>
-                    prevConversations.map((conv) =>
-                        conv.id === selectedConversationId
-                            ? { ...conv, messages: [...conv.messages, replyMessage], lastMessage: replyMessage }
-                            : conv
-                    )
-                );
-            }, 1000);
+            // setTimeout(() => {
+            //     const replyMessage: Message = {
+            //         id: `msg-reply-${Date.now()}`,
+            //         senderId: mockUser2.id,
+            //         content: `Thanks for your message! We'll get back to you soon regarding "${messageContent.trim()}".`,
+            //         timestamp: new Date(),
+            //     };
+            //     setConversations((prevConversations) =>
+            //         prevConversations.map((conv) =>
+            //             conv.id === selectedConversationId
+            //                 ? { ...conv, messages: [...conv.messages, replyMessage], lastMessage: replyMessage }
+            //                 : conv
+            //         )
+            //     );
+            // }, 1000);
             try {
                 // Example of calling an API
                 // const callGetChatFunc = await ChatApi.chatControllerGet(Number(mockOtherUser.id));
@@ -64,7 +64,7 @@ const MessagingPanel: React.FC = () => {
         }
     };
 
-    const handleSelectConversation = (conversationId: string) => {
+    const handleSelectConversation = (conversationId: number) => {
         setSelectedConversationId(conversationId);
         // Mark messages as read (optional)
         setConversations((prevConversations) =>

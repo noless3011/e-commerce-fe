@@ -3,8 +3,8 @@ import { Conversation } from "@/app/types/Conversation";
 interface ConversationListItemProps {
     conversation: Conversation;
     isSelected: boolean;
-    onSelect: (conversationId: string) => void;
-    loggedInUserId: string;
+    onSelect: (conversationId: number) => void;
+    loggedInUserId: number;
 }
 
 const ConversationListItem: React.FC<ConversationListItemProps> = ({

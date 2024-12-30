@@ -4,9 +4,9 @@ import ConversationListItem from "./ConversationListItem";
 
 interface ConversationListProps {
     conversations: Conversation[];
-    selectedConversationId: string | null;
-    onSelectConversation: (conversationId: string) => void;
-    loggedInUserId: string;
+    selectedConversationId: number | null;
+    onSelectConversation: (conversationId: number) => void;
+    loggedInUserId: number;
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({
