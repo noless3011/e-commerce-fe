@@ -1,6 +1,11 @@
 import React from 'react';
 import Product from '@/app/types/Product';
 import Link from 'next/link';
+import { addOrder } from '@/app/redux/cartSlice';
+import { RootState } from '@/app/redux/store';
+import Order from '@/app/types/Order';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 
 type ProductProps = {
@@ -8,6 +13,38 @@ type ProductProps = {
 };
 
 const ProductSideBar: React.FC<ProductProps> = ({ product }) => {
+    const currentUser = useSelector((state: RootState) => state.auth.user);
+    const dispatch = useDispatch();
+    const handleAddToCart = () => {
+        if (currentUser) {
+            const newOrder: Order = {
+                status: "inCart",
+                ownerId: currentUser.id, // Replace with actual owner ID
+                productId: product.id, // Replace with actual product ID
+                address: currentUser.address, // Replace with actual address
+                amount: 1, // Replace with actual amount
+                createdTime: Date.now(),
+                purchasedTime: 0,
+            };
+            dispatch(addOrder(newOrder));
+        }
+    };
+    const router = useRouter();
+    const handleBuy = () => {
+        if (currentUser) {
+            const newOrder: Order = {
+                status: "inCart",
+                ownerId: currentUser.id, // Replace with actual owner ID
+                productId: product.id, // Replace with actual product ID
+                address: currentUser.address, // Replace with actual address
+                amount: 1, // Replace with actual amount
+                createdTime: Date.now(),
+                purchasedTime: 0,
+            };
+            dispatch(addOrder(newOrder));
+        }
+        router.push("/payment");
+    }
     return (
         <div className="max-w-xl h-full p-6 bg-gray-100 rounded-lg">
             <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
@@ -56,10 +93,10 @@ const ProductSideBar: React.FC<ProductProps> = ({ product }) => {
                 <p><strong>Availability:</strong> {product.remaining > 0 ? `${product.remaining} in stock` : 'Out of stock'}</p>
             </div>
 
-            <button className="my-1 bg-darkgreen hover:bg-green mx-auto w-full text-white p-2 rounded-full border-solid border-4 border-black">
+            <button onClick={handleBuy} className="my-1 bg-darkgreen hover:bg-green mx-auto w-full text-white p-2 rounded-full border-solid border-4 border-black">
                 BUY NOW
             </button>
-            <button className="my-1 bg-gray-300 hover:bg-white mx-auto w-full text-black p-2 rounded-full border-solid border-4 border-black">
+            <button onClick={handleAddToCart} className="my-1 bg-gray-300 hover:bg-white mx-auto w-full text-black p-2 rounded-full border-solid border-4 border-black">
                 Add to cart
             </button>
         </div>

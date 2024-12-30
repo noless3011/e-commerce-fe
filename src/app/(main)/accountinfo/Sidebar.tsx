@@ -3,15 +3,18 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation'; // Correct import for app router
 
 const Sidebar: React.FC = () => {
     const [username, setUserName] = useState<string>("N/A");
     const [avatar, setAvatar] = useState<string>("N/A");
     const authInfo = useSelector((state: RootState) => state.auth);
+    const pathname = usePathname(); // Initialize usePathname
 
     useEffect(() => {
         setUserName(authInfo.user?.username || "N/A");
-        setAvatar(authInfo.user?.avatar || "N/A");
+        setAvatar("N/A"); //authInfo.user?.avatar ||
     }, [authInfo]);
 
     return (
@@ -32,18 +35,18 @@ const Sidebar: React.FC = () => {
                 </div>
             </div>
             <div className="space-y-2">
-                <a href="#" className="block text-orange-500 font-semibold">
+                <Link href="/accountinfo/personal-info" className={`block font-semibold ${pathname === '/accountinfo/personal-info' ? 'text-orange-500' : 'text-gray-700 hover:text-gray-900'}`}>
                     Personal information
-                </a>
-                <a href="#" className="block text-gray-700 hover:text-gray-900">
+                </Link>
+                <Link href="/accountinfo/billing" className={`block font-semibold ${pathname === '/accountinfo/billing' ? 'text-orange-500' : 'text-gray-700 hover:text-gray-900'}`}>
                     Billing & Payments
-                </a>
-                <a href="#" className="block text-gray-700 hover:text-gray-900">
+                </Link>
+                <Link href="/accountinfo/order-history" className={`block font-semibold ${pathname === '/accountinfo/order-history' ? 'text-orange-500' : 'text-gray-700 hover:text-gray-900'}`}>
                     Order History
-                </a>
-                <a href="#" className="block text-gray-700 hover:text-gray-900">
+                </Link>
+                <Link href="/accountinfo/gift-cards" className={`block font-semibold ${pathname === '/accountinfo/gift-cards' ? 'text-orange-500' : 'text-gray-700 hover:text-gray-900'}`}>
                     Gift Cards
-                </a>
+                </Link>
             </div>
         </div>
     );

@@ -29,7 +29,7 @@ export default function StoreManagementPage() {
         getProducts();
     }, [inspectorState, userId])
     const defaultProduct: Product = {
-        id: "",
+        id: 0,
         created_at: "",
         updated_at: "",
         status: "Available", // Replace "draft" with a valid default status from your enum
