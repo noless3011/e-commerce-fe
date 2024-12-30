@@ -4,35 +4,8 @@ import ItemsResult from "./ItemsResult";
 import { ProductApi } from "@/app/utils/ApiClient";
 import { ProductControllerFindPaginationTypesEnum } from "@/api";
 import { ProductControllerFindPaginationSortByEnum } from "@/api";
-import { AxiosResponse } from "axios";
+import Product, { mapProductResponseToProduct } from "@/app/types/Product";
 
-// Định nghĩa kiểu dữ liệu cho sản phẩm và phản hồi phân trang từ API
-type ProductItem = {
-    id: string;
-    created_at: string;
-    updated_at: string;
-    status: "SoldOut" | "Available" | "InStock";
-    name: string;
-    description: string;
-    images: string[];
-    price: number;
-    discount: number;
-    rating: number;
-    remaining: number;
-    soldNumber: number;
-    totalLike: number;
-    totalReview: number;
-    ownerId: number;
-    types: string[];
-    createdTime: number;
-};
-
-type ProductPaginationResponse = {
-    total: number;
-    page: number;
-    pageSize: number;
-    data: ProductItem[];
-};
 
 const FindItems: React.FC = () => {
     const [page] = useState(1);
@@ -42,7 +15,7 @@ const FindItems: React.FC = () => {
     const [sortBy, setSortBy] = useState("createdTime");
     const [sortOrder, setSortOrder] = useState<"ASC" | "DESC">("DESC");
 
-    const [results, setResults] = useState<ProductItem[]>([]); // Định nghĩa kết quả là mảng các ProductItem
+    const [results, setResults] = useState<Product[]>([]); // Định nghĩa kết quả là mảng các ProductItem
     const [showResults, setShowResults] = useState(false);
     const [showForm, setShowForm] = useState(true);
 
@@ -69,10 +42,9 @@ const FindItems: React.FC = () => {
             );
 
             // Lấy dữ liệu từ response.data và ép kiểu về ProductPaginationResponse
-            const res: AxiosResponse<ProductPaginationResponse> = await callProductApiFunc();
-            const { data } = res; // Lấy đúng phần data từ response
-
-            setResults(data.data || []); // Dữ liệu là mảng các sản phẩm
+            const res = await callProductApiFunc();
+            const tempProductList = res.data.data.map((dto) => mapProductResponseToProduct(dto));
+            setResults(tempProductList || []); // Dữ liệu là mảng các sản phẩm
             setShowResults(true);
             setShowForm(false);
         } catch (error) {

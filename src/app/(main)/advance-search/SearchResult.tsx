@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { ProductApi } from "@/app/utils/ApiClient";
-import { ProductControllerFindPaginationTypesEnum, ProductControllerFindPaginationSortByEnum } from "@/api";
-import { AxiosResponse } from "axios";
+import { ProductControllerFindPaginationTypesEnum, ProductControllerFindPaginationSortByEnum, ProductResponseDto } from "@/api";
 import Image from "next/image";
+
 
 // Định nghĩa kiểu dữ liệu sản phẩm
 interface ProductItem {
@@ -15,7 +14,15 @@ interface ProductItem {
     description: string;
     images: string[];
 };
-
+const convertDtoToProductItem = (dto: ProductResponseDto): ProductItem => {
+    return {
+        id: dto.id.toString(), // Convert number to string
+        name: dto.name,
+        price: dto.price,
+        description: dto.description,
+        images: dto.images,
+    };
+};
 interface SearchResultProps {
     keywords: string;
     category: string;
@@ -44,9 +51,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ keywords, category }) => {
                     params.sortBy,
                     params.sortOrder
                 );
-
-                const res: AxiosResponse<{ data: ProductItem[] }> = await callProductApiFunc();
-                setResults(res.data.data);
+                const res = await callProductApiFunc();
+                setResults(res.data.data.map((dto) => convertDtoToProductItem(dto)));
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

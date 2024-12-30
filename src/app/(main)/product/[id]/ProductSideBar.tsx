@@ -18,6 +18,7 @@ const ProductSideBar: React.FC<ProductProps> = ({ product }) => {
     const handleAddToCart = () => {
         if (currentUser) {
             const newOrder: Order = {
+                id: 0,
                 status: "inCart",
                 ownerId: currentUser.id, // Replace with actual owner ID
                 productId: product.id, // Replace with actual product ID
@@ -33,6 +34,7 @@ const ProductSideBar: React.FC<ProductProps> = ({ product }) => {
     const handleBuy = () => {
         if (currentUser) {
             const newOrder: Order = {
+                id: 0,
                 status: "inCart",
                 ownerId: currentUser.id, // Replace with actual owner ID
                 productId: product.id, // Replace with actual product ID
