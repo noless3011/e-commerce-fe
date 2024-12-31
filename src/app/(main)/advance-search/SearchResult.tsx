@@ -64,9 +64,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ keywords, category }) => {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {results.map((product) => (
+            {results.map((product, index) => (
 
-                <Link href={"product/" + product.id}>
+                <Link key={index} href={"product/" + product.id}>
                     <div key={product.id} className="relative w-full bg-white p-4 rounded-lg shadow-lg">
                         {/* Container cố định kích thước cho ảnh */}
                         <div className="relative w-full h-40 mb-4 overflow-hidden">
