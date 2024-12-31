@@ -17,7 +17,7 @@ const AccountInfo: React.FC<AccountInfoProps> = () => {
     return (<div className="flex flex-row items-center gap-2">
         <div className="relative h-10 aspect-square rounded-full overflow-hidden">
             <Image
-                src="https://picsum.photos/300/300"
+                src={authInfo.user?.avatar || "/images/categories/default-avatar.jpg"}
                 alt="avatar"
                 layout="fill"
                 objectFit="contain"

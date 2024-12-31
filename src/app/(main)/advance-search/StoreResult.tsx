@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from 'next/image';
 
 interface Product {
     id: number;
@@ -54,12 +55,13 @@ const StoresResult: React.FC = () => {
                             {store.products.map((product) => (
                                 <div
                                     key={product.id}
-                                    className="border p-4 rounded-md shadow-md bg-gray-50"
+                                    className="border p-4 rounded-md shadow-md bg-gray-50 relative h-32" // Added 'relative' and a fixed height for the container
                                 >
-                                    <img
+                                    <Image
                                         src={product.image}
                                         alt={product.name}
-                                        className="w-full h-32 object-cover rounded-md mb-4"
+                                        className="object-cover rounded-md mb-4"
+                                        layout="fill"
                                     />
                                     <h4 className="text-sm font-semibold text-gray-800">{product.name}</h4>
                                     <p className="text-gray-600">{product.price}</p>

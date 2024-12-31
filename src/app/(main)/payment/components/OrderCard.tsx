@@ -3,6 +3,7 @@ import Order from '@/app/types/Order';
 import { ProductApi } from '@/app/utils/ApiClient';
 import Product, { mapProductResponseToProduct } from '@/app/types/Product';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 interface OrderCardProps {
     index: number;
     order: Order | null; // Single order for the current component
@@ -48,8 +49,18 @@ export const OrderCard: React.FC<OrderCardProps> = ({
                 </div>
             </div>
             <div className="flex-3 flex flex-row gap-2 items-center p-2">
-                <div className="h-32 aspect-square rounded-lg overflow-hidden">
-                    <img src={product?.images[0]} alt="Product" className="w-full h-full object-cover" />
+                <div className="h-32 aspect-square rounded-lg overflow-hidden relative">
+                    {product?.images && product.images.length > 0 ? (
+                        <Image
+                            src={product.images[0]}
+                            alt="Product"
+                            fill // Or specify width and height
+                            style={{ objectFit: 'cover' }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Optional: for responsive images
+                        />
+                    ) : (
+                        <div>No Image Available</div> // Or a placeholder image
+                    )}
                 </div>
                 <div className="flex-1 h-32 overflow-y-scroll scrollbar-hidden">
                     <p className="w-auto">{product?.description}</p>

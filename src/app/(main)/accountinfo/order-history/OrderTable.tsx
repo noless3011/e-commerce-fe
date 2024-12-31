@@ -16,7 +16,7 @@ const OrderTable = () => {
         try {
             if (!auth) return;
             let temp: Order[] = [];
-            const [fetchActiveOrderFunc, fetchPreparingOrderFunc, fetchPurchasedOrderFunc] = await Promise.all([
+            const [fetchActiveOrderFunc, fetchPreparingOrderFunc] = await Promise.all([
                 OrderApi.orderControllerFindPagination(
                     1,
                     ITEMS_PER_PAGE,
@@ -30,24 +30,15 @@ const OrderTable = () => {
                     'preparing',
                     currentUser,
                     undefined
-                ),
-                OrderApi.orderControllerFindPagination(
-                    1,
-                    ITEMS_PER_PAGE,
-                    'purchased',
-                    currentUser,
-                    undefined
-                ),
+                )
             ]);
 
-            const [resActive, resPreparing, resPurchased] = await Promise.all([
+            const [resActive, resPreparing] = await Promise.all([
                 fetchActiveOrderFunc(),
                 fetchPreparingOrderFunc(),
-                fetchPurchasedOrderFunc(),
             ]);
             temp = temp.concat(convertToOrders(resActive.data.data));
             temp = temp.concat(convertToOrders(resPreparing.data.data));
-            temp = temp.concat(convertToOrders(resPurchased.data.data));
             setOrders(temp);
 
         } catch (error) {
